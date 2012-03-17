@@ -1,12 +1,10 @@
-
 package com.codingdojo.numerosromanos;
-
 
 public class NumerosRomanos {
     
-    static String[][] Cadenas = new String[40][4000];
+    static String[][] Cadenas = new String[4][10];
     public static void main(String[] args) {
-        System.out.println("salida = "+getNumeroRomano(3994));
+        System.out.println("salida = "+getNumeroRomano(11));
     }
     
     
