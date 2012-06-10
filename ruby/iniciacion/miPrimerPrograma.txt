@@ -1,13 +1,13 @@
 class MegaAnfitrion
 	attr_accessor :nombres
 	
-	def initialize(nombres="Mundo")
+	def initialize(nombres="Anonimo")
 		@nombres = nombres
 	end
 
 	def decir_hola
 		if @nombres.nil?
-			puts "………."
+			puts "…………..."
 		elsif	@nombres.respond_to?("each")
 			@nombres.each do |nombre|
 				puts "Hola #{nombre}"
