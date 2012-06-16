@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/TituloMain" />
+
+    <Button
+        android:id="@+id/btnAgregarPersona"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Agregar Persona" />
+    <Button
+        android:id="@+id/btnBuscarPersona"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Buscar Persona" />
+    <Button
+        android:id="@+id/btnEliminarPersona"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Eliminar Persona" />
+    
+    <Button
+        android:id="@+id/btnOpciones"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Opciones"			/>
+
+</LinearLayout>
