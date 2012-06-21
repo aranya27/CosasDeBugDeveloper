@@ -4,31 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/TituloMain" />
-
-    <Button
-        android:id="@+id/btnAgregarPersona"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Agregar Persona" />
-    <Button
-        android:id="@+id/btnBuscarPersona"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Buscar Persona" />
-    <Button
-        android:id="@+id/btnEliminarPersona"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Eliminar Persona" />
-    
-    <Button
-        android:id="@+id/btnOpciones"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Opciones"			/>
+    <ListView android:id="@+id/LstOpciones" android:layout_width="fill_parent" 
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

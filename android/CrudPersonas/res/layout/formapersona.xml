@@ -69,9 +69,35 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textEmailAddress" />
-
+	
     <TextView
         android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha de Nacimiento"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <RadioGroup
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    android:id="@+id/rgSexo">
+        
+	    <RadioButton
+	        android:id="@+id/rbSexoMasculino"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Masculino" />
+	    
+	    <RadioButton
+	        android:id="@+id/rbSexoFemenino"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Femenino" />
+	    
+	</RadioGroup>
+    
+    <TextView
+        android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Fecha de Nacimiento"
