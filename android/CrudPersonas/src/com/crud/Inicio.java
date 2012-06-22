@@ -2,6 +2,7 @@ package com.crud;
 
 import com.crud.altas.AltaPersona;
 import com.crud.beans.Opcion;
+import com.crud.busqueda.BuscarPersona;
 
 import android.app.Activity;
 import android.content.Context;
@@ -58,8 +59,12 @@ public class Inicio extends Activity {
 				case 0:
 					intent = new Intent(view.getContext(),AltaPersona.class);
 					break;
-				}
 				
+				case 1:
+					intent  = new Intent(view.getContext(),BuscarPersona.class);
+					break;
+				
+				}
 				
 				startActivity(intent);
 				

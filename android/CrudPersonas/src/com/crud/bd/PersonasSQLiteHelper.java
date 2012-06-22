@@ -4,23 +4,24 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class UsuariosSQLiteHelper extends SQLiteOpenHelper{
-	private static final int DATABASE_VERSION = 1;
-	private static final String DATABASE_NAME = "UsuariosDB";
+public class PersonasSQLiteHelper extends SQLiteOpenHelper{
+	private static final int DATABASE_VERSION = 2;
+	private static final String DATABASE_NAME = "PersonasDB";
 	private static final String DATABASE_CREATE = 
-			"create table usuario(" +
+			"create table persona(" +
 			"	id integer primary key autoincrement," +
 			"	nombre text not null," +
 			"	apaterno text not null," +
 			"	amaterno text, " +
 			"	email text," +
-			"	fechaNacimiento date" +
+			"	fechaNacimiento date," +
+			"	sexo text" +
 			")";
 	
 	
 	
 
-	public UsuariosSQLiteHelper(Context context) {
+	public PersonasSQLiteHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);	
 		
 	}
@@ -33,7 +34,7 @@ public class UsuariosSQLiteHelper extends SQLiteOpenHelper{
 
 	@Override
 	public void onUpgrade(SQLiteDatabase database, int arg1, int arg2) {
-		database.execSQL("DROP TABLE IF EXISTS usuario");
+		database.execSQL("DROP TABLE IF EXISTS persona");
 		onCreate(database);
 		
 	}
