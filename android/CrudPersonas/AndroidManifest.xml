@@ -33,7 +33,6 @@
             android:name=".busqueda.BuscarPersona"
             android:label="@string/app_name" >
         </activity>
-        
         <activity
             android:name=".modificaciones.ModificarPersona"
             android:label="@string/app_name" >
