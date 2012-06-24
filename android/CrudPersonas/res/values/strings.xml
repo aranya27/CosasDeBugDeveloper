@@ -3,5 +3,9 @@
 
     <string name="TituloMain">Selecciona una Opción</string>
     <string name="app_name">CrudPersonas</string>
-
+	<string-array name="opcionesBusqueda">
+        <item>Nombre</item>
+        <item>Apellido Paterno</item>
+        <item>Apellido Materno</item>
+    </string-array>
 </resources>

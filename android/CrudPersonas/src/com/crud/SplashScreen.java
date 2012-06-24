@@ -36,7 +36,7 @@ public class SplashScreen extends Activity {
                 } finally {
                     finish();
                     startActivity(new Intent(SplashScreen.this,Inicio.class));
-                    stop();
+                    
                 }
             }
         };

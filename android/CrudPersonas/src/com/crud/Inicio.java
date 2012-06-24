@@ -1,11 +1,19 @@
 package com.crud;
 
 import com.crud.altas.AltaPersona;
+import com.crud.bd.PersonasSQLiteHelper;
 import com.crud.beans.Opcion;
+import com.crud.busqueda.BuscarPersona;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class Inicio extends Activity {
-    /** Called when the activity is first created. */
+	Inicio context = this;
 	
 	//Inicio context=this;
 	private Opcion[] opciones = new Opcion[]{
@@ -36,11 +44,8 @@ public class Inicio extends Activity {
         
         
         AdaptadorOpciones adaptador = new AdaptadorOpciones(this);
-         
         ListView lstOpciones = (ListView)findViewById(R.id.LstOpciones);
-         
         lstOpciones.setAdapter(adaptador);
-        
         lstOpciones.setOnItemClickListener(new OnItemClickListener(){
 
 			@Override
@@ -55,13 +60,61 @@ public class Inicio extends Activity {
 				//intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 				
 				switch(position){
-				case 0:
-					intent = new Intent(view.getContext(),AltaPersona.class);
-					break;
+					case 0:
+						intent = new Intent(view.getContext(),AltaPersona.class);
+						break;
+					
+					case 1:
+						intent  = new Intent(view.getContext(),BuscarPersona.class);
+						break;
+					
+					case 2:
+						AlertDialog.Builder builder = new AlertDialog.Builder(context);
+						
+						builder.setTitle("Confirmación");
+						builder.setMessage("¿Seguro desea eliminar todos los registros existentes?");
+						builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+							   public void onClick(DialogInterface dialog, int which) {
+								   	PersonasSQLiteHelper helper = new PersonasSQLiteHelper(getApplicationContext());
+									SQLiteDatabase db = helper.getWritableDatabase();
+									db.execSQL("delete from persona");
+									db.close();
+									
+									String ns = Context.NOTIFICATION_SERVICE;
+									NotificationManager notManager = (NotificationManager) getSystemService(ns);
+									
+									int icono = android.R.drawable.stat_sys_warning;
+									CharSequence textoEstado = "Alerta!";
+									long hora = System.currentTimeMillis();
+									Notification notif = new Notification(icono, textoEstado, hora);
+									
+									Context contexto = getApplicationContext();
+									CharSequence titulo = "Alerta de que se borro todo";
+									CharSequence descripcion = "Se la pelaron todas las personas";
+									 
+									Intent notIntent = new Intent(contexto,Inicio.class);
+									 
+									PendingIntent contIntent = PendingIntent.getActivity(contexto, 0, notIntent, 0);
+									 
+									notif.setLatestEventInfo(contexto, titulo, descripcion, contIntent);
+									
+									notManager.notify(1, notif);
+									dialog.cancel();
+							   }
+							});
+						builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+							   public void onClick(DialogInterface dialog, int which) {
+								   //dialog.cancel();
+							   }
+							});
+						
+						
+						builder.create().show();
+						break;
 				}
 				
-				
-				startActivity(intent);
+				if(intent!=null)
+					startActivity(intent);
 				
 			}
         	

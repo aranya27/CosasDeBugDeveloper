@@ -1,16 +1,15 @@
-package com.crud.altas;
+package com.crud.modificaciones;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import com.crud.R;
 import com.crud.bd.PersonasSQLiteHelper;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -19,29 +18,68 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
-public class AltaPersona extends Activity{
-	AltaPersona miActivity = this;
+public class ModificarPersona extends Activity {
+	ModificarPersona miActivity = this;
+	int idDeLaPersona;
+	
+	public void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+	    setContentView(R.layout.formapersona);
+	    Bundle extras = getIntent().getExtras();
+	    idDeLaPersona = extras.getInt("idDeLaPersona");
+	    llenarFormaConLosDatosDeLaPersona();
+		
+	    OnClickListener accion = new Accion();
+	    Button boton;
+		boton = (Button)findViewById(R.id.btnAceptarUsuario);
+		boton.setOnClickListener(accion);
+		boton = (Button)findViewById(R.id.btnCancelarUsuario);
+		boton.setOnClickListener(accion);
+	}
+
+	private void llenarFormaConLosDatosDeLaPersona() {
+		View v;
+		PersonasSQLiteHelper helper = new PersonasSQLiteHelper(getApplicationContext());
+		SQLiteDatabase db = helper.getReadableDatabase();
+		Cursor c;
+		String query = "select nombre,apaterno,amaterno,email,sexo,date(fechaNacimiento)  from persona where id = "+idDeLaPersona;
+		c = db.rawQuery(query,null);
+		c.moveToFirst();
+		
+		v = findViewById(R.id.txtNombre);
+		((EditText)v).setText(c.getString(0));
+		
+		v = findViewById(R.id.txtApaterno);
+		((EditText)v).setText(c.getString(1));
+		
+		v = findViewById(R.id.txtAmaterno);
+		((EditText)v).setText(c.getString(2));
+		
+		v = findViewById(R.id.txtEmail);
+		((EditText)v).setText(c.getString(3));
+		
+		
+		String sexo = c.getString(4);
+
+		if(sexo.equals("M"))
+			((RadioButton)findViewById(R.id.rbSexoMasculino)).setChecked(true);
+		else
+			((RadioButton)findViewById(R.id.rbSexoFemenino)).setChecked(true);
+		
+		String[] fecha = c.getString(5).split("-");
+		
+		DatePicker d = (DatePicker)findViewById(R.id.dateFechaNacimiento);
+		d.init(Integer.parseInt(fecha[0]),Integer.parseInt(fecha[1])-1,Integer.parseInt(fecha[2]), null);
+		c.close();
+	}
 	
 	
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.formapersona);
-        Button boton;
-        OnClickListener accion = new Accion();
-        
-        boton = (Button)findViewById(R.id.btnAceptarUsuario);
-        boton.setOnClickListener(accion);
-        boton = (Button)findViewById(R.id.btnCancelarUsuario);
-        boton.setOnClickListener(accion);
-        
-        
-    }
-    
-    class Accion implements OnClickListener{
+	
+	
+	
+	class Accion implements OnClickListener{
 
 		@Override
 		public void onClick(View v) {
@@ -98,7 +136,7 @@ public class AltaPersona extends Activity{
 				alertDialog.show();
 			}
 			else{
-				GuardarPersona(nombre,apaterno,amaterno,email,fechaNacimiento,sexo);
+				ActualizarPersona(nombre,apaterno,amaterno,email,fechaNacimiento,sexo);
 				Toast toast1 = Toast.makeText(getApplicationContext(),"Se ha agregado una nueva persona", Toast.LENGTH_LONG);
 				toast1.show();
 				miActivity.finish();
@@ -138,7 +176,7 @@ public class AltaPersona extends Activity{
 		}
     	
 		
-		private void GuardarPersona(String nombre, String apaterno,String amaterno, String email, Date fechaNacimiento, String sexo) {
+		private void ActualizarPersona(String nombre, String apaterno,String amaterno, String email, Date fechaNacimiento, String sexo) {
 			PersonasSQLiteHelper helper = new PersonasSQLiteHelper(getApplicationContext());
 			SQLiteDatabase db = helper.getWritableDatabase();
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
@@ -151,8 +189,8 @@ public class AltaPersona extends Activity{
 			valores.put("fechaNacimiento",format.format(fechaNacimiento));
 			valores.put("sexo",sexo);
 			
-			db.insert("persona", null, valores);
-			//db.execSQL("insert into.....");
+			//db.insert("persona", null, valores);
+			db.update("persona", valores, "id="+idDeLaPersona, null);
 			
 			db.close();
 		}
