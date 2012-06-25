@@ -116,12 +116,37 @@ public class BuscarPersona extends Activity{
         l.setOnItemClickListener(new OnItemClickListener(){
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
+				AlertDialog alertDialog = new AlertDialog.Builder(context).create();
 				
-				int idDeLaPersona = ((Opcion)parent.getItemAtPosition(position)).getId();
-				Intent intent = new Intent(context,ModificarPersona.class);
-				intent.putExtra("idDeLaPersona", idDeLaPersona);
-				startActivity(intent);
+				alertDialog.setTitle("Selección");
+				alertDialog.setMessage("¿Que desea hacer?");
+				
+				alertDialog.setButton("Editarlo", new DialogInterface.OnClickListener() {
+				      public void onClick(DialogInterface dialog, int which) {
+				    	  	int idDeLaPersona = ((Opcion)parent.getItemAtPosition(position)).getId();
+							Intent intent = new Intent(context,ModificarPersona.class);
+							intent.putExtra("idDeLaPersona", idDeLaPersona);
+							startActivity(intent);
+							context.finish();
+				    } });
+				
+				alertDialog.setButton2("Eliminarlo", new DialogInterface.OnClickListener() {
+				      public void onClick(DialogInterface dialog, int which) {
+				    	  int idDeLaPersona = ((Opcion)parent.getItemAtPosition(position)).getId();
+				    	  
+				    	  PersonasSQLiteHelper helper = new PersonasSQLiteHelper(getApplicationContext());
+				    	  SQLiteDatabase db = helper.getWritableDatabase();
+				    	  
+				    	  db.execSQL("delete from persona where id = "+idDeLaPersona);
+				    	  db.close();
+				    	  
+				    	  Toast toast1 = Toast.makeText(getApplicationContext(),"Se ha agregado una nueva persona", Toast.LENGTH_LONG);
+						  toast1.show();
+				    	  context.finish();
+				    } });
+				
+				alertDialog.show();
 			}
         	
         });
