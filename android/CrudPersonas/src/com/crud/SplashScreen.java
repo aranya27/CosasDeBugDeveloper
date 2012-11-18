@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 public class SplashScreen extends Activity {
     protected boolean _active = true;
-    protected int _splashTime = 500;
+    protected int _splashTime = 2000;
     
     /** Called when the activity is first created. */
     @Override

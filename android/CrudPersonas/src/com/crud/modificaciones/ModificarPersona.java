@@ -137,7 +137,7 @@ public class ModificarPersona extends Activity {
 			}
 			else{
 				ActualizarPersona(nombre,apaterno,amaterno,email,fechaNacimiento,sexo);
-				Toast toast1 = Toast.makeText(getApplicationContext(),"Se ha agregado una nueva persona", Toast.LENGTH_LONG);
+				Toast toast1 = Toast.makeText(getApplicationContext(),"Se ha modificado una persona", Toast.LENGTH_LONG);
 				toast1.show();
 				miActivity.finish();
 			}
