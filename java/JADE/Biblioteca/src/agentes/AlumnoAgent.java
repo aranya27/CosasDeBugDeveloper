@@ -21,9 +21,11 @@ import jade.lang.acl.MessageTemplate;
 import jade.util.leap.List;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Scanner;
 import ontologia.BibliotecaOntologia;
 import ontologia.BibliotecaVocabulario;
 import ontologia.ConsultarLibros;
+import ontologia.LibrosEncontrados;
 
 
 public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
@@ -39,7 +41,8 @@ public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
         getContentManager().registerLanguage(codec);
         getContentManager().registerOntology(ontology);
         
-        
+        // Set this agent main behaviour
+        addBehaviour(new EsperarOrdenUsuario(this));
     }
     
     int getOrdenDeUsuario() {
@@ -79,7 +82,7 @@ public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
                     doDelete();
                     System.exit(0);
                     break;
-                case CONSULTAR_LIBROS:
+                case CONSULTA_LIBROS:
                     consultarLibros();
                     break;
             }
@@ -130,8 +133,20 @@ public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
                     if (content instanceof Result) {
                         Result result = (Result) content;
                         
-                        if (result.getValue() instanceof List) {
-                            
+                        System.out.println("SE RECIBIO DEL SERVIDOR: "+result.getValue());
+                        
+                        
+                        if (result.getValue() instanceof LibrosEncontrados) {
+                            System.out.println("Es instancia de LibrosEncontrados");
+                            LibrosEncontrados le = (LibrosEncontrados)result.getValue();
+                            if(le.getLibros()!=null){
+                                System.out.println("Cantidad de libros encontrados: "+le.getLibros().size());
+                                for(int i=0;i<le.getLibros().size();i++){
+                                    System.out.println("Libro "+i+": "+le.getLibros().get(i));
+                                }
+                            }else{
+                                System.out.println("le.getLibros() es NULO");
+                            }
                         }
                     }
                     else {
@@ -144,11 +159,12 @@ public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
                     e.printStackTrace();
                 }
             }
+            finished = true;
         }
 
         @Override
         public boolean done() {
-            throw new UnsupportedOperationException("Not supported yet.");
+            return this.finished;
         }
         
     }
@@ -165,13 +181,17 @@ public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
         ConsultarLibros cl = new ConsultarLibros();
         System.out.print("Escribe los parámetros de búsqueda\n");
         try {
-            BufferedReader buf = new BufferedReader(new InputStreamReader(System.in));
+            Scanner reader = new Scanner(System.in);
             System.out.print("Autor:");
-            cl.setAutor(buf.readLine());
+            cl.setAutor(reader.next());
             System.out.print("Tema:");
-            cl.setAutor(buf.readLine());
+            cl.setTema(reader.next());
             System.out.print("Título:");
-            cl.setAutor(buf.readLine());
+            cl.setTitulo(reader.next());
+            /*
+            System.out.println("titulo! = "+cl.getTitulo());
+            System.out.println("autor! = "+cl.getAutor());
+            System.out.println("tema! = "+cl.getTema());*/
         }
         catch (Exception ex) { ex.printStackTrace(); }
         return cl;
