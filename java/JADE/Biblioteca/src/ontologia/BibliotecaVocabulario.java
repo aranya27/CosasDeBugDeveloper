@@ -13,5 +13,7 @@ public interface BibliotecaVocabulario {
     public static final String TEMA = "tema";
     public static final String AUTOR = "autor";
     
+    public static final String LIBROS = "libros";
+    
     public static final String CONSULTAR_LIBROS = "ConsultarLibros";
 }

@@ -19,7 +19,6 @@ import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
-import jade.util.leap.List;
 import java.util.ArrayList;
 import ontologia.BibliotecaOntologia;
 import ontologia.BibliotecaVocabulario;
@@ -42,14 +41,11 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
         temas.add(new Tema("PBA",20));
         temas.add(new Tema("PL",20));
         libros.add(new Libro(1,"Paradigmas de Programación","Pedro Herrera",temas));
-        libros.add(new Libro(2,"Paradigmas de Programación","Pedro Herrera",temas));
-        libros.add(new Libro(3,"Paradigmas de Programación","Pedro Herrera",temas));
         
         temas = new ArrayList<Tema>();
         temas.add(new Tema("POO",50));
         temas.add(new Tema("Java",50));
-        libros.add(new Libro(4,"Programación en Java","Pedro Herrera",temas));
-        libros.add(new Libro(5,"Programación en Java","Pedro Herrera",temas));
+        libros.add(new Libro(2,"Programación en Java","Pedro Herrera",temas));
     }
     
     protected void setup() {
@@ -194,75 +190,102 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
         }
     }
     
+    String libroAXML(Libro l){
+        StringBuilder sb = new StringBuilder("");
+        sb.append("<libro>");
+        
+        sb.append("<titulo>");
+        sb.append(l.getTitulo());
+        sb.append("</titulo>");
+        
+        sb.append("<autor>");
+        sb.append(l.getAutor());
+        sb.append("</autor>");
+        
+        sb.append("<temas>");
+        for(Tema t : l.getTemas()){
+            sb.append("<tema>");
+                sb.append("<nombre>");
+                sb.append(t.getTema());
+                sb.append("</nombre>");
+                
+                sb.append("<porcentaje>");
+                sb.append(t.getPorcentaje());
+                sb.append("</porcentaje>");
+            sb.append("</tema>");
+        }
+        sb.append("</temas>");
+        
+        sb.append("</libro>");
+        
+        return sb.toString();
+    }
+    
+    private boolean libroTieneTema(Libro l, String tema){
+        
+        for(Tema t:l.getTemas()){
+            if(t.getTema().equals(tema))
+                return true;
+        }
+        
+        return false;
+    }
+    
+    private boolean libroCumpleConLoQueSePide(Libro l, String titulo, String autor, String tema){
+        if(
+            (
+                autor==null || 
+                autor.equals(l.getAutor())
+            )
+            &&
+            (
+                titulo==null || 
+                titulo.equals(l.getTitulo())
+            )
+            &&
+            (
+                tema==null ||
+                libroTieneTema(l,tema)
+            )
+                
+        ){
+            return true;
+        }
+        
+        
+        return false;
+        
+    }
+    
     Object procesarConsultaLibros(ConsultarLibros mo) {
-        
+        StringBuilder sb = new StringBuilder("");
         LibrosEncontrados le = new LibrosEncontrados();
-        le.setLibros(new ArrayList<Libro>());
+        ArrayList<Libro> librosARetornar = new ArrayList<Libro>();
         
-        System.out.println("titulo = "+mo.getTitulo());
+        
+        /*System.out.println("titulo = "+mo.getTitulo());
         System.out.println("autor = "+mo.getAutor());
-        System.out.println("tema = "+mo.getTema());
+        System.out.println("tema = "+mo.getTema());*/
         
-        //buscar por titulo
-        if(mo.getTitulo()!=null){
-            for(Libro l : libros){
-                if(l.getTitulo().equals(mo.getTitulo())){
-                    le.getLibros().add(l);
-                }
+        sb.append("<catalogo>");
+        
+        for(Libro l : libros){
+            if(libroCumpleConLoQueSePide(l,mo.getTitulo(),mo.getAutor(),mo.getTema() )){
+                librosARetornar.add(l);
             }
         }
+
         
-        //buscar por autor
-        if(mo.getAutor()!=null){
-            for(Libro l : libros){
-                if(l.getAutor().equals(mo.getAutor()) && !le.getLibros().contains(l) ){
-                    le.getLibros().add(l);
-                }
-            }
+        for(Libro l : librosARetornar){
+            sb.append(libroAXML(l));
         }
+        sb.append("</catalogo>");
         
-        //buscar por tema
-        if(mo.getTema()!=null){
-            for(Libro l : libros){
-                for(Tema t : l.getTemas()){
-                    if(t.getTema().equals(mo.getTema()) && !le.getLibros().contains(l) ){
-                        le.getLibros().add(l);
-                    }
-                }
-            }
-        }
-        
-        System.out.println("Cantidad de libros encontrados: "+le.getLibros().size());
-        
-        
-        
+        le.setLibros(sb.toString());
+        System.out.println("Libros encontrados (server): "+le.getLibros());
         return le;
         
-        /*
-        Account acc = (Account)accounts.get(mo.getAccountId());
-        if (acc == null) return newProblem(ACCOUNT_NOT_FOUND);
-        if (mo.getAmount() <= 0) return newProblem(ILLEGAL_OPERATION);
-
-        if (mo.getType() != DEPOSIT && mo.getType() != WITHDRAWAL)
-            return null;
-        if (mo.getType() == DEPOSIT)
-            acc.setBalance(acc.getBalance() + mo.getAmount());
-        else if (mo.getType() == WITHDRAWAL) {
-            if (mo.getAmount() > acc.getBalance())
-            return newProblem(NOT_ENOUGH_MONEY);
-            acc.setBalance(acc.getBalance() - mo.getAmount());
-        }
-        Operation op = new Operation();
-        op.setType(mo.getType());
-        op.setAmount(mo.getAmount());
-        op.setAccountId(acc.getId());
-        op.setDate(new java.util.Date());
-        List l = (List)operations.get(acc.getId());
-        l.add(op);
-        operations.put(acc.getId(), l);
-        return acc;
-        * 
-        */
+        
    }
     
 }

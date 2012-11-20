@@ -5,21 +5,19 @@
 package ontologia;
 
 import jade.content.Concept;
-import java.util.ArrayList;
-import recursos.Libro;
 
 /**
  *
  * @author armando
  */
 public class LibrosEncontrados implements Concept {
-    private ArrayList<Libro> libros;
+    private String libros;
 
-    public ArrayList<Libro> getLibros() {
+    public String getLibros() {
         return libros;
     }
 
-    public void setLibros(ArrayList<Libro> libros) {
+    public void setLibros(String libros) {
         this.libros = libros;
     }
     

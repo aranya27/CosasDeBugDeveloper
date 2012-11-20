@@ -19,6 +19,11 @@ public class BibliotecaOntologia  extends Ontology implements BibliotecaVocabula
     public static BibliotecaOntologia getInstance(){
         return instance;
     }
+    /*
+        * conceptos (libro, !pedido, revista, cds, alumno) 
+        * acciones (pedir prestado un libro, regresarlo, apartarlo)
+        * predicado (debe libro)//Son meramente preguntas que se hacen entre agentes
+     */
     private BibliotecaOntologia(){
         super(ONTOLOGY_NAME, BasicOntology.getInstance());
         
@@ -28,30 +33,21 @@ public class BibliotecaOntologia  extends Ontology implements BibliotecaVocabula
             //add(new ConceptSchema("Libro"),Libro.class);
             
             
-            ConceptSchema cs = new ConceptSchema("ArrayList");
-            add(cs,ArrayList.class);
-            
-            
-            cs = new ConceptSchema("Libro");
-            add(cs, Libro.class);
-            cs.add("id", (PrimitiveSchema) getSchema(BasicOntology.INTEGER), ObjectSchema.MANDATORY);
-            cs.add("titulo", (PrimitiveSchema) getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
-            
-            
-            
+            ConceptSchema cs;
+              
             
             cs = new ConceptSchema(LIBROS_ENCONTRADOS);
             add(cs,LibrosEncontrados.class);
-            cs.add("LIBROS", (ConceptSchema) getSchema("ArrayList"), ObjectSchema.MANDATORY);
+            cs.add(LIBROS, (PrimitiveSchema) getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
             
             
             // ------- Add AgentActions
             // Consultar libros
             AgentActionSchema as;
             add(as = new AgentActionSchema(CONSULTAR_LIBROS), ConsultarLibros.class);
-            as.add(TITULO, (PrimitiveSchema) getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
-            as.add(TEMA, (PrimitiveSchema) getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
-            as.add(AUTOR, (PrimitiveSchema) getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
+            as.add(TITULO, (PrimitiveSchema) getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
+            as.add(TEMA, (PrimitiveSchema) getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
+            as.add(AUTOR, (PrimitiveSchema) getSchema(BasicOntology.STRING), ObjectSchema.OPTIONAL);
             
         }catch (OntologyException oe) {
          oe.printStackTrace();

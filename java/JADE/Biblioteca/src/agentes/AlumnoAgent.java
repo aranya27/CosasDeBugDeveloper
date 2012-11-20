@@ -97,6 +97,7 @@ public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
             addSubBehaviour(new ProcesarRespuestaServidor(myAgent));
                     
             addSubBehaviour(new WakerBehaviour(myAgent, 5000) {
+                
                 protected void handleElapsedTimeout() {
                     System.out.println("\n\tNo response from server. Please, try later!");
                     addBehaviour(new EsperarOrdenUsuario(myAgent));
@@ -113,7 +114,7 @@ public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
             super(a);
         }
       
-        @Override
+        
         public void action() {
             ACLMessage msg = receive(MessageTemplate.MatchSender(server));
             if (msg == null) { 
@@ -137,13 +138,11 @@ public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
                         
                         
                         if (result.getValue() instanceof LibrosEncontrados) {
-                            System.out.println("Es instancia de LibrosEncontrados");
                             LibrosEncontrados le = (LibrosEncontrados)result.getValue();
                             if(le.getLibros()!=null){
-                                System.out.println("Cantidad de libros encontrados: "+le.getLibros().size());
-                                for(int i=0;i<le.getLibros().size();i++){
-                                    System.out.println("Libro "+i+": "+le.getLibros().get(i));
-                                }
+                                
+                                System.out.println("LibrosXML: "+le.getLibros());
+                                
                             }else{
                                 System.out.println("le.getLibros() es NULO");
                             }
@@ -160,16 +159,42 @@ public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
                 }
             }
             finished = true;
+            
         }
 
-        @Override
+        
         public boolean done() {
-            return this.finished;
+            return finished;
         }
+        
+        
+        public int onEnd() {
+            System.out.println("YA TERMINO");
+            addBehaviour(new EsperarOrdenUsuario(myAgent));
+            return 0;
+      }
         
     }
     
     
+    
+    String getUserInput(String msg) {
+// ---------------------------------
+
+      System.out.print(msg);
+      try {
+         BufferedReader buf = new BufferedReader(new InputStreamReader(System.in));
+         String s = buf.readLine();
+         
+         if(s==null || s.trim().equals("")){
+             return null;
+         }
+         return s;
+         
+      }
+      catch (Exception ex) { ex.printStackTrace(); }
+      return null;
+   }
     
     void consultarLibros(){
         ConsultarLibros cl = getConsultaDeUsuario();
@@ -181,17 +206,9 @@ public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
         ConsultarLibros cl = new ConsultarLibros();
         System.out.print("Escribe los parámetros de búsqueda\n");
         try {
-            Scanner reader = new Scanner(System.in);
-            System.out.print("Autor:");
-            cl.setAutor(reader.next());
-            System.out.print("Tema:");
-            cl.setTema(reader.next());
-            System.out.print("Título:");
-            cl.setTitulo(reader.next());
-            /*
-            System.out.println("titulo! = "+cl.getTitulo());
-            System.out.println("autor! = "+cl.getAutor());
-            System.out.println("tema! = "+cl.getTema());*/
+            cl.setAutor(getUserInput("Autor:"));
+            cl.setTema(getUserInput("Tema:"));
+            cl.setTitulo(getUserInput("Título:"));
         }
         catch (Exception ex) { ex.printStackTrace(); }
         return cl;
