@@ -1,19 +1,21 @@
 package recursos;
 
+import jade.content.Concept;
+import jade.util.leap.ArrayList;
 import java.io.Serializable;
-import java.util.ArrayList;
 
-public class Libro implements Serializable{
+
+public class Libro  implements Concept{
     private int id;
     private String titulo,autor;
-    private ArrayList<Tema> temas;
+    private ArrayList temas;
     private boolean estaPrestado;
     
     public Libro(){
         
     }
 
-    public Libro(int id, String titulo, String autor, ArrayList<Tema> temas) {
+    public Libro(int id, String titulo, String autor, ArrayList temas) {
         this.id=id;
         this.titulo = titulo;
         this.autor = autor;
@@ -45,11 +47,11 @@ public class Libro implements Serializable{
         this.id = id;
     }
 
-    public ArrayList<Tema> getTemas() {
+    public ArrayList getTemas() {
         return temas;
     }
 
-    public void setTemas(ArrayList<Tema> temas) {
+    public void setTemas(ArrayList temas) {
         this.temas = temas;
     }
 
@@ -63,7 +65,7 @@ public class Libro implements Serializable{
 
     @Override
     public String toString() {
-        return getId()+"-"+getTitulo();
+        return getId()+"-"+getTitulo()+"-"+getTemas();
     }
     
     

@@ -7,8 +7,9 @@ import jade.content.schema.AgentActionSchema;
 import jade.content.schema.ConceptSchema;
 import jade.content.schema.ObjectSchema;
 import jade.content.schema.PrimitiveSchema;
-import java.util.ArrayList;
+import jade.util.leap.ArrayList;
 import recursos.Libro;
+import recursos.Tema;
 
 
 public class BibliotecaOntologia  extends Ontology implements BibliotecaVocabulario {
@@ -30,7 +31,6 @@ public class BibliotecaOntologia  extends Ontology implements BibliotecaVocabula
         try{
             
             // ------- Add Concepts
-            //add(new ConceptSchema("Libro"),Libro.class);
             
             
             ConceptSchema cs;
@@ -38,7 +38,20 @@ public class BibliotecaOntologia  extends Ontology implements BibliotecaVocabula
             
             cs = new ConceptSchema(LIBROS_ENCONTRADOS);
             add(cs,LibrosEncontrados.class);
-            cs.add(LIBROS, (PrimitiveSchema) getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
+            //cs.add(LIBROS, (PrimitiveSchema) getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
+            //cs.add(LIBROS, (ConceptSchema) getSchema("ArrayList"));
+            cs.add(LIBROS, (ConceptSchema) getSchema("Libro"), 1, ObjectSchema.UNLIMITED);
+            
+            cs = new ConceptSchema("Libro");
+            add(cs,Libro.class);
+            cs.add("id", (PrimitiveSchema) getSchema(BasicOntology.INTEGER), ObjectSchema.MANDATORY);
+            cs.add("titulo", (PrimitiveSchema) getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
+            cs.add("temas", (ConceptSchema) getSchema("Tema"), 1, ObjectSchema.UNLIMITED);
+            
+            cs = new ConceptSchema("Tema");
+            add(cs,Tema.class);
+            cs.add("nombretema", (PrimitiveSchema) getSchema(BasicOntology.STRING), ObjectSchema.MANDATORY);
+            cs.add("porcentaje", (PrimitiveSchema) getSchema(BasicOntology.INTEGER), ObjectSchema.MANDATORY);
             
             
             // ------- Add AgentActions

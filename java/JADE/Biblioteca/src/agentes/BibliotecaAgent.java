@@ -19,7 +19,7 @@ import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
-import java.util.ArrayList;
+import jade.util.leap.ArrayList;
 import ontologia.BibliotecaOntologia;
 import ontologia.BibliotecaVocabulario;
 import ontologia.ConsultarLibros;
@@ -31,10 +31,10 @@ import recursos.Tema;
 public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
     private Codec codec = new SLCodec();
     private Ontology ontology = BibliotecaOntologia.getInstance();
-    private ArrayList<Libro> libros = new ArrayList<Libro>();
+    private ArrayList libros = new ArrayList();
     
     private void crearLibros(){
-        ArrayList<Tema> temas = new ArrayList<Tema>();
+        ArrayList temas = new ArrayList();
         temas.add(new Tema("POO",20));
         temas.add(new Tema("POA",20));
         temas.add(new Tema("PE",20));
@@ -42,7 +42,7 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
         temas.add(new Tema("PL",20));
         libros.add(new Libro(1,"Paradigmas de Programación","Pedro Herrera",temas));
         
-        temas = new ArrayList<Tema>();
+        temas = new ArrayList();
         temas.add(new Tema("POO",50));
         temas.add(new Tema("Java",50));
         libros.add(new Libro(2,"Programación en Java","Pedro Herrera",temas));
@@ -189,7 +189,7 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
             }
         }
     }
-    
+    /*
     String libroAXML(Libro l){
         StringBuilder sb = new StringBuilder("");
         sb.append("<libro>");
@@ -220,16 +220,18 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
         
         return sb.toString();
     }
-    
-    private boolean libroTieneTema(Libro l, String tema){
+    */
+    /*private boolean libroTieneTema(Libro l, String tema){
         
         for(Tema t:l.getTemas()){
             if(t.getTema().equals(tema))
                 return true;
         }
         
+        
+        
         return false;
-    }
+    }*/
     
     private boolean libroCumpleConLoQueSePide(Libro l, String titulo, String autor, String tema){
         if(
@@ -245,7 +247,8 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
             &&
             (
                 tema==null ||
-                libroTieneTema(l,tema)
+                //libroTieneTema(l,tema)
+                true
             )
                 
         ){
@@ -260,7 +263,7 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
     Object procesarConsultaLibros(ConsultarLibros mo) {
         StringBuilder sb = new StringBuilder("");
         LibrosEncontrados le = new LibrosEncontrados();
-        ArrayList<Libro> librosARetornar = new ArrayList<Libro>();
+        jade.util.leap.ArrayList librosARetornar = new jade.util.leap.ArrayList();
         
         
         /*System.out.println("titulo = "+mo.getTitulo());
@@ -269,19 +272,23 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
         
         sb.append("<catalogo>");
         
-        for(Libro l : libros){
+        //for(Libro l : libros){
+        Libro l;
+        for(int i=0;i<libros.size(); i++){
+            l = (Libro)libros.get(i);
             if(libroCumpleConLoQueSePide(l,mo.getTitulo(),mo.getAutor(),mo.getTema() )){
                 librosARetornar.add(l);
             }
         }
 
-        
+        /*
         for(Libro l : librosARetornar){
             sb.append(libroAXML(l));
-        }
+        }*/
         sb.append("</catalogo>");
         
-        le.setLibros(sb.toString());
+        //le.setLibros(sb.toString());
+        le.setLibros(librosARetornar);
         System.out.println("Libros encontrados (server): "+le.getLibros());
         return le;
         

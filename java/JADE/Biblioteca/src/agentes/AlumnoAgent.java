@@ -26,6 +26,7 @@ import ontologia.BibliotecaOntologia;
 import ontologia.BibliotecaVocabulario;
 import ontologia.ConsultarLibros;
 import ontologia.LibrosEncontrados;
+import recursos.Tema;
 
 
 public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
