@@ -9,7 +9,7 @@ public class Libro  implements Concept{
     private int id;
     private String titulo,autor;
     private ArrayList temas;
-    private boolean estaPrestado;
+    private boolean isPrestado;
     
     public Libro(){
         
@@ -20,7 +20,7 @@ public class Libro  implements Concept{
         this.titulo = titulo;
         this.autor = autor;
         this.temas = temas;
-        this.estaPrestado = false;
+        this.isPrestado = false;
     }
 
     public String getAutor() {
@@ -31,12 +31,12 @@ public class Libro  implements Concept{
         this.autor = autor;
     }
 
-    public boolean isEstaPrestado() {
-        return estaPrestado;
+    public boolean isPrestado() {
+        return isPrestado;
     }
 
-    public void setEstaPrestado(boolean estaPrestado) {
-        this.estaPrestado = estaPrestado;
+    public void setPrestado(boolean isPrestado) {
+        this.isPrestado = isPrestado;
     }
 
     public int getId() {

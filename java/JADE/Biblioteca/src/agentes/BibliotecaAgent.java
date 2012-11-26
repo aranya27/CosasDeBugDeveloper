@@ -20,10 +20,7 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.util.leap.ArrayList;
-import ontologia.BibliotecaOntologia;
-import ontologia.BibliotecaVocabulario;
-import ontologia.ConsultarLibros;
-import ontologia.LibrosEncontrados;
+import ontologia.*;
 import recursos.Libro;
 import recursos.Tema;
 
@@ -126,7 +123,10 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
 
       public void action() {
           ACLMessage msg = receive();
-         if (msg == null) { block(); return; }
+         if (msg == null) { 
+             System.out.println("(Servidor) MENSAJE ES NULL");
+             block(); 
+             return; }
          try {
             ContentElement content = getContentManager().extractContent(msg);
             Concept action = ((Action)content).getAction();
@@ -139,22 +139,19 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
 
                   if (action instanceof ConsultarLibros)
                      addBehaviour(new HandleConsultarLibros(myAgent, msg));
+                  else if(action instanceof PedirPrestado)
+                      addBehaviour(new HandlePrestarLibro(myAgent, msg));
+                  else if(action instanceof Devolver)
+                      addBehaviour(new HandleDevolverLibro(myAgent, msg));
                   else replyNotUnderstood(msg);
                   break;
 
-               /*case (ACLMessage.QUERY_REF):
-
-                  System.out.println("Query from " + msg.getSender().getLocalName());
-
-                  if (action instanceof Information)
-                     addBehaviour(new HandleInformation(myAgent, msg));
-                  else replyNotUnderstood(msg);
-                  break;
-*/
                default: replyNotUnderstood(msg);
             }
          }
-         catch(Exception ex) { ex.printStackTrace(); }
+         catch(Exception ex) { 
+             ex.printStackTrace(); 
+         }
       }
    }
 
@@ -163,7 +160,6 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
     
     class HandleConsultarLibros extends OneShotBehaviour{
         ACLMessage request;
-        
         
         public HandleConsultarLibros(Agent a, ACLMessage request) {
             super(a);
@@ -182,56 +178,93 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
                 Result result = new Result((Action)content, obj);
                 getContentManager().fillContent(reply, result);
                 send(reply);
-                System.out.println("Operation processed.");
+                System.out.println("Operation processed. (Consultar Libros)");
                 
             }catch(Exception e){
                 e.printStackTrace();
             }
         }
     }
-    /*
-    String libroAXML(Libro l){
-        StringBuilder sb = new StringBuilder("");
-        sb.append("<libro>");
+    
+    class HandleDevolverLibro extends OneShotBehaviour{
+        ACLMessage request;
         
-        sb.append("<titulo>");
-        sb.append(l.getTitulo());
-        sb.append("</titulo>");
+        public HandleDevolverLibro(Agent a, ACLMessage request) {
+            super(a);
+            this.request = request;
+        }
         
-        sb.append("<autor>");
-        sb.append(l.getAutor());
-        sb.append("</autor>");
-        
-        sb.append("<temas>");
-        for(Tema t : l.getTemas()){
-            sb.append("<tema>");
-                sb.append("<nombre>");
-                sb.append(t.getTema());
-                sb.append("</nombre>");
+        @Override
+        public void action() {
+            try{
+                ContentElement content = getContentManager().extractContent(request);
+                Devolver d = (Devolver)((Action)content).getAction();
+                ACLMessage reply = new ACLMessage();
                 
-                sb.append("<porcentaje>");
-                sb.append(t.getPorcentaje());
-                sb.append("</porcentaje>");
-            sb.append("</tema>");
+                reply.setLanguage(codec.getName());
+                reply.setOntology(ontology.getName());
+                reply.setSender(getAID());
+                reply.addReceiver(request.getSender());
+                
+                InformarDevolucion id = procesarDevolverLibro(d);
+                
+                if(id.getStatus()==DEVOLUCION_EXITOSA)
+                    reply.setPerformative(ACLMessage.INFORM);
+                else
+                    reply.setPerformative(ACLMessage.FAILURE);
+                
+                getContentManager().fillContent(reply, id);
+                send(reply);
+                System.out.println("Operation processed. (Devolucion exitosa)");
+            }catch(Exception e){
+                e.printStackTrace();
+            }
         }
-        sb.append("</temas>");
-        
-        sb.append("</libro>");
-        
-        return sb.toString();
     }
-    */
-    /*private boolean libroTieneTema(Libro l, String tema){
+    
+    class HandlePrestarLibro extends OneShotBehaviour{
+        ACLMessage request;
         
-        for(Tema t:l.getTemas()){
-            if(t.getTema().equals(tema))
-                return true;
+        public HandlePrestarLibro(Agent a, ACLMessage request) {
+            super(a);
+            this.request = request;
         }
         
+        @Override
+        public void action() {
+            try{
+                ContentElement content = getContentManager().extractContent(request);
+                PedirPrestado pp = (PedirPrestado)((Action)content).getAction();
+                ACLMessage reply = request.createReply();
+                
+                Object obj = procesarPrestarLibro(pp);
+                
+                if(obj instanceof Problema)
+                    reply.setPerformative(ACLMessage.FAILURE);
+                else
+                    reply.setPerformative(ACLMessage.INFORM);
+                Result result = new Result((Action)content, obj);
+                getContentManager().fillContent(reply, result);
+                send(reply);
+                System.out.println("Operation processed. (Prestar Libro)");
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
         
+    }
+    
+    private boolean libroTieneTema(Libro l, String tema){
+        ArrayList temas = l.getTemas();
+        
+        for(int i=0; i<temas.size(); i++){
+            if( ((Tema)temas.get(i)).getNombretema().equals(tema) ){
+                return true;
+            }
+        }
         
         return false;
-    }*/
+    }
     
     private boolean libroCumpleConLoQueSePide(Libro l, String titulo, String autor, String tema){
         if(
@@ -247,8 +280,7 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
             &&
             (
                 tema==null ||
-                //libroTieneTema(l,tema)
-                true
+                libroTieneTema(l,tema)
             )
                 
         ){
@@ -260,19 +292,72 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
         
     }
     
+    InformarDevolucion procesarDevolverLibro(Devolver d){
+        Libro libroQueSeQuiereDevolver = d.getLibro();
+        Libro laux;
+        InformarDevolucion id = new InformarDevolucion();
+        boolean devolucionExitosa = false;
+        
+        for(int i=0; i<libros.size(); i++){
+            laux = (Libro)libros.get(i);
+            if(laux.getId()==libroQueSeQuiereDevolver.getId()){
+                laux.setPrestado(false);
+                System.out.println("Se devuelve el libro "+laux);
+                devolucionExitosa = true;
+                break;
+            }
+        }
+        
+        if(devolucionExitosa){
+            id.setStatus(DEVOLUCION_EXITOSA);
+        }else{
+            id.setStatus(LIBRO_NO_EXISTE);
+        }
+        
+        return id;
+    }
+    
+    Object procesarPrestarLibro(PedirPrestado pp){
+        Libro libroQueQuiereElAlumno = pp.getLibro();
+        Libro laux;
+        Libro libroAPrestar = null;
+        Object retorno = null;
+        
+        for(int i=0; i<libros.size(); i++){
+            laux = (Libro)libros.get(i);
+            if(laux.getId()==libroQueQuiereElAlumno.getId()){
+                libroAPrestar = laux;
+            }
+        }
+        
+        
+        if(libroAPrestar==null){//Si no se encontro el libro que se quiere prestar
+            Problema p = new Problema();
+            p.setNum(LIBRO_NO_EXISTE);
+            p.setMsg("El libro con id = "+libroQueQuiereElAlumno.getId()+" no existe en el catálogo");
+            retorno = p;
+        }else if(libroAPrestar.isPrestado()){//Si sí encontramos el libro, pero ya esta prestado
+            Problema p = new Problema();
+            p.setNum(LIBRO_YA_PRESTADO);
+            p.setMsg("El libro con id = "+libroQueQuiereElAlumno.getId()+" ya se encuentra prestado");
+            retorno = p;
+        }else{//Todo bien
+            Prestamo p = new Prestamo();
+            p.setTiempo(TIEMPO_PRESTAMO);
+            p.setLibro(libroAPrestar);
+            libroAPrestar.setPrestado(true);
+            retorno = p;
+        }
+        
+        
+        return retorno;
+    }
+    
     Object procesarConsultaLibros(ConsultarLibros mo) {
-        StringBuilder sb = new StringBuilder("");
         LibrosEncontrados le = new LibrosEncontrados();
         jade.util.leap.ArrayList librosARetornar = new jade.util.leap.ArrayList();
         
-        
-        /*System.out.println("titulo = "+mo.getTitulo());
-        System.out.println("autor = "+mo.getAutor());
-        System.out.println("tema = "+mo.getTema());*/
-        
-        sb.append("<catalogo>");
-        
-        //for(Libro l : libros){
+
         Libro l;
         for(int i=0;i<libros.size(); i++){
             l = (Libro)libros.get(i);
@@ -281,13 +366,6 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
             }
         }
 
-        /*
-        for(Libro l : librosARetornar){
-            sb.append(libroAXML(l));
-        }*/
-        sb.append("</catalogo>");
-        
-        //le.setLibros(sb.toString());
         le.setLibros(librosARetornar);
         System.out.println("Libros encontrados (server): "+le.getLibros());
         return le;
