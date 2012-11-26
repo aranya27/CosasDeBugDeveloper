@@ -2,7 +2,6 @@ package recursos;
 
 import jade.content.Concept;
 import jade.util.leap.ArrayList;
-import java.io.Serializable;
 
 
 public class Libro  implements Concept{

@@ -8,7 +8,8 @@ public interface BibliotecaVocabulario {
     public static final int DEVOLUCION_EXITOSA = 4;
     public static final int LIBRO_NO_EXISTE = 5;
     public static final int LIBRO_YA_PRESTADO = 6;
-    public static final int TIEMPO_PRESTAMO = 10;
+    public static final int TIEMPO_PRESTAMO = 2000;
+    public static final int TIEMPO_ESPERA = 1000;
     public static final String SERVER_AGENT = "Server agent";
     
     //-------> Ontology vocabulary

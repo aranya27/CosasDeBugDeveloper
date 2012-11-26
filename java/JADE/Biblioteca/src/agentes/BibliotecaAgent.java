@@ -20,6 +20,8 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.util.leap.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import ontologia.*;
 import recursos.Libro;
 import recursos.Tema;
@@ -29,6 +31,7 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
     private Codec codec = new SLCodec();
     private Ontology ontology = BibliotecaOntologia.getInstance();
     private ArrayList libros = new ArrayList();
+    SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss:SS");
     
     private void crearLibros(){
         ArrayList temas = new ArrayList();
@@ -48,11 +51,11 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
     protected void setup() {
       crearLibros();
 
-      // Register language and ontology
+      // Registramos lenguaje y ontologia
       getContentManager().registerLanguage(codec);
       getContentManager().registerOntology(ontology);
 
-      // Set this agent main behaviour
+      // Establecemos los Behaviours
       SequentialBehaviour sb = new SequentialBehaviour();
       sb.addSubBehaviour(new RegisterInDF(this));
       sb.addSubBehaviour(new ReceiveMessages(this));
@@ -63,88 +66,76 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
     
     
     class RegisterInDF extends OneShotBehaviour {
-// ---------------------------------------------  Register in the DF for the client agent
-//                                                be able to retrieve its AID
-      RegisterInDF(Agent a) {
-         super(a);
-      }
+        RegisterInDF(Agent a) {
+            super(a);
+        }
 
-      public void action() {
-
-         ServiceDescription sd = new ServiceDescription();
-         sd.setType(SERVER_AGENT);
-         sd.setName(getName());
-         sd.setOwnership("Prof6802");
-         DFAgentDescription dfd = new DFAgentDescription();
-         dfd.setName(getAID());
-         dfd.addServices(sd);
-         try {
-            DFAgentDescription[] dfds = DFService.search(myAgent, dfd);
+        public void action() {
+            ServiceDescription sd = new ServiceDescription();
+            sd.setType(SERVER_AGENT);
+            sd.setName(getName());
+            sd.setOwnership("Prof6802");
+            DFAgentDescription dfd = new DFAgentDescription();
+            dfd.setName(getAID());
+            dfd.addServices(sd);
+            try {
+                DFAgentDescription[] dfds = DFService.search(myAgent, dfd);
             if (dfds.length > 0 ) {
-               DFService.deregister(myAgent, dfd);
+                DFService.deregister(myAgent, dfd);
             }
             DFService.register(myAgent, dfd);
-            System.out.println(getLocalName() + " is ready.");
-         }
-         catch (Exception ex) {
-            System.out.println("Failed registering with DF! Shutting down...");
-            ex.printStackTrace();
-            doDelete();
-         }
+            mensajito(getLocalName() + " is ready.");
+            }
+            catch (Exception ex) {
+                mensajito("Failed registering with DF! Shutting down...");
+                ex.printStackTrace();
+                doDelete();
+            }
         }
-      
-      
-      
     }
     
     void replyNotUnderstood(ACLMessage msg) {
-        // -----------------------------------------
-
-            try {
-                ContentElement content = getContentManager().extractContent(msg);
-                ACLMessage reply = msg.createReply();
-                reply.setPerformative(ACLMessage.NOT_UNDERSTOOD);
-                getContentManager().fillContent(reply, content);
-                send(reply);
-                System.out.println("Not understood!");
-            }
-            catch(Exception ex) { ex.printStackTrace(); }
+        try {
+            ContentElement content = getContentManager().extractContent(msg);
+            ACLMessage reply = msg.createReply();
+            reply.setPerformative(ACLMessage.NOT_UNDERSTOOD);
+            getContentManager().fillContent(reply, content);
+            send(reply);
+            mensajito("Se recibió una petición que no se entendió. La mando  " + msg.getSender().getLocalName());
         }
+        catch(Exception ex) { 
+            ex.printStackTrace(); 
+        }
+    }
     
     
     class ReceiveMessages extends CyclicBehaviour {
-// -----------------------------------------------  Receive requests and queries from client
-//                                                  agent and launch appropriate handlers
-
       public ReceiveMessages(Agent a) {
-
          super(a);
       }
 
       public void action() {
           ACLMessage msg = receive();
          if (msg == null) { 
-             System.out.println("(Servidor) MENSAJE ES NULL");
              block(); 
-             return; }
+             return; 
+         }
          try {
             ContentElement content = getContentManager().extractContent(msg);
             Concept action = ((Action)content).getAction();
-
             switch (msg.getPerformative()) {
-
-               case (ACLMessage.REQUEST):
-
-                  System.out.println("Request from " + msg.getSender().getLocalName());
-
-                  if (action instanceof ConsultarLibros)
-                     addBehaviour(new HandleConsultarLibros(myAgent, msg));
-                  else if(action instanceof PedirPrestado)
-                      addBehaviour(new HandlePrestarLibro(myAgent, msg));
-                  else if(action instanceof Devolver)
-                      addBehaviour(new HandleDevolverLibro(myAgent, msg));
-                  else replyNotUnderstood(msg);
-                  break;
+                case (ACLMessage.REQUEST):
+                    if (action instanceof ConsultarLibros){
+                        mensajito("El agente " + msg.getSender().getLocalName()+" nos hizo una consulta para saber que libros hay");
+                        addBehaviour(new HandleConsultarLibros(myAgent, msg));
+                    }else if(action instanceof PedirPrestado){
+                        mensajito("El agente " + msg.getSender().getLocalName()+" nos pide prestado un libro");
+                        addBehaviour(new HandlePrestarLibro(myAgent, msg));
+                    }else if(action instanceof Devolver){
+                        mensajito("El agente " + msg.getSender().getLocalName()+" nos quere devolver un libro");
+                        addBehaviour(new HandleDevolverLibro(myAgent, msg));
+                    }else replyNotUnderstood(msg);
+                    break;
 
                default: replyNotUnderstood(msg);
             }
@@ -172,13 +163,13 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
                 ContentElement content = getContentManager().extractContent(request);
                 ConsultarLibros cl = (ConsultarLibros)((Action)content).getAction();
                 ACLMessage reply = request.createReply();
-                Object obj = procesarConsultaLibros(cl);
+                LibrosEncontrados obj = procesarConsultaLibros(cl);
                 
                 reply.setPerformative(ACLMessage.INFORM);
                 Result result = new Result((Action)content, obj);
                 getContentManager().fillContent(reply, result);
                 send(reply);
-                System.out.println("Operation processed. (Consultar Libros)");
+                mensajito("Se encontraron "+obj.getLibros().size()+" libros");
                 
             }catch(Exception e){
                 e.printStackTrace();
@@ -215,7 +206,6 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
                 
                 getContentManager().fillContent(reply, id);
                 send(reply);
-                System.out.println("Operation processed. (Devolucion exitosa)");
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -236,17 +226,15 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
                 ContentElement content = getContentManager().extractContent(request);
                 PedirPrestado pp = (PedirPrestado)((Action)content).getAction();
                 ACLMessage reply = request.createReply();
-                
                 Object obj = procesarPrestarLibro(pp);
-                
-                if(obj instanceof Problema)
+                if(obj instanceof Problema){
                     reply.setPerformative(ACLMessage.FAILURE);
-                else
+                }else{
                     reply.setPerformative(ACLMessage.INFORM);
+                }
                 Result result = new Result((Action)content, obj);
                 getContentManager().fillContent(reply, result);
                 send(reply);
-                System.out.println("Operation processed. (Prestar Libro)");
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -287,7 +275,6 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
             return true;
         }
         
-        
         return false;
         
     }
@@ -302,7 +289,7 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
             laux = (Libro)libros.get(i);
             if(laux.getId()==libroQueSeQuiereDevolver.getId()){
                 laux.setPrestado(false);
-                System.out.println("Se devuelve el libro "+laux);
+                mensajito("Se devuelve el libro "+laux.getTitulo());
                 devolucionExitosa = true;
                 break;
             }
@@ -317,7 +304,7 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
         return id;
     }
     
-    Object procesarPrestarLibro(PedirPrestado pp){
+    synchronized Object procesarPrestarLibro(PedirPrestado pp){
         Libro libroQueQuiereElAlumno = pp.getLibro();
         Libro laux;
         Libro libroAPrestar = null;
@@ -334,12 +321,12 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
         if(libroAPrestar==null){//Si no se encontro el libro que se quiere prestar
             Problema p = new Problema();
             p.setNum(LIBRO_NO_EXISTE);
-            p.setMsg("El libro con id = "+libroQueQuiereElAlumno.getId()+" no existe en el catálogo");
+            p.setMsg("El libro "+libroQueQuiereElAlumno.getTitulo()+" ("+libroQueQuiereElAlumno.getId()+") no existe en el catálogo");
             retorno = p;
         }else if(libroAPrestar.isPrestado()){//Si sí encontramos el libro, pero ya esta prestado
             Problema p = new Problema();
             p.setNum(LIBRO_YA_PRESTADO);
-            p.setMsg("El libro con id = "+libroQueQuiereElAlumno.getId()+" ya se encuentra prestado");
+            p.setMsg("El libro "+libroQueQuiereElAlumno.getTitulo()+" ("+libroQueQuiereElAlumno.getId()+") ya se encuentra prestado");
             retorno = p;
         }else{//Todo bien
             Prestamo p = new Prestamo();
@@ -347,13 +334,14 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
             p.setLibro(libroAPrestar);
             libroAPrestar.setPrestado(true);
             retorno = p;
+            mensajito("Se presta el libro "+p.getLibro().getTitulo());
         }
         
         
         return retorno;
     }
     
-    Object procesarConsultaLibros(ConsultarLibros mo) {
+    LibrosEncontrados procesarConsultaLibros(ConsultarLibros mo) {
         LibrosEncontrados le = new LibrosEncontrados();
         jade.util.leap.ArrayList librosARetornar = new jade.util.leap.ArrayList();
         
@@ -367,10 +355,13 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
         }
 
         le.setLibros(librosARetornar);
-        System.out.println("Libros encontrados (server): "+le.getLibros());
         return le;
         
         
    }
+    
+    public void mensajito(String msg){
+        System.out.println(this.getLocalName()+" "+fmt.format(new Date())+": "+msg);
+    }
     
 }

@@ -21,11 +21,14 @@ import jade.lang.acl.MessageTemplate;
 import jade.util.leap.ArrayList;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import ontologia.*;
 import recursos.Libro;
+import recursos.Tema;
 
 
-public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
+public class AlumnoAutAgent extends Agent implements BibliotecaVocabulario{
     private Codec codec = new SLCodec();
     private Ontology ontology = BibliotecaOntologia.getInstance();
     private AID server;
@@ -34,14 +37,18 @@ public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
     static final int ESPERAR = -1;
     static final int QUITAR = 0;
     private int comando = ESPERAR;
+    private String parametro,tipoParametro;
+    SimpleDateFormat fmt = new SimpleDateFormat("HH:mm:ss:SS");
     
     protected void setup(){
+        iniciarParametros();
+        
         //Registramos lenguaje y ontologia
         getContentManager().registerLanguage(codec);
         getContentManager().registerOntology(ontology);
         
         // Set this agent main behaviour
-        addBehaviour(new EsperarOrdenUsuario(this));
+        addBehaviour(new AlumnoAutAgent.PedirCatalogo(this));
     }
     
     int getOrdenDeUsuario() {
@@ -59,49 +66,74 @@ public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
       return ESPERAR;
     }
 
-    
-    class EsperarOrdenUsuario extends OneShotBehaviour {
+    private void iniciarParametros() {
+        Object[] args = getArguments();
         
-        EsperarOrdenUsuario(Agent a){
+        this.tipoParametro = args[0].toString();
+        this.parametro = args[1].toString();
+    }
+    
+    
+    class PedirCatalogo extends OneShotBehaviour{
+        PedirCatalogo(Agent a){
             super(a);
             comando = ESPERAR;
         }
-        
+
         @Override
         public void action() {
-            comando = getOrdenDeUsuario();
-            
-            switch(comando){
-                case QUITAR:
-                    mensajito(getLocalName() + " Se esta apagando...Bye!");
-                    doDelete();
-                    System.exit(0);
-                    break;
-                case CONSULTA_LIBROS:
-                    consultarLibros();
-                    break;
-                case PEDIR_PRESTADO_LIBRO:
-                    pedirPrestadoLibro();
-                    break;
-                case REGRESAR_LIBRO:
-                    regresarLibroPrestado();
-                    break;
-            }
-        }   
+            consultarLibros();  
+        }
     }
+    
+    
+    class PedirLibro extends OneShotBehaviour{
+        PedirLibro(Agent a){
+            super(a);
+            comando = ESPERAR;
+        }
+
+        @Override
+        public void action() {
+            pedirPrestadoLibro();
+        }
+        
+    }
+    
+    class EsperarYPedirCatalogo extends WakerBehaviour{
+        EsperarYPedirCatalogo(Agent a, long tiempo){
+            super(a,tiempo);
+        }
+        
+        protected void handleElapsedTimeout() {
+            addBehaviour(new AlumnoAutAgent.PedirCatalogo(myAgent));
+        }
+    }
+    
+    
+    class EsperarYDevolverLibro extends WakerBehaviour{
+        EsperarYDevolverLibro(Agent a, long tiempo){
+            super(a,tiempo);
+        }
+        
+        protected void handleElapsedTimeout() {
+            regresarLibroPrestado();
+        }
+    }
+    
     
     
     class EsperarRespuestaServidor extends ParallelBehaviour {
         EsperarRespuestaServidor(Agent a){
             super(a, 1);
             
-            addSubBehaviour(new ProcesarRespuestaServidor(myAgent));
+            addSubBehaviour(new AlumnoAutAgent.ProcesarRespuestaServidor(myAgent));
                     
             addSubBehaviour(new WakerBehaviour(myAgent, 5000) {
                 
                 protected void handleElapsedTimeout() {
                     mensajito("Np hay respuesta del servidor. Ya pasó mucho tiempo");
-                    addBehaviour(new EsperarOrdenUsuario(myAgent));
+                    //addBehaviour(new AlumnoAutAgent.EsperarOrdenUsuario(myAgent));
                 }
             });
         }
@@ -132,10 +164,17 @@ public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
                          if (result.getValue() instanceof Problema) {
                              Problema p = (Problema)result.getValue();
                              mensajito("Error devuelto por el bibliotecario: "+p.getMsg());
-                             addBehaviour(new EsperarOrdenUsuario(myAgent));
+                             
+                             if(p.getNum()==LIBRO_NO_EXISTE || p.getNum()==LIBRO_YA_PRESTADO){
+                                 addBehaviour(new AlumnoAutAgent.PedirLibro(myAgent));
+                                 
+                             }else{
+                                mensajito("ERROR. Se llego a una condicion no esperada. No se puede interpretar el problema");
+                             }
                          }
                          else {
-                            mensajito("No se puede interpretar la respuesta del servidor1.");
+                            mensajito("ERROR. Se llego a una condicion no esperada. No se puede interpretar la respuesta del servidor1.");
+                            addBehaviour(new AlumnoAutAgent.PedirCatalogo(myAgent));
                         }
                     }else{
                         mensajito("No se puede interpretar la respuesta del servidor..");
@@ -157,14 +196,20 @@ public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
                             if(le.getLibros()!=null){
                                 libros = le.getLibros();
                                 mensajito("Se encontraron los siguientes libros:\n "+libros);
+                                addBehaviour(new AlumnoAutAgent.PedirLibro(myAgent));
                             }else{
                                 mensajito("No se encontraron libros con los criterios seleccionados");
+                                addBehaviour(new AlumnoAutAgent.EsperarYPedirCatalogo(myAgent,TIEMPO_ESPERA));
                             }
                         }else if (result.getValue() instanceof Prestamo) {
                             Prestamo le = (Prestamo)result.getValue();
                             libro = le.getLibro();
                             mensajito("Se nos prestó el libro "+libro.getTitulo());
+                            addBehaviour(new AlumnoAutAgent.EsperarYDevolverLibro(myAgent,le.getTiempo()));
+                            
+                            
                         }else {
+                            //===Aqui tal vez tengamos que hacer algo
                             mensajito("No se puede interpretar la respuesta del servidor");
                         }
                     }else if (content instanceof InformarDevolucion) {
@@ -172,6 +217,7 @@ public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
                         if(id.getStatus()==DEVOLUCION_EXITOSA){
                             libro=null;
                             mensajito("Devolucion exitosa del libro");
+                            addBehaviour(new AlumnoAutAgent.EsperarYPedirCatalogo(myAgent,TIEMPO_ESPERA));
                         }
                         else{
                             mensajito("Hubo un error al devolver libro");
@@ -193,36 +239,21 @@ public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
         public boolean done() {
             return finished;
         }
-        
+        /*
         public int onEnd() {
-            addBehaviour(new EsperarOrdenUsuario(myAgent));
+            addBehaviour(new AlumnoAutAgent.EsperarOrdenUsuario(myAgent));
             return 0;
       }
-        
+        */
     }
     
     
     
-    String getUserInput(String msg) {
-      System.out.print(msg);
-      try {
-         BufferedReader buf = new BufferedReader(new InputStreamReader(System.in));
-         String s = buf.readLine();
-         
-         if(s==null || s.trim().equals("")){
-             return null;
-         }
-         return s;
-         
-      }
-      catch (Exception ex) { ex.printStackTrace(); }
-      return null;
-   }
     
     void regresarLibroPrestado(){
         if(libro==null){
             mensajito("No hay libros para regresar");
-            addBehaviour(new EsperarOrdenUsuario(this));
+            addBehaviour(new AlumnoAutAgent.EsperarYPedirCatalogo(this,TIEMPO_ESPERA));
         }
         else{
             devolver(libro);
@@ -232,33 +263,105 @@ public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
     void pedirPrestadoLibro(){
         if(libro!=null){
             mensajito("Ya tienes un libro prestado, primero debes devolverlo antes de pedir otro prestado");
-            addBehaviour(new EsperarOrdenUsuario(this));
+            //addBehaviour(new AlumnoAutAgent.EsperarOrdenUsuario(this));
+            //=============HAcer algo aqui
         }
         else if(libros==null || libros.size()==0){
-            System.out.println("Primero debes preguntar el catálogo de libros a la biblioteca");
-            addBehaviour(new EsperarOrdenUsuario(this));
+            mensajito("Ya no hay libros para pedir prestado. Tenemos que esperar y luego consultar el catalogo con la biblioteca");
+            addBehaviour(new AlumnoAutAgent.EsperarYPedirCatalogo(this,TIEMPO_ESPERA));
         }else{
-            System.out.println("Lista de libros:\n");
-            for(int i=0; i<libros.size(); i++){
-                System.out.println((i+1)+". "+libros.get(i));
+            Libro libroAPedirPrestado = new Libro();
+            
+            if(this.tipoParametro.equals("tema")){
+                libroAPedirPrestado = getMejorLibroSegunTema(this.parametro);
+            }
+            else if(this.tipoParametro.equals("titulo")){
+                libroAPedirPrestado = getLibroSegunTitulo(this.parametro);
+            }
+            else if(this.tipoParametro.equals("autor")){
+                libroAPedirPrestado = getLibroSegunAutor(this.parametro);
             }
             
-            String m=getUserInput("Selecciona el libro que quieres pedir prestado: ");
+            //Quitamos del catalogo interno que tenemos el libro que vamos a pedir prestado
+            quitarLibro(libroAPedirPrestado);
             
-            try{
-                pedirPrestadoLibro((Libro)libros.get(Integer.parseInt(m)-1));
-            }catch(Exception e){
-                mensajito("Opción incorrecta");
-                addBehaviour(new EsperarOrdenUsuario(this));
-            }
+            //Hacemos el pedido del prestamo
+            PedirPrestado pp = new PedirPrestado();
+            pp.setLibro(libroAPedirPrestado);
+            enviarMensaje(ACLMessage.REQUEST, pp);
             
         }
     }
     
-    void devolver(Libro l){
-        Devolver d = new Devolver();
-        d.setLibro(libro);
-        enviarMensaje(ACLMessage.REQUEST, d);
+    Libro getLibroSegunAutor(String autor){
+        Libro l=null;
+        Libro auxLibro;
+        
+        for(int i=0; i<libros.size(); i++){
+            auxLibro = (Libro)libros.get(i);
+            if(auxLibro.getAutor().equals(autor)){
+                l = auxLibro;
+                break;
+            }
+        }
+        
+        if(l==null){
+            l = (Libro)libros.get(0);
+        }
+        
+        return l;
+    }
+    
+    Libro getLibroSegunTitulo(String titulo){
+        Libro l=null;
+        Libro auxLibro;
+        
+        for(int i=0; i<libros.size(); i++){
+            auxLibro = (Libro)libros.get(i);
+            if(auxLibro.getTitulo().equals(titulo)){
+                l = auxLibro;
+                break;
+            }
+        }
+        
+        if(l==null){
+            l = (Libro)libros.get(0);
+        }
+        
+        return l;
+    }
+    
+    Libro getMejorLibroSegunTema(String tema){
+        Libro l=null;
+        Libro auxLibro;
+        int porcentajeTemaMejorActual=-1;
+        int auxInt;
+        
+        for(int i=0; i<libros.size(); i++){
+            auxLibro = (Libro)libros.get(i);
+            auxInt = getPorcentajeTemaLibro(auxLibro,tema);
+            if(auxInt > porcentajeTemaMejorActual){
+                l = auxLibro;
+                porcentajeTemaMejorActual = auxInt;
+            }
+        }
+        
+        return l;
+    }
+    
+    int getPorcentajeTemaLibro(Libro l, String tema){
+        int porcentaje = 0;
+        Tema auxTema;
+        ArrayList temas = l.getTemas();
+        
+        for(int i=0; i<temas.size(); i++){
+            auxTema = (Tema)temas.get(i);
+            if(auxTema.getNombretema().equals(tema)){
+                porcentaje = auxTema.getPorcentaje();
+                break;
+            }
+        }
+        return porcentaje;
     }
     
     void pedirPrestadoLibro(Libro l){
@@ -267,23 +370,47 @@ public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
         enviarMensaje(ACLMessage.REQUEST, pp);
     }
     
-    void consultarLibros(){
-        ConsultarLibros cl = getConsultaDeUsuario();
-        
-         enviarMensaje(ACLMessage.REQUEST, cl);
+    void devolver(Libro l){
+        Devolver d = new Devolver();
+        d.setLibro(libro);
+        enviarMensaje(ACLMessage.REQUEST, d);
     }
     
-    private ConsultarLibros getConsultaDeUsuario() {
-        ConsultarLibros cl = new ConsultarLibros();
-        System.out.print("Escribe los parámetros de búsqueda\n");
-        try {
-            cl.setAutor(getUserInput("Autor:"));
-            cl.setTema(getUserInput("Tema:"));
-            cl.setTitulo(getUserInput("Título:"));
+    void quitarLibro(Libro l){
+        Libro auxLibro;
+        ArrayList nuevosLibros = new ArrayList();
+        
+        for(int i=0; i<libros.size(); i++){
+            auxLibro = (Libro)libros.get(i);
+            if( auxLibro.getId()!=l.getId() ){
+                nuevosLibros.add(auxLibro);
+            }
         }
-        catch (Exception ex) { ex.printStackTrace(); }
+        
+        this.libros = nuevosLibros;
+    }
+    
+    void consultarLibros(){
+        ConsultarLibros cl = getConsultaDeCatalogo();
+        
+        enviarMensaje(ACLMessage.REQUEST, cl);
+    }
+    
+    private ConsultarLibros getConsultaDeCatalogo() {
+        ConsultarLibros cl = new ConsultarLibros();
+        
+        if(this.tipoParametro.equals("tema")){
+            cl.setTema(this.parametro);
+        }else if(this.tipoParametro.equals("titulo")){
+            cl.setTitulo(this.parametro);
+        }else if(this.tipoParametro.equals("autor")){
+            cl.setAutor(this.parametro);
+        }
+        
         return cl;
     }
+    
+  
     
     private void enviarMensaje(int performative,  AgentAction action) {
         
@@ -298,7 +425,7 @@ public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
       try {
          getContentManager().fillContent(msg, new Action(server, action));
          msg.addReceiver(server);
-         addBehaviour(new EsperarRespuestaServidor(this));
+         addBehaviour(new AlumnoAutAgent.EsperarRespuestaServidor(this));
          send(msg);
          mensajito("Contactando la biblioteca.......!");
       }
@@ -306,27 +433,34 @@ public class AlumnoAgent extends Agent implements BibliotecaVocabulario{
     }
     
     void lookupServer() {
-      ServiceDescription sd = new ServiceDescription();
-      sd.setType(SERVER_AGENT);
-      DFAgentDescription dfd = new DFAgentDescription();
-      dfd.addServices(sd);
-      try {
-         DFAgentDescription[] dfds = DFService.search(this, dfd);
-         if (dfds.length > 0 ) {
+        
+        try{
+            Thread.sleep(500);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        ServiceDescription sd = new ServiceDescription();
+        sd.setType(SERVER_AGENT);
+        DFAgentDescription dfd = new DFAgentDescription();
+        dfd.addServices(sd);
+        try {
+            DFAgentDescription[] dfds = DFService.search(this, dfd);
+            if (dfds.length > 0 ) {
             server = dfds[0].getName();
-         }
-         else  
-             mensajito("No se pudo localizar la biblioteca");
-      }
-      catch (Exception ex) {
-         ex.printStackTrace();
-         mensajito("Failed searching int the DF!");
-      }
-   }
+            }
+            else  
+                mensajito("No se pudo localizar la biblioteca");
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            mensajito("Failed searching int the DF!");
+        }
+    }
     
     
     public void mensajito(String msg){
-        System.out.println("\n"+this.getLocalName()+": "+msg);
+        System.out.println(this.getLocalName()+" "+fmt.format(new Date())+": "+msg);
     }
     
 }
