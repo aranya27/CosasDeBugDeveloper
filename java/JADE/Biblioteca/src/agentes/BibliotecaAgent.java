@@ -45,7 +45,7 @@ public class BibliotecaAgent extends Agent implements BibliotecaVocabulario{
         temas = new ArrayList();
         temas.add(new Tema("POO",50));
         temas.add(new Tema("Java",50));
-        libros.add(new Libro(2,"Programación en Java","Pedro Herrera",temas));
+        libros.add(new Libro(2,"Programación en Java","Hugo",temas));
     }
     
     protected void setup() {
