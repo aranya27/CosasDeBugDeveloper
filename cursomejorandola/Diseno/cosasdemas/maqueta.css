@@ -1,0 +1,97 @@
+
+/*Se pone eso del body porque en IE solo jalaria asi*/
+body {
+    text-align: center;
+}
+#header {
+    background: url(bg.png) top left no-repeat;
+    width: 400px;
+    height: 100px;
+    margin: 0px;
+    padding: 0px;
+}
+#header h1 {
+ margin: 0px;
+}
+
+#header a span {
+ visibility: hidden;
+}
+#header a {
+    width: 400px;
+    height: 100px;
+    display: block;
+    padding: 0px;
+    margin: 0px;
+    text-decoration: none;
+}
+
+
+
+#container {
+    width: 700px;
+    margin: 0px auto;
+    text-align: left;
+}
+
+#sidebar {
+    width: 200px;
+    padding: 10px;
+    float: left;
+}
+ul {
+    padding-left: 10px;
+    margin-left: 10px;
+    list-style-type: none;
+}
+ul li {
+    padding-left: 12px;
+    background: url(bullet.png) 0em 0.5em no-repeat;
+    margin-bottom: 1em;
+}
+#menu ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 200px;
+    font-family: Arial, sans-serif;
+    font-size: 11pt;
+}
+#menu ul li {
+    background-color: #666;
+}
+#menu ul li a {
+    color: #ccc;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: block;
+    padding: 10px 10px 10px 20px;
+}
+#menu ul li a:hover {
+    background: #000;
+    border-left: 10px solid #333;
+    color: #fff;
+}
+
+
+
+
+
+
+
+#main {
+    margin-left: 225px;
+}
+
+#footer {
+    clear: both;
+}
+
+
+div {
+
+	border-width: 5px;
+	border-style: solid;
+	border-color: gray;
+
+}
