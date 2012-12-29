@@ -18,6 +18,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Base de datos: `hibernate`
 --
+create database hibernate;
+use hibernate;
 
 -- --------------------------------------------------------
 
@@ -32,12 +34,4 @@ CREATE TABLE IF NOT EXISTS `EVENTS` (
   PRIMARY KEY (`EVENT_ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
---
--- Volcar la base de datos para la tabla `EVENTS`
---
 
-INSERT INTO `EVENTS` (`EVENT_ID`, `EVENT_DATE`, `title`) VALUES
-(1, '2012-12-15', 'Fiesta'),
-(2, '2012-12-15', 'Fiesta'),
-(3, '2012-12-24', 'Fiesta'),
-(4, '2012-12-24', 'Fiesta');
