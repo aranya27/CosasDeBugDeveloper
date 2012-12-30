@@ -2,6 +2,12 @@
 Correr en consola lo siguiente:
 npm install
 Es es para instalar todo lo que hay en el archivo package.json
+
+Para modificar cosas sin reiniciar el servidor es con supervisor, investigar. Y cuando es en produccion es forever
+npm install -g <libreria>
+
+
+Tambien hay una libreria llamada faye en donde se puede dividir o categorizar los sockets en grupos y asi mandar algo solo a ciertos sockets
 */
 
 var express = require("express");
