@@ -1,3 +1,8 @@
+# encoding: utf-8
+
+SALIDA = 4
+PERSONASAGREGADAS = []
+
 class Persona
 
 	attr_accessor :nombre,:edad,:fechaNac
@@ -8,6 +13,8 @@ class Persona
 		@fechaNac = fechaNac
 	end
 
+	def initialize
+	end
 end
 
 class Musico < Persona
@@ -18,6 +25,9 @@ class Musico < Persona
 		@edad = edad
 		@fechaNac = fechaNac
 		@instrumentos = instrumentos
+	end
+
+	def initialize
 	end
 end
 
@@ -30,6 +40,9 @@ class Programador < Persona
 		@fechaNac = fechaNac
 		@lenguajes = lenguajes
 	end
+
+	def initialize
+	end
 end
 
 
@@ -37,6 +50,7 @@ end
 
 def printMenuPrincipal
 	puts "Seleccione una opción"
+
 	puts "1. Agregar persona"
 	puts "2. Consultar persona"
 	puts "3. Ver listado completo de personas"
@@ -63,10 +77,72 @@ def menuPrincipal
 end
 
 def capturarNuevaPersona
-	puts "Aaaaaaaaaaaaaa"
+	p = nil
+	menuYaMostrado = false
+	opc = 0
+
+	until (1..2) === opc do
+		if menuYaMostrado == true
+			puts "La opción #{opc} no es reconocida, vuelva a intentarlo"
+			puts
+		end
+		menuYaMostrado = true
+
+		puts "¿Que desea capturar?"
+		puts "1. Un músico"
+		puts "2. Un programador"
+
+		opc = gets.chomp.to_i
+	end
+
+	if opc == 1
+		capturarNuevoMusico
+	else
+		capturarNuevoProgramador
+	end
 end
 
-SALIDA = 4
+
+
+def capturarNuevoMusico
+	p = Musico.new
+	puts "Dame el nombre:"
+	p.nombre = gets.chomp
+	puts "Dame la edad en años:"
+	p.edad = gets.chomp
+	puts "Dame la fecha de nacimiento:"
+	p.fechaNac = gets.chomp
+	puts "Dame los instrumentos que toca:"
+	p.instrumentos = gets.chomp
+
+	PERSONASAGREGADAS[PERSONASAGREGADAS.length] = p
+end
+
+def capturarNuevoProgramador
+	p = Programador.new
+	puts "Dame el nombre:"
+	p.nombre = gets.chomp
+	puts "Dame la edad en años:"
+	p.edad = gets.chomp
+	puts "Dame la fecha de nacimiento:"
+	p.fechaNac = gets.chomp
+	puts "Dame los lenguajes de programacion que conoce:"
+	p.lenguajes = gets.chomp
+
+	PERSONASAGREGADAS[PERSONASAGREGADAS.length] = p
+end
+
+def imprimirListadoPersonas
+	i = 1
+	for p in PERSONASAGREGADAS
+		if p.instance_of? Programador
+			puts "#{i} nombre=#{p.nombre}. edad=#{p.edad}. Fecha de nacimiento=#{p.fechaNac}. Lenguajes que sabe=#{p.lenguajes}"
+		elsif p.instance_of? Musico
+			puts "#{i} nombre=#{p.nombre}. edad=#{p.edad}. Fecha de nacimiento=#{p.fechaNac}. Instrumentos que toca=#{p.instrumentos}"
+		end
+		
+	end
+end
 
 if __FILE__ == $0
 	# Creamos un array con los instrumentos musicales disponibles
@@ -76,8 +152,7 @@ if __FILE__ == $0
 	# Creamos un array de los lenguajes de programacion disponibles
 	lenguajes = ['Java','Ruby','Python','C','C++','Objective-C','PHP','Cobol','Javascript']
 	lenguajes = lenguajes.sort # ordenamos el array
-
-
+	
 	print "Empezando"
 	STDOUT.sync = true
 	60.times {
@@ -96,6 +171,8 @@ if __FILE__ == $0
 		case opc
 			when 1
 				capturarNuevaPersona
+			when 3
+				imprimirListadoPersonas
 			when 4
 				salir = true
 			else
