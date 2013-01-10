@@ -1,0 +1,112 @@
+<html>
+<head>
+	<style>
+		#divx
+		{
+			border: 5px solid black;
+			text-align: center;
+			
+			
+		}
+		
+		#miTabla tr
+		{
+			color:red;
+		
+		}
+		
+	</style>
+	
+	<script src="jquery.js"></script>
+	<script type="text/javascript">
+		//$(document).ready(alert("sss"));
+		$(document).on("ready",inicio);
+		
+		
+		function inicio(){
+			$("#texto").keypress(cambiarTexto);
+			$("#miTabla").attr("border","1");
+			$("#addCol").on("click",agregarColumna);
+			$("#addLine").on("click",agregarLinea);
+		}
+		
+		function cambiarTexto(event){
+			if(event.which==13){//Es enter
+				$("#divx").text( $("#texto").val() );
+			}
+		}
+		
+		
+		function agregarColumna(){
+			//alert( $("#miTabla").find("tbody tr").length );
+			
+			$("#miTabla tbody tr").each(function( index, domElem ){
+				$(this).append("<td>"+index+"."+ $("#miTabla").find("tbody tr:first td").length +"</td>");
+				
+			});
+			
+		}
+		
+		function agregarLinea(){
+			var tr = $("<tr></tr>");
+			var linea = $("#miTabla").find("tbody tr").length;
+			$("#miTabla tbody tr:first td").each( function( index, domElem ) {
+				tr.append("<td>"+linea+"."+index);
+			});
+			
+			
+			
+			
+			$("#miTabla tbody").append(tr);
+		}
+	</script>
+</head>
+
+<body>
+	<div id="container">
+		Introduce un texto, dale enter y este se pondra en el div x
+		<input type="text" id="texto" size="50"  />
+		<br />
+		<br />
+		<div id="divx">
+			soy el div x
+		</div>
+		
+		<br />
+		Jugando con tablitas
+		<br />
+		<input type="button" value="agregar columna" id="addCol">
+		<input type="button" value="agregar linea" id="addLine">
+		<br />
+		<input type="button" value="quitar columna" id="rmCol">
+		<input type="button" value="quitar linea" id="rmLine">
+		<table id="miTabla">
+			<thead>
+				<tr>
+					<td>
+						Header
+					</td>
+					<td>
+						Header
+					</td>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr>
+					<td>0.0</td>
+					<td>0.1</td>
+				</tr>
+				<tr>
+					<td>1.0</td>
+					<td>1.1</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		
+	</div>
+	
+	
+</body>
+</html>
