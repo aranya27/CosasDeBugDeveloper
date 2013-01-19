@@ -12,9 +12,9 @@ public class Main {
         array.add(2);
         array.add(3);
         array.add(14);
-        array.add(9);
         
-        Ordenador o = new Seleccion();
+        
+        Ordenador o = new QuickSort();
         System.out.println("====ARRAY ORIGINAL====");
         o.imprime(array);
         System.out.println("====COMIENZO DE ORDENACION====");
