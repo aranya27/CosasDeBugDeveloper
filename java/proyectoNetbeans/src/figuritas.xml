@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" 
+"http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+    
+    <!-- Podemos usar autowire="byName" en caso de que el nombre del bean haga match con la propiedad
+    <bean id="triangle" class="com.spring.ejemplodefiguras.Triangle" name="triangle-name" autowire="byName">
+    -->
+    <bean id="triangle" class="com.spring.ejemplodefiguras.Triangle" name="triangle-name" scope="prototype">    
+        <!-- 1 -->
+        <!--<constructor-arg value="Equilateral" />-->
+        <!--<constructor-arg type="java.lang.String" value="20" /> -->
+        <!--<constructor-arg index="0" value="20" />-->
+        <!--
+        <property name="type" value="Equilateral" />
+        -->
+        
+        <!-- 2 -->
+        <!--
+        <property name="pointA" ref="zeroPoint" />
+        <property name="pointB" >
+            <bean class="com.spring.ejemplodefiguras.Point">
+                <property name="x" value="-20" />
+                <property name="y" value="0" />
+            </bean>
+        </property>
+        <property name="pointC">
+            <bean class="com.spring.ejemplodefiguras.Point">
+                <property name="x" value="20" />
+                <property name="y" value="0" />
+            </bean>
+        </property>
+        -->
+        
+        <property name="points">
+            <list>
+                <ref bean="zeroPoint" />
+                <ref bean="point2" />
+                <ref bean="point3" />
+            </list>
+        </property>
+    </bean>
+    
+    
+    
+    
+    
+    
+    
+    <bean id="zeroPoint" class="com.spring.ejemplodefiguras.Point">
+        <property name="x" value="0" />
+        <property name="y" value="0" />
+    </bean>
+    
+    <bean id="point2" class="com.spring.ejemplodefiguras.Point">
+        <property name="x" value="-20" />
+        <property name="y" value="0" />
+    </bean>
+    
+    <bean id="point3" class="com.spring.ejemplodefiguras.Point">
+        <property name="x" value="20" />
+        <property name="y" value="0" />
+    </bean>
+    
+    <alias name="triangle" alias="triangle-alias" />
+    
+</beans>
