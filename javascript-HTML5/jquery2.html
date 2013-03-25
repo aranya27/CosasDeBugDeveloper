@@ -1,0 +1,32 @@
+<html>
+<head>
+<!-- http://www.tutorialspoint.com/jquery/jquery-quick-guide.htm -->	
+	<script src="jquery.js"></script>
+	<script type="text/javascript">
+		$(document).on("ready",inicio);
+		
+
+		function inicio(){
+			$("ul li:first").html("xxxx");
+			$("ul").on("click", function (){alert('a');});
+			$("#miSelect").val("2");
+			alert($("body").html());
+		}
+	</script>
+</head>
+
+<body>
+	<ul>
+		<li>aaa</li>
+		<li>bbb</li>
+
+	</ul>
+	<select id="miSelect" multiple >
+		<option value="1">Uno</option>
+		<option value="2">Dos</option>
+		<option value="3">Tres</option>
+	</select>
+	
+
+</body>
+</html>
