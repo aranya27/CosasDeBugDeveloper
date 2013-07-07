@@ -12,6 +12,10 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        Valor de la variable msg establecida en scoping.jsp: 
+        <%
+            String msg = (String)application.getAttribute("msg");
+            out.println(msg);
+        %>
     </body>
 </html>

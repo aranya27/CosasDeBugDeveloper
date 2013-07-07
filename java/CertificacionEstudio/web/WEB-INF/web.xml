@@ -15,4 +15,10 @@
             <scripting-invalid>true</scripting-invalid>
         </jsp-property-group>
     </jsp-config>
+    
+    <context-param>
+        <param-name>parametroContexto</param-name>
+        <param-value>abcde</param-value>
+    </context-param>
+    
 </web-app>
