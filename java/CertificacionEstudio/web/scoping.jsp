@@ -1,3 +1,5 @@
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -65,10 +67,11 @@
         <br />
         <br />
         
-        <h1>Imprimiendo de varias maneras el parametro 'parametroContexto' que es un un parametro de inicializacion de contexto</h1>
+        <h2>Imprimiendo de varias maneras el parametro 'parametroContexto' que es un un parametro de inicializacion de contexto</h2>
         ${initParam.parametroContexto}
         <br />
         ${initParam['parametroContexto']}
-            
+        <br />
+        
     </body>
 </html>
