@@ -4,6 +4,7 @@
     Author     : armando
 --%>
 
+<%@page import="java.util.Enumeration"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -43,6 +44,8 @@
         
         ${hobbies.get(paramValues.hobbyEnum[0])} _ No es EL code snippet
         <br />
+        ${hobbies.put("hola","mundo")}
+        ${hobbies.get("hola")}
         
         <h2>Pregunta 6</h2>
         <% 
@@ -52,5 +55,27 @@
         ${5 + 3 lt 6} 
         ${requestScope['foo'][0] ne 10 div 0}
         ${10 div 0}
+        
+        <br />
+        <h2>Pregunta 8</h2>
+        Valor: 
+        <%=
+            request.getIntHeader("X-Retries")
+        %>
+        <br />
+        <%
+            Enumeration n = request.getHeaderNames();
+            while(n.hasMoreElements()){
+                String s = (String)n.nextElement();
+                out.print(s+" = "+request.getHeader(s)+"<br />");
+            }
+        %>
+        
+        <br />
+        <h2>Pregunta 9</h2>
+        Agregamos una cookie
+        <%
+            response.addCookie(new Cookie("username","joe"));
+        %>
     </body>
 </html>

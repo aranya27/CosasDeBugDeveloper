@@ -9,7 +9,7 @@
     <function>
         <name>randomColor</name> <!-- Will be used to call your El Function:   ${myTagLibrary:randomColor()} inside your JSP page -->
         <function-class>com.tld.RandomNumber</function-class>
-        <function-signature>void pickRandomColor()</function-signature>
+        <function-signature>void pickRandomColor(java.util.Date)</function-signature>
     </function>
   
   

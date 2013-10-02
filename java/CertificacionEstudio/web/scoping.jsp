@@ -11,9 +11,10 @@
         <%
             String msg = "Hola mundo";
             application.setAttribute("msg", msg);
-            
+            out.println("lo mismo:"+(pageContext.getRequest() == request));
+            request.setAttribute("variable", 123);
         %>
-        
+        ${requestScope.variable}
         
         
         <h1>Scoping en JSP</h1>

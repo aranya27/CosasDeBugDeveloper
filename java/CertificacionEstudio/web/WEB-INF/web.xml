@@ -18,7 +18,7 @@
     
     <context-param>
         <param-name>parametroContexto</param-name>
-        <param-value>abcde</param-value>
+        <param-value>MiParametroContexto</param-value>
     </context-param>
     
 </web-app>
