@@ -16,6 +16,10 @@
         </jsp-property-group>
     </jsp-config>
     
+    <listener>
+        <listener-class>com.servletDinamico.AgregaServletDinamico</listener-class>
+    </listener>
+    
     <context-param>
         <param-name>parametroContexto</param-name>
         <param-value>MiParametroContexto</param-value>
