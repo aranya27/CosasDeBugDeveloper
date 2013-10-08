@@ -21,6 +21,8 @@
             request.setAttribute("index", "2");
         %>
         ${vals['2']}
+        <br />
+        ${4 + '50' }
         
         <br />
         <h2>Pregunta 5</h2>
@@ -55,6 +57,7 @@
         ${5 + 3 lt 6} 
         ${requestScope['foo'][0] ne 10 div 0}
         ${10 div 0}
+        
         
         <br />
         <h2>Pregunta 8</h2>
