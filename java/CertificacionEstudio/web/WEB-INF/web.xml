@@ -22,7 +22,7 @@
         </user-data-constraint>
     </security-constraint>
     <welcome-file-list>
-        <welcome-file>beansEnJSP.jsp</welcome-file>
+        <welcome-file>jstl.jsp</welcome-file>
     </welcome-file-list>
     <session-config>
         <session-timeout>
