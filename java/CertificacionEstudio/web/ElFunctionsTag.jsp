@@ -27,5 +27,13 @@
         
         ${pageScope.x}
         
+        
+        <br />
+        <br />
+        <h1>Listita</h1>
+        <%
+            String cadena = "Java,Python,C#";
+        %>
+        <myFn:creaLista cadena="<%=cadena %>" delimitador="," >Colado</myFn:creaLista>
     </body>
 </html>

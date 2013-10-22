@@ -3,16 +3,24 @@
   <tlib-version>1.0</tlib-version>
   <short-name>mytaglibrary</short-name>
   <uri>/WEB-INF/tlds/myTagLibrary</uri>
-  
-  
-    <!-- Define a Custom EL Function -->
-    <function>
-        <name>randomColor</name> <!-- Will be used to call your El Function:   ${myTagLibrary:randomColor()} inside your JSP page -->
-        <function-class>com.tld.RandomNumber</function-class>
-        <function-signature>void pickRandomColor(java.util.Date)</function-signature>
-    </function>
-  
-  
+    
+    <tag>
+        <name>creaLista</name>
+        <tag-class>com.tld.MiTag</tag-class>
+        <body-content>tagdependent</body-content> <!--scriptless, empty, tagdependent --> <!-- http://www.coderanch.com/t/172331/java-Web-Component-SCWCD/certification/body-content-values -->
+        <attribute>
+            <name>cadena</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>String</type>
+        </attribute>
+        <attribute>
+            <name>delimitador</name>
+            <type>String</type>
+        </attribute>    
+    </tag>
+    
+    
     <tag>
         <name>formatin</name>
         <tag-class>com.tld.FormateaFecha</tag-class>
@@ -26,4 +34,19 @@
         </attribute>
         
     </tag>
+    
+    
+    
+    
+    
+    
+    
+      
+  
+    <!-- Define a Custom EL Function -->
+    <function>
+        <name>randomColor</name> <!-- Will be used to call your El Function:   ${myTagLibrary:randomColor()} inside your JSP page -->
+        <function-class>com.tld.RandomNumber</function-class>
+        <function-signature>void pickRandomColor(java.util.Date)</function-signature>
+    </function>
 </taglib>
