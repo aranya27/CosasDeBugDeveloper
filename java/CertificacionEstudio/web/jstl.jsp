@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -47,9 +48,27 @@
         dataString de page = ${dataString} <br />
         
         <ul>
-        <c:forTokens items="hola,mundo" delims="," var="lenguage"  >
-            <ol>${lenguaje}</ol>
+        <c:forTokens items="hola,mundo" varStatus="status" delims="," var="lenguage"  >
+            <ol>${status.count}. ${lenguaje}</ol>
         </c:forTokens>
         </ul>
+        <br />
+        <br />
+        <%
+            ArrayList<String> arr = new ArrayList<String>();
+            
+            arr.add("Violin");
+            arr.add("Guitarron");
+            arr.add("Vihuela");
+            request.setAttribute("arrayInstrumentos", arr);
+        %>
+        <ul>
+        <c:forEach  items="${arrayInstrumentos}" var="instr" varStatus="status" >
+            <ol>${status.count}. ${instr}</ol>
+        </c:forEach>
+        </ul>
+        
+        <c:forEach var="i" begin="0" end="10" step="2" >${i} - </c:forEach>
+        
     </body>
 </html>
