@@ -3,6 +3,10 @@
     <servlet>
         <servlet-name>servlet2</servlet-name>
         <servlet-class>com.seguridad.servlet2</servlet-class>
+        <init-param>
+            <param-name>miParametro1</param-name>
+            <param-value>Pedrito</param-value>
+        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>servlet2</servlet-name>
@@ -13,12 +17,18 @@
             <web-resource-name>MiWebResource1</web-resource-name>
             <description/>
             <url-pattern>/servlet2</url-pattern>
-            <http-method>POST</http-method>
+            <http-method>GET</http-method>
         </web-resource-collection>
-        <auth-constraint />
+        <!--<auth-constraint />-->
+        <!--
+        <auth-constraint>
+            <role-name>armandito</role-name>
+            <role-name>pedrito</role-name>
+        </auth-constraint>
+        -->
         <user-data-constraint>
             <description/>
-            <transport-guarantee>INTEGRAL</transport-guarantee>
+            <transport-guarantee>NONE</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
     <welcome-file-list>

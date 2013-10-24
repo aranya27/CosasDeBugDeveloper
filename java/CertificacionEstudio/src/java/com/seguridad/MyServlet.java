@@ -42,6 +42,8 @@ public class MyServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet MyServlet at " + request.getContextPath() + "</h1>");
+            out.println("Mi parametro init = "+this.getInitParameter("miParametro1"));
+            out.println("<br />Mi parametro de contexto 'parametroContexto' es = "+this.getServletContext().getInitParameter("parametroContexto"));
             out.println("</body>");
             out.println("</html>");
         } finally {            

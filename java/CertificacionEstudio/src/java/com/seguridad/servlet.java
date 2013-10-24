@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 )
 
 //@ServletSecurity(value=@HttpConstraint(rolesAllowed = {"TutorialUser", "guest"}))
-/*
+
 @ServletSecurity(
         httpMethodConstraints={ 
             @HttpMethodConstraint("GET"), 
@@ -35,13 +35,16 @@ import javax.servlet.http.HttpServletResponse;
             @HttpMethodConstraint(value="TRACE", emptyRoleSemantic=ServletSecurity.EmptyRoleSemantic.DENY) 
         }
 )
-*/
 
+
+
+/*
 @DeclareRoles("aaaax")
 @ServletSecurity(value = @HttpConstraint(value=EmptyRoleSemantic.PERMIT, rolesAllowed={"aaaa"}, transportGuarantee=TransportGuarantee.NONE),
         httpMethodConstraints = {@HttpMethodConstraint(value = "GET", emptyRoleSemantic = EmptyRoleSemantic.PERMIT)})
-
+*/
 public class servlet extends HttpServlet {
+    
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
