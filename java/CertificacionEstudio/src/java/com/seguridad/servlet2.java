@@ -40,6 +40,7 @@ public class servlet2 extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet servlet2 at " + request.getContextPath() + "</h1>");
+            out.println("Mi parametro init = "+this.getInitParameter("miParametro1"));
             out.println("</body>");
             out.println("</html>");
         } finally {            
