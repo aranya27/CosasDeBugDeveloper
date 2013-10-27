@@ -70,5 +70,18 @@
         
         <c:forEach var="i" begin="0" end="10" step="2" >${i} - </c:forEach>
         
+        <br />
+        <br />
+        
+        <c:url value="/"></c:url>
+        <br />
+        <c:url value="www.google.com"></c:url>
+        <br />
+        ${empty 0}<br />
+        ${empty null}<br />
+        
+        <%
+            //response.sendRedirect("http://www.google.com");
+        %>
     </body>
 </html>
