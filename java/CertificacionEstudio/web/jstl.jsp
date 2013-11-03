@@ -102,5 +102,7 @@
         <c:import varReader="miVar" url="http://www.google.com" />
         ${miVar.close()}
         
+        
+        <c:out value="<h1>asdadas</h1>" escapeXml="true" />
     </body>
 </html>
