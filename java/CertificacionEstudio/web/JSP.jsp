@@ -18,5 +18,14 @@
         <br />
         
         ${24 / 6 * 4}
+        
+        <br />
+        
+        
+        <jsp:include page="EL.jsp">
+            <jsp:param name="parametro" value="pedrito" />
+        </jsp:include>
+        
+        
     </body>
 </html>

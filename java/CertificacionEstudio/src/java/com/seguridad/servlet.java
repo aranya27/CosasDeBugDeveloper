@@ -30,8 +30,9 @@ import javax.servlet.http.HttpServletResponse;
 
 @ServletSecurity(
         httpMethodConstraints={ 
-            @HttpMethodConstraint("GET"), 
-            @HttpMethodConstraint(value="POST", rolesAllowed={"javaee"}), 
+            //@HttpMethodConstraint(value="GET", transportGuarantee=TransportGuarantee.CONFIDENTIAL), 
+            @HttpMethodConstraint("GET"),
+            @HttpMethodConstraint(value="POST", rolesAllowed={"javaee"}, transportGuarantee=TransportGuarantee.NONE), 
             @HttpMethodConstraint(value="TRACE", emptyRoleSemantic=ServletSecurity.EmptyRoleSemantic.DENY) 
         }
 )

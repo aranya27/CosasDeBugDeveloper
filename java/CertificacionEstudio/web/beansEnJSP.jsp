@@ -9,6 +9,14 @@
     </head>
     <body>
         <%
+            
+            
+        %>
+        
+        <hr />
+        <br />
+        <br />
+        <%
             Empleado p = new Empleado();
             p.setIdEmpleado(10);
             p.setNombre("Pepito");

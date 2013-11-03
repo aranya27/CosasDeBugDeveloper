@@ -25,11 +25,13 @@
         <c:set target="${personita}" property="nombre" value="Armando" />
         El nombre de la persona es: <jsp:getProperty name="personita" property="nombre" /><br />
         El nombre de la persona es: <c:out value="${personita.nombre}" /><br />
-        <c:set target="${personita}" property="nombre" >Fernando</c:set>
+        <c:set target="${personita}" property="nombre" >Fernando</c:set>        
         El nombre de la persona es: <c:out value="${personita.nombre}" /><br />
         <c:set target="${personita}" property="nombre" >
             <jsp:getProperty name="personita" property="nombre" />
         </c:set>
+        El nombre de la persona es: <c:out value="${personita.nombre}" /><br />
+        <c:set target="${personita}" property="nombre" value="Ernesto" />
         El nombre de la persona es: <c:out value="${personita.nombre}" /><br />
         
         
@@ -80,8 +82,25 @@
         ${empty 0}<br />
         ${empty null}<br />
         
+        
         <%
             //response.sendRedirect("http://www.google.com");
         %>
+        
+        <br />
+        <c:catch var ="catchException">
+           <% int x = 5/0;%>
+        </c:catch>
+
+        <c:if test = "${catchException != null}">
+           <p>The exception is : ${catchException} <br />
+           There is an exception: ${catchException.message}</p>
+        </c:if>
+         
+        <br /><br />
+        
+        <c:import varReader="miVar" url="http://www.google.com" />
+        ${miVar.close()}
+        
     </body>
 </html>

@@ -1,3 +1,4 @@
+<%@page import="com.pasoobjetos.Product"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -7,10 +8,15 @@
     </head>
     <body>
         <h1>Recibiendo objetos del servlet</h1>
+        <%
+            Product pop = new Product("Popo",10.0,true);
+        %>
+        ${pop.name}
+        <br />
+        <br />
+        <jsp:useBean id="product" class="com.pasoobjetos.Product"  />
         
-        <jsp:useBean id="product" type="com.pasoobjetos.Product" scope="session" />
-        
-        <%=product.getName() %>
+        <%=product.getName() %>__${product.name}
         <br />
         <jsp:getProperty name="product" property="name" />
         <br />

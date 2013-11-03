@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @WebServlet(
-        urlPatterns={"/servletCosas"},
+        urlPatterns={"/servletCosas/*"},
         initParams={
             @WebInitParam(name="parametroInitServlet",value="holaaa")
             }
@@ -20,6 +20,7 @@ public class ServletCosas extends HttpServlet{
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException{
         doPost(req,res);
+        this.getServletConfig().getServletContext();
     }
     
     
@@ -38,17 +39,20 @@ public class ServletCosas extends HttpServlet{
         out.println(req.getSession().getServletContext().getInitParameter("parametroContexto"));
         
         //Obteniedo el path del contexto
-        out.println(req.getContextPath());
+        out.println("req.getContextPath() = "+req.getContextPath());
         
         //Obteniendo el path de este servlet
-        out.println(req.getServletPath());
+        out.println("req.getServletPath() = "+req.getServletPath());
+        
+        //Obteniendo el path info
+        out.println("req.getPathInfo() = "+req.getPathInfo());
         
         
-        out.println(req.getRequestURL());//http://localhost:8080/CertificacionEstudio/servletCosas
-        out.println(req.getRequestURI());///CertificacionEstudio/servletCosas
+        out.println("req.getRequestURL() = "+req.getRequestURL());
+        out.println("req.getRequestURI() = "+req.getRequestURI());
         
-        out.println(req.getRequestedSessionId());
-        out.println(req.getMethod());
+        out.println("req.getRequestedSessionId() = "+req.getRequestedSessionId());
+        out.println("req.getMethod() = "+req.getMethod());
         
         out.close();
     }

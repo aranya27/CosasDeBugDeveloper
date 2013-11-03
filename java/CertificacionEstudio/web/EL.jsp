@@ -12,6 +12,18 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        parametro = ${pageContext.request.getParameter("parametro")}
+        <br />
+        pageContext.request es igual a requestScope = ${pageContext.request eq requestScope}
+        <br />
+        
+        <%
+            ((HttpServletResponse)pageContext.getResponse()).addCookie(new Cookie("miCookie","cookieNice"));
+        %>
+        
+        Valor de cookie = ${cookie.miCookie.value}
+        <br />
+        Valor de cookie = ${cookie["miCookie"].value}
+        
     </body>
 </html>
