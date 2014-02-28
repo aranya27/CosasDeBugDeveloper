@@ -1,0 +1,78 @@
+package com.example.asteroides;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
+public class Asteroides extends Activity {
+	public static AlmacenPuntuaciones almacen = new AlmacenPuntuacionesArray();
+	
+	
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        
+    }
+    
+    
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;  /** true -> el menu ya esta visible */
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+    	
+    	switch(item.getItemId()){
+    		case R.id.acercaDe:
+    			lanzarAcercaDe(null);
+    			break;
+    		case R.id.config:
+    			lanzarPreferencias(null);
+    			break;
+    	}
+    	
+    	return true; // true -> consumimos el item, no se propaga
+    }
+    
+    public void lanzarPuntuaciones(View view){
+    	Intent i = new Intent(this, Puntuaciones.class);
+    	startActivity(i);	
+    }
+    
+    
+    public void lanzarAcercaDe(View view){
+    	Intent i = new Intent(this, AcercaDe.class);
+    	startActivity(i);
+    }
+    
+    public void lanzarPreferencias(View view){
+    	Intent i = new Intent(this, Preferencias.class);
+    	startActivity(i);
+    }
+    
+    public void mostrarPreferencias(View view){
+    	SharedPreferences pref = this.getSharedPreferences("com.example.asteroides_preferences", MODE_PRIVATE);
+    	String s = "musica: "+pref.getBoolean("musica", true)
+    			+", graficos: "+pref.getString("graficos", "?")
+    			+", num. fragmentos"+pref.getString("fragmentos", "");
+    	Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+    
+    public void salir(View view){
+    	finish();
+    }
+    
+}

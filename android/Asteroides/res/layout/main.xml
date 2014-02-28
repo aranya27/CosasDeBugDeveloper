@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:gravity="center"
+    android:background="@android:color/black"
+    android:padding="30dip"
+    >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:text="Asteroides"
+        style="@style/Titulo"
+         />
+
+    <Button
+        android:id="@+id/button1"
+        android:gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="mostrarPreferencias"
+        android:text="Jugar" />
+
+    <Button
+        android:id="@+id/button2"
+        android:gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="lanzarPreferencias"
+        android:text="Configurar" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:onClick="lanzarAcercaDe"
+        android:text="Acerca de.." />
+
+    <Button
+        android:id="@+id/button4"
+        android:gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Puntuaciones"
+        android:onClick="lanzarPuntuaciones" />
+    
+    <Button
+        android:id="@+id/button5"
+        android:gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Salir"
+        android:onClick="salir" />
+
+</LinearLayout>
