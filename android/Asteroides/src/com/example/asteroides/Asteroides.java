@@ -64,11 +64,15 @@ public class Asteroides extends Activity {
     }
     
     public void mostrarPreferencias(View view){
+    	/*
     	SharedPreferences pref = this.getSharedPreferences("com.example.asteroides_preferences", MODE_PRIVATE);
     	String s = "musica: "+pref.getBoolean("musica", true)
     			+", graficos: "+pref.getString("graficos", "?")
     			+", num. fragmentos"+pref.getString("fragmentos", "");
     	Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    	*/
+    	Intent i = new Intent(this, Juego.class);
+    	startActivity(i);
     }
     
     public void salir(View view){
