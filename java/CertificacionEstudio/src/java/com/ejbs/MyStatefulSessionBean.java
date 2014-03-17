@@ -15,7 +15,7 @@ import javax.ejb.Stateless;
  *
  * @author armando
  */
-@Stateful
+@Stateful(name="aa")
 public class MyStatefulSessionBean {
     private int contador=0;
     

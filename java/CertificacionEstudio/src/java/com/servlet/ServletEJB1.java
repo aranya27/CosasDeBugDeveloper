@@ -5,8 +5,11 @@
 package com.servlet;
 
 import com.ejbs.MyStatefulSessionBean;
+import com.ejbs.MyStatelessSessionBean;
+import com.ejbs.MyStatelessSessionBeanLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ServletEJB1", urlPatterns = {"/ServletEJB1"})
 public class ServletEJB1 extends HttpServlet {
+    @EJB
+    MyStatelessSessionBeanLocal myStatelessSessionBean;
     
     @EJB
     MyStatefulSessionBean myStatefulSessionBean;
@@ -37,6 +42,11 @@ public class ServletEJB1 extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Contador = " + myStatefulSessionBean.getContador() +"</h1>");
+            try{
+                out.println("<h1>Suma = " + myStatelessSessionBean.hola("guey") +"</h1>");
+            }catch(ParseException e){
+                e.printStackTrace();
+            }
             out.println("</body>");
             out.println("</html>");
         } finally {            
