@@ -23,9 +23,13 @@ public class ClienteSingleton {
     @EJB
     EJBDePruebaTransac myEJB;
     
+    @EJB
+    MiTimer miTimer;
+    
     @PostConstruct
     public void llamarEJB() {
         //myEJB.metodoAsincrono();
         myEJB.metodoBusiness();
+        //miTimer.imprimeFecha2();
     }    
 }
