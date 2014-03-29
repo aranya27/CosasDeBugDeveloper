@@ -52,10 +52,10 @@ public class MiTimer {
     @Timeout
     public void timeoutHandler(javax.ejb.Timer timer)
     {
-       System.out.println("---------------------");
+       /*System.out.println("---------------------");
        System.out.println("* Received Timer event: " + timer.getInfo());
        System.out.println("---------------------");
-
-       //timer.cancel();
+       */
+       timer.cancel();
     }
 }
