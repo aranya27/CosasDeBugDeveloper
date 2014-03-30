@@ -41,6 +41,9 @@ public class ClienteSingleton {
     @EJB
     MiTimer miTimer;
     
+    @EJB
+    MiSingleton miSingleton;
+    
     @PostConstruct
     public void llamarEJB() {
         
@@ -48,11 +51,16 @@ public class ClienteSingleton {
         //myEJB.metodoBusiness();
         //miTimer.imprimeFecha2();
         
+        /*
         try {
             sendJMSMessageToDest("Mensaje para Message bean");
         } catch (JMSException ex) {
             Logger.getLogger(ClienteSingleton.class.getName()).log(Level.SEVERE, null, ex);
         }
+        */
+        Proceso proceso = new Proceso();
+        proceso.start();
+        miSingleton.procesoLargo();
     }    
 
     private Message createJMSMessageForjmsDest(Session session, Object messageData) throws JMSException {
@@ -84,4 +92,23 @@ public class ClienteSingleton {
             }
         }
     }
+    
+    
+    
+    
+    public class Proceso extends Thread{
+	
+	
+	public void run()
+	{
+            miSingleton.procesoLargo();
+	}
+	
+
+}
+    
+    
+    
+    
+    
 }
