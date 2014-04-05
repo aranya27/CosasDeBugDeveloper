@@ -12,9 +12,6 @@
         <servlet-name>servlet2</servlet-name>
         <url-pattern>/servlet2</url-pattern>
     </servlet-mapping>
-    
-    
-    
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>MiWebResource1</web-resource-name>
@@ -23,7 +20,6 @@
             <!--<http-method-omission>GET</http-method-omission>-->
             <!--<http-method>GET</http-method>-->
         </web-resource-collection>
-
         <!--<auth-constraint />-->
         <!--
         <auth-constraint>
@@ -38,20 +34,19 @@
         </user-data-constraint>
         -->
     </security-constraint>
-    
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>file</realm-name>
+    </login-config>
     <security-role>
         <role-name>Admin</role-name>
     </security-role>
-    
     <!--
     <login-config>
         <auth-method>FORM</auth-method>
         
     </login-config>
     -->
-    
-    
-    
     <welcome-file-list>
         <welcome-file>jstl.jsp</welcome-file>
     </welcome-file-list>
