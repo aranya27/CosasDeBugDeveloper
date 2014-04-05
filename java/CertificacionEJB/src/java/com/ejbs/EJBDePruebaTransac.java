@@ -8,9 +8,12 @@ package com.ejbs;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PreDestroy;
 import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ejb.Remove;
+import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
@@ -18,7 +21,7 @@ import javax.ejb.TransactionAttributeType;
  *
  * @author armando
  */
-@Stateless
+@Stateful
 @LocalBean
 public class EJBDePruebaTransac {
 
@@ -28,6 +31,7 @@ public class EJBDePruebaTransac {
     }
     
     @Asynchronous
+    @Remove //Este remove solo jalaria si este fuera un Stateful, con los stateless no hace nada. Solo el cliente invoca esto, no se invoca automaticamente
     public void metodoAsincrono(){
         try {
             Thread.sleep(5000);
@@ -37,5 +41,9 @@ public class EJBDePruebaTransac {
         }
     }
     
+    @PreDestroy
+    public void avisoDeDestruccion(){
+        System.out.println("===ADIOS===");
+    }
     
 }

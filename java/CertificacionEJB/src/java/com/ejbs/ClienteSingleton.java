@@ -47,7 +47,7 @@ public class ClienteSingleton {
     @PostConstruct
     public void llamarEJB() {
         
-        //myEJB.metodoAsincrono();
+        myEJB.metodoAsincrono();
         //myEJB.metodoBusiness();
         //miTimer.imprimeFecha2();
         
