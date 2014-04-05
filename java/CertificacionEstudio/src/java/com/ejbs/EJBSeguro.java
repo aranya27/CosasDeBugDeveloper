@@ -14,7 +14,7 @@ import javax.ejb.Stateless;
  * @author armando
  */
 @Stateless
-@RolesAllowed("administrador")
+@RolesAllowed("admin")
 public class EJBSeguro {
 
     public String greet(){

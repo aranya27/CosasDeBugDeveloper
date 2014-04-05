@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author armando
  */
 @WebServlet(name = "SoloAdmins", urlPatterns = {"/SoloAdmins"})
-@ServletSecurity(@HttpConstraint(rolesAllowed={"administrador","customer"}))
+@ServletSecurity(@HttpConstraint(rolesAllowed={"admin","customer"}))
 public class SoloAdmins extends HttpServlet {
     @EJB
     private EJBSeguro ejbSeguro;
@@ -49,7 +49,11 @@ public class SoloAdmins extends HttpServlet {
             out.println("<title>Servlet SoloAdmins</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>bean = "+ejbSeguro.greet()+"</h1>");
+            try{
+                out.println("<h1>bean = "+ejbSeguro.greet()+"</h1>");
+            }catch(Exception e){
+                 out.println("<h1>Entraste pero no puedes acceder al bean, es solo para admins</h1>");   
+            }
             out.println("</body>");
             out.println("</html>");
         } finally {
