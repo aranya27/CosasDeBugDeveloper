@@ -9,10 +9,44 @@
     <role-name>customer</role-name>
     <group-name>ventas</group-name>
   </security-role-mapping>
+  <security-role-mapping>
+    <role-name>Admin</role-name>
+    <group-name>grupochafa</group-name>
+  </security-role-mapping>
   <class-loader delegate="true"/>
   <jsp-config>
     <property name="keepgenerated" value="true">
       <description>Keep a copy of the generated servlet class' java code.</description>
     </property>
   </jsp-config>
+  
+  
+    <!--
+    The application's role "superusers" is mapped to the application
+    server principal (user) "ivan".
+    This gives the user "ivan" defined in the application server
+    access to the parts of the application that requires the user
+    to be in the "superusers" role.
+    -->
+    <security-role-mapping>
+        <role-name>superusers</role-name>
+        <principal-name>ivan</principal-name>
+    </security-role-mapping>
+    
+    <!--
+    The application's role "plainusers" is mapped to the application
+    server's user group "plain-users"
+    This gives all the users defined in the application server that
+    belongs to the "plain-users" group access to the parts of the
+    application that requires the user to be in the "plainusers" role.
+    -->
+    <security-role-mapping>
+        <role-name>plainusers</role-name>
+        <group-name>plain-users</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>runasadmin</role-name>
+        <principal-name>runas-superuser</principal-name>
+    </security-role-mapping>
+
 </glassfish-web-app>

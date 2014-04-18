@@ -34,13 +34,7 @@
         </user-data-constraint>
         -->
     </security-constraint>
-    <login-config>
-        <auth-method>BASIC</auth-method>
-        <realm-name>file</realm-name>
-    </login-config>
-    <security-role>
-        <role-name>Admin</role-name>
-    </security-role>
+    
     <!--
     <login-config>
         <auth-method>FORM</auth-method>
@@ -68,4 +62,24 @@
         <param-name>parametroContexto</param-name>
         <param-value>MiParametroContexto</param-value>
     </context-param>
+    
+    
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>protegiendo servlet3</web-resource-name>
+            <url-pattern>/servlet3</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>Admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>file</realm-name>
+    </login-config>
+    <security-role>
+        <role-name>Admin</role-name>
+    </security-role>
+    
 </web-app>
