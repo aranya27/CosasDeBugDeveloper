@@ -43,6 +43,8 @@ public class ClienteSingleton {
     
     @EJB
     MiSingleton miSingleton;
+    @EJB
+    MiSingleton miSingleton2;
     
     @EJB
     YLocal yLocalBean;
@@ -65,6 +67,13 @@ public class ClienteSingleton {
         proceso.start();
         miSingleton.procesoLargo();
                 */
+        
+        System.out.println("====Probando pregunta 20 del cheat-test=====");
+        System.out.println("Es igual? "+miSingleton.equals(miSingleton2));
+        miSingleton.entero = 99;
+        System.out.println("miSingleton.entero = "+miSingleton.entero);
+        System.out.println("miSingleton2.entero = "+miSingleton2.entero);
+        System.out.println("====FIN DE Probando pregunta 20 del cheat-test=====");
     }    
 
     private Message createJMSMessageForjmsDest(Session session, Object messageData) throws JMSException {
