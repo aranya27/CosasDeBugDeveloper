@@ -53,9 +53,9 @@ public class ClienteSingleton {
     public void llamarEJB() {
         
         //myEJB.metodoAsincrono();
-        myEJB.metodoBusiness();
+        //myEJB.metodoBusiness();
         //miTimer.imprimeFecha2();
-        yLocalBean.suma(2, 2);
+        //yLocalBean.suma(2, 2);
         /*
         try {
             sendJMSMessageToDest("Mensaje para Message bean");
@@ -68,12 +68,14 @@ public class ClienteSingleton {
         miSingleton.procesoLargo();
                 */
         
+        /*
         System.out.println("====Probando pregunta 20 del cheat-test=====");
         System.out.println("Es igual? "+miSingleton.equals(miSingleton2));
         miSingleton.entero = 99;
         System.out.println("miSingleton.entero = "+miSingleton.entero);
         System.out.println("miSingleton2.entero = "+miSingleton2.entero);
         System.out.println("====FIN DE Probando pregunta 20 del cheat-test=====");
+        */
     }    
 
     private Message createJMSMessageForjmsDest(Session session, Object messageData) throws JMSException {

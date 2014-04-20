@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar xmlns = "http://java.sun.com/xml/ns/javaee" 
+         version = "3.1"
+         xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation = "http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_1.xsd">
+
+    <enterprise-beans>
+        <session>
+            <ejb-name>UnBean</ejb-name>
+            <local-bean/>
+            <ejb-class>com.xmlBeans.UnBean</ejb-class>
+            <session-type>Stateful</session-type>
+        </session>
+    </enterprise-beans>
+    
+    <interceptors>
+        <interceptor>
+            <interceptor-class>com.interceptores.DefaultInterceptor</interceptor-class>
+            <around-invoke>  
+                <method-name>metodito</method-name>  
+            </around-invoke>
+        </interceptor>
+    </interceptors>
+    
+    <assembly-descriptor>
+        <interceptor-binding>
+            <ejb-name>*</ejb-name>
+            <interceptor-class>com.interceptores.DefaultInterceptor</interceptor-class>
+            
+            <!-- Pa que funcione esto hay que quitar el <interceptor-class> que esta antes que esto
+            <interceptor-order>
+                <interceptor-class>
+                    com.interceptores.InterceptorB
+                </interceptor-class>
+            </interceptor-order>
+            -->
+            
+        </interceptor-binding>
+    </assembly-descriptor>
+</ejb-jar>
