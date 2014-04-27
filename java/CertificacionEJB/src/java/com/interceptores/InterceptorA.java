@@ -3,10 +3,8 @@ package com.interceptores;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import javax.transaction.Transactional;
 
-@Interceptor
-@Transactional
+
 public class InterceptorA {
     
     @AroundInvoke
