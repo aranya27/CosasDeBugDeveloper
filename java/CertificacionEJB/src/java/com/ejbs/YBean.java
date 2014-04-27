@@ -1,6 +1,9 @@
 package com.ejbs;
 
+import java.util.concurrent.Future;
 import javax.annotation.Resource;
+import javax.ejb.AsyncResult;
+import javax.ejb.Asynchronous;
 import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.SessionContext;
@@ -29,4 +32,11 @@ public class YBean implements YLocal,YRemote{
     public int resta(int a, int b) {
         return a - b;
     }
+
+    /*
+    public Future <void> bar() throws Exception {
+        return new AsyncResult<Void>(null);
+        
+    }
+    */
 }

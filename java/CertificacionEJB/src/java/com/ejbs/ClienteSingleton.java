@@ -30,10 +30,11 @@ import javax.jms.TextMessage;
 @Startup
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class ClienteSingleton {
+    @Resource(mappedName = "jms/queue")
+    private ConnectionFactory miConnectionFactory;
     @Resource(mappedName = "jms/dest")
     private Queue dest;
-    @Resource(mappedName = "jms/queue")
-    private ConnectionFactory queue;
+    
     
     @EJB
     EJBDePruebaTransac myEJB;
@@ -56,13 +57,13 @@ public class ClienteSingleton {
         //myEJB.metodoBusiness();
         //miTimer.imprimeFecha2();
         //yLocalBean.suma(2, 2);
-        /*
+        
         try {
             sendJMSMessageToDest("Mensaje para Message bean");
         } catch (JMSException ex) {
             Logger.getLogger(ClienteSingleton.class.getName()).log(Level.SEVERE, null, ex);
         }
-        */
+        
         /*Proceso proceso = new Proceso();
         proceso.start();
         miSingleton.procesoLargo();
@@ -89,11 +90,14 @@ public class ClienteSingleton {
         Connection connection = null;
         Session session = null;
         try {
-            connection = queue.createConnection();
+            connection = miConnectionFactory.createConnection();
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             MessageProducer messageProducer = session.createProducer(dest);
-            messageProducer.send(createJMSMessageForjmsDest(session, messageData));
-            messageProducer.send(createJMSMessageForjmsDest(session, messageData));
+            
+            for(int i=0; i<10; i++){
+                messageProducer.send(createJMSMessageForjmsDest(session, messageData));
+            }
+            
         } finally {
             if (session != null) {
                 try {

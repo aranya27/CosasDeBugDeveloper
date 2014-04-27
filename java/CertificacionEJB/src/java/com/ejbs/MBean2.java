@@ -19,9 +19,9 @@ import javax.jms.TextMessage;
  *
  * @author armando
  */
-@MessageDriven(mappedName = "jms/dest", activationConfig = {
+/*@MessageDriven(mappedName = "jms/dest", activationConfig = {
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
-})
+})*/
 public class MBean2 implements MessageListener {
     
     public MBean2() {

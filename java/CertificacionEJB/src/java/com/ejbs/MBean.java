@@ -31,7 +31,7 @@ public class MBean implements MessageListener {
     public void onMessage(Message message) {
         TextMessage tmsg = (TextMessage)message;
         try {
-            System.out.println("MBean: Mensaje = "+tmsg.getText());
+            System.out.println("===============MBean: Mensaje = "+tmsg.getText());
         } catch (JMSException ex) {
             Logger.getLogger(MBean.class.getName()).log(Level.SEVERE, null, ex);
         }
