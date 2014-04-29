@@ -13,8 +13,12 @@ import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.LocalBean;
+import javax.ejb.MessageDrivenContext;
 import javax.ejb.Schedule;
+import javax.ejb.SessionContext;
 import javax.ejb.Startup;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.jms.Connection;
@@ -25,16 +29,24 @@ import javax.jms.MessageProducer;
 import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
+import javax.transaction.NotSupportedException;
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
 
 @Singleton
 @Startup
-@TransactionManagement(TransactionManagementType.CONTAINER)
+@TransactionManagement(TransactionManagementType.BEAN)
 public class ClienteSingleton {
     @Resource(mappedName = "jms/queue")
     private ConnectionFactory miConnectionFactory;
     @Resource(mappedName = "jms/dest")
     private Queue dest;
     
+    @Resource
+    SessionContext ejbContext;
+    
+    @Resource
+    UserTransaction ut;
     
     @EJB
     EJBDePruebaTransac myEJB;
@@ -58,9 +70,17 @@ public class ClienteSingleton {
         //miTimer.imprimeFecha2();
         //yLocalBean.suma(2, 2);
         
+        
+        
+        //UserTransaction ut = ejbContext.getUserTransaction();
         try {
+            ut.begin();
             sendJMSMessageToDest("Mensaje para Message bean");
-        } catch (JMSException ex) {
+            myEJB.metodoBusiness();
+            ut.commit();
+           
+            
+        } catch (Exception ex) {
             Logger.getLogger(ClienteSingleton.class.getName()).log(Level.SEVERE, null, ex);
         }
         

@@ -6,12 +6,14 @@
 
 package com.ejbs;
 
+import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import javax.ejb.Asynchronous;
 import javax.ejb.EJBContext;
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.ejb.Remove;
@@ -29,7 +31,7 @@ import javax.ejb.TransactionManagementType;
 @Stateful
 @LocalBean
 @TransactionManagement( TransactionManagementType.CONTAINER )
-public class EJBDePruebaTransac {
+public class EJBDePruebaTransac implements javax.ejb.SessionSynchronization{
     
     @Resource 
     private EJBContext ejbContext;
@@ -59,6 +61,21 @@ public class EJBDePruebaTransac {
     @PreDestroy
     public void avisoDeDestruccion(){
         System.out.println("===ADIOS===");
+    }
+
+    @Override
+    public void afterBegin() throws EJBException, RemoteException {
+        System.out.println("!---Una nueva transaccion a comenzado");
+    }
+
+    @Override
+    public void beforeCompletion() throws EJBException, RemoteException {
+        System.out.println("!---La transaccion esta a punto de ser commiteada");
+    }
+
+    @Override
+    public void afterCompletion(boolean committed) throws EJBException, RemoteException {
+        System.out.println("!---La transaccion ha sido terminada. ¿Hubo commit? R="+committed);
     }
     
 }
