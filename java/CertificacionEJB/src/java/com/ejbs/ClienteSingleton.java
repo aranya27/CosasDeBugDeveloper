@@ -1,21 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.ejbs;
 
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.ejb.Singleton;
 import javax.ejb.LocalBean;
 import javax.ejb.MessageDrivenContext;
 import javax.ejb.Schedule;
 import javax.ejb.SessionContext;
+import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -64,25 +59,33 @@ public class ClienteSingleton {
     
     @PostConstruct
     public void llamarEJB() {
-        
-        //myEJB.metodoAsincrono();
+        /*
+        try{
+            //myEJB.metodoAsincrono();
+            Future<Integer> f = myEJB.otroMetodoAsincrono();
+            System.out.println("f.get() = "+f.get());
+            Thread.sleep(1000);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        */
         //myEJB.metodoBusiness();
-        //miTimer.imprimeFecha2();
+        //miTimer.metodoBusiness();
         //yLocalBean.suma(2, 2);
         
         
-        
+        /*
         //UserTransaction ut = ejbContext.getUserTransaction();
         try {
             ut.begin();
             sendJMSMessageToDest("Mensaje para Message bean");
             myEJB.metodoBusiness();
             ut.commit();
-           
-            
         } catch (Exception ex) {
             Logger.getLogger(ClienteSingleton.class.getName()).log(Level.SEVERE, null, ex);
         }
+        */
+        
         
         /*Proceso proceso = new Proceso();
         proceso.start();
@@ -114,9 +117,9 @@ public class ClienteSingleton {
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             MessageProducer messageProducer = session.createProducer(dest);
             
-            for(int i=0; i<10; i++){
+            //for(int i=0; i<10; i++){
                 messageProducer.send(createJMSMessageForjmsDest(session, messageData));
-            }
+            //}
             
         } finally {
             if (session != null) {

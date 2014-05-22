@@ -12,6 +12,10 @@ import javax.interceptor.InvocationContext;
 
 public class InterceptorB {
     
+    public InterceptorB(){
+        System.out.println("===============Se creo instancia de InterceptorB");
+    }
+    
     @AroundInvoke
     public Object logMethodEntryExit(InvocationContext inInvocationContext) throws Exception
     {

@@ -1,6 +1,7 @@
 package com.interceptores;
 
 import javax.ejb.LocalBean;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.ExcludeClassInterceptors;
@@ -9,7 +10,7 @@ import javax.interceptor.Interceptors;
 import javax.interceptor.InvocationContext;
 
 
-@Stateless
+@Stateful
 @LocalBean
 @Interceptors(InterceptorA.class)
 public class BeanInterceptado {
