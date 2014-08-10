@@ -1,21 +1,19 @@
-<%-- 
-    Document   : index
-    Created on : 04-jul-2013, 20:29:55
-    Author     : armando
---%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@page contentType="text/html" pageEncoding="UTF-8"%>
+    <%@ taglib uri="/WEB-INF/tlds/myTagLibrary" prefix="myFn" %>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        Valor de la variable msg establecida en scoping.jsp: 
-        <%
-            String msg = (String)application.getAttribute("msg");
-            out.println(msg);
-        %>
-    </body>
-</html>
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <title>Ejemplo custom tags</title>
+        </head>
+        <body>
+            <c:set var="unNumero" value="3" />
+            Suma = <myFn:sumador operando1="${unNumero}" operando2="5" />
+        </body>
+    </html>
+
+    
+    
+    
