@@ -25,5 +25,18 @@
         <br />
         Valor de cookie = ${cookie["miCookie"].value}
         
+        <br /><br />
+        <%
+            pageContext.setAttribute("obj","000000");
+            request.setAttribute("obj","AAAAAA");
+            session.setAttribute("obj","BBBBBB");
+        %>
+
+        
+        ${obj}
+        ${pageScope.obj}
+        ${requestScope.obj}
+        ${sessionScope.obj}
+        
     </body>
 </html>
