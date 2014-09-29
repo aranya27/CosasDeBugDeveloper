@@ -20,6 +20,7 @@ public class EnviaCola{
             QueueSender enviaACola = sesion.createSender(cola);
             // Creamos un mensaje
             TextMessage mensaje = sesion.createTextMessage();
+            mensaje.setStringProperty("nombre", "Armando");
             mensaje.setText("Esto es un mensaje");
             // Lo enviamos
             enviaACola.send(mensaje);
