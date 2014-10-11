@@ -48,7 +48,7 @@ public Publisher(String uname, String pwd)
  public void writeMsg(String msg) throws JMSException {
        //  Creating a Text Message with the String object
        TextMessage txtMsg = pubSession.createTextMessage(msg);
-
+       
        //  Publishing the message object to the Topic
        tPub.publish(txtMsg);
  }

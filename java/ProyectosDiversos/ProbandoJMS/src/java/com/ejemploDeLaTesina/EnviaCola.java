@@ -21,6 +21,7 @@ public class EnviaCola{
             // Creamos un mensaje
             TextMessage mensaje = sesion.createTextMessage();
             mensaje.setStringProperty("nombre", "Armando");
+            mensaje.setStringProperty("MessageFormat","Version 3.4");
             mensaje.setText("Esto es un mensaje");
             // Lo enviamos
             enviaACola.send(mensaje);
