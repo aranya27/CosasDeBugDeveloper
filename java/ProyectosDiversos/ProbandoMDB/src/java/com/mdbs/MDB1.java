@@ -19,6 +19,7 @@ import javax.jms.TextMessage;
 @MessageDriven(activationConfig = {
     @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "Cola"),
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue")
+    ,@ActivationConfigProperty(propertyName = "messageSelector", propertyValue = "MessageFormat = 'Version 3.4'")
 })
 public class MDB1 implements MessageListener {
     
