@@ -5,7 +5,9 @@ import java.io.PrintWriter;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.HttpMethodConstraint;
 import javax.servlet.annotation.ServletSecurity;
+import javax.servlet.annotation.ServletSecurity.TransportGuarantee;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,9 +15,22 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @WebServlet(name = "ServletSeguro", urlPatterns = {"/ServletSeguro"})
-@ServletSecurity(
+/*@ServletSecurity(
         @HttpConstraint(rolesAllowed={"superusers"})
-)
+)*/
+/*@ServletSecurity(
+    httpMethodConstraints={ 
+        @HttpMethodConstraint("POST"), 
+        @HttpMethodConstraint(value="GET", rolesAllowed={"superusers"}), 
+        @HttpMethodConstraint(value="TRACE", emptyRoleSemantic=ServletSecurity.EmptyRoleSemantic.DENY)
+    }
+)*/
+/*@ServletSecurity(
+    @HttpConstraint(
+    transportGuarantee = TransportGuarantee.CONFIDENTIAL,
+                    rolesAllowed = {"superusers"}
+    )
+)*/
 public class ServletSeguro extends HttpServlet {
 
     /**
