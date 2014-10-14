@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.simplesockettester.Client" >
+
+    <EditText
+        android:id="@+id/txt_server_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:hint="@string/server_address" 
+        style="@style/txt_input"
+        >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/txt_server_port"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/txt_server_address"
+        android:layout_below="@id/txt_server_address"
+        android:inputType="number" 
+        android:ems="10"
+        android:hint="@string/server_port"
+        style="@style/txt_input"
+         />
+
+    <Button
+        android:id="@+id/btn_connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/txt_server_port"
+        android:layout_alignBottom="@id/txt_server_port"
+        android:layout_alignParentRight="true"
+        android:text="@string/connect" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/txt_server_port"
+        android:layout_alignRight="@id/btn_connect"
+        android:layout_below="@id/btn_connect"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:lines="5"
+        android:hint="@string/info_to_send"
+        style="@style/txt_input"
+        />
+
+</RelativeLayout>

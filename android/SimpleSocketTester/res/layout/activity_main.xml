@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:layout_weight="3"
-        style="@style/text_title"
+        style="@style/title_text"
         />
 
     <Button
@@ -25,13 +25,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/btn_client"
-        android:layout_weight="1" />
+        android:layout_weight="1" 
+        style="@style/btn_menu"
+        />
 
     <Button
         android:id="@+id/btn_server"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/btn_server"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        style="@style/btn_menu"
+        />
+    
+    <Button
+        android:id="@+id/btn_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_about"
+        android:layout_weight="1"
+        style="@style/btn_menu"
+        />
+    
+    <Button
+        android:id="@+id/btn_exit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_exit"
+        android:layout_weight="1"
+        style="@style/btn_menu"
+        />
  
 </LinearLayout>
