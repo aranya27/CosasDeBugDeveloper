@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Simple Socket Tester</string>
+    <string name="action_settings">Settings</string>
+    <string name="btn_client">Client</string>
+    <string name="btn_server">Server</string>
+    
+
+</resources>
