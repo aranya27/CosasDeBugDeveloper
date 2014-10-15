@@ -7,14 +7,24 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.simplesockettester.Client" >
-
+	
+    <TextView
+	    android:id="@+id/txt_info"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_toLeftOf="@+id/btn_connect"
+	    style="@style/txt_info"
+	    android:text="Blabla bla"
+	    android:textAppearance="?android:attr/textAppearanceSmall" />
+    
     <EditText
         android:id="@+id/txt_server_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/txt_info"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        
         android:ems="10"
         android:hint="@string/server_address" 
         style="@style/txt_input"
@@ -25,37 +35,37 @@
 
     <EditText
         android:id="@+id/txt_server_port"
+        style="@style/txt_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/txt_server_address"
         android:layout_below="@id/txt_server_address"
-        android:inputType="number" 
-        android:ems="10"
+        android:ems="5"
+        android:maxLength="5"
         android:hint="@string/server_port"
-        style="@style/txt_input"
-         />
-
-    <Button
+        android:inputType="number" />
+	
+	<Button
         android:id="@+id/btn_connect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/txt_server_port"
-        android:layout_alignBottom="@id/txt_server_port"
-        android:layout_alignParentRight="true"
+        android:layout_below="@id/txt_server_address"
+        android:layout_toRightOf="@id/txt_server_port"
         android:text="@string/connect" />
+    
+	<EditText
+	    android:id="@+id/editText1"
+	    style="@style/txt_input"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@id/txt_server_port"
+	    android:layout_alignRight="@+id/txt_server_address"
+	    android:layout_below="@id/btn_connect"
+	    android:ems="10"
+	    android:hint="@string/info_to_send"
+	    android:inputType="textMultiLine"
+	    android:lines="5" />
 
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/txt_server_port"
-        android:layout_alignRight="@id/btn_connect"
-        android:layout_below="@id/btn_connect"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        android:lines="5"
-        android:hint="@string/info_to_send"
-        style="@style/txt_input"
-        />
+	
 
 </RelativeLayout>

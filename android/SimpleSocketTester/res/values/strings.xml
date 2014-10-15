@@ -10,7 +10,7 @@
     <string name="title_activity_client">Client</string>
     <string name="hello_world">Hello world!</string>
     
-    <string name="server_address">Server IP address</string>
+    <string name="server_address">Server address</string>
     <string name="server_port">Server port</string>
     <string name="connect">Connect</string>
     <string name="info_to_send">Write here the info to send</string>
