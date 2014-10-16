@@ -14,5 +14,13 @@
     <string name="server_port">Server port</string>
     <string name="connect">Connect</string>
     <string name="info_to_send">Write here the info to send</string>
+    <string name="server_answer">Server answer</string>
+    <string name="save_cfg">Save this cfg</string>
+    <string name="load_cfg">Load cfg</string>
+    <string name="send">Send</string>
+    <string name="clear">Clear</string>
+    <string name="hex">Hex</string>
+    
+    
     
 </resources>

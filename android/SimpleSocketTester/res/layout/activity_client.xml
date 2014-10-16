@@ -1,12 +1,17 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+<RelativeLayout 
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.simplesockettester.Client" >
+    tools:context="com.example.simplesockettester.ClientActivity" >
 	
     <TextView
 	    android:id="@+id/txt_info"
@@ -24,18 +29,17 @@
         android:layout_below="@id/txt_info"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        
-        android:ems="10"
         android:hint="@string/server_address" 
-        style="@style/txt_input"
+        style="@style/txt_input_1"
         >
 
-        <requestFocus />
+        <requestFocus android:layout_width="wrap_content" />
+
     </EditText>
 
     <EditText
         android:id="@+id/txt_server_port"
-        style="@style/txt_input"
+        style="@style/txt_input_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/txt_server_address"
@@ -54,18 +58,99 @@
         android:text="@string/connect" />
     
 	<EditText
-	    android:id="@+id/editText1"
-	    style="@style/txt_input"
+	    android:id="@+id/txt_input_client"
+	    style="@style/txt_input_2"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_alignLeft="@id/txt_server_port"
 	    android:layout_alignRight="@+id/txt_server_address"
 	    android:layout_below="@id/btn_connect"
-	    android:ems="10"
 	    android:hint="@string/info_to_send"
 	    android:inputType="textMultiLine"
-	    android:lines="5" />
-
+	     />
 	
-
+	<CheckBox
+	    android:id="@+id/chk_hex_client"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/txt_input_client"
+	    android:layout_below="@+id/txt_input_client"
+	    style="@style/txt_info"
+	    android:text="@string/hex" />
+	
+	<Button
+	    android:id="@+id/btn_clear_info_to_send"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/txt_input_client"
+	    android:layout_toRightOf="@id/chk_hex_client"
+	    android:text="@string/clear" />
+	
+	<Button
+	    android:id="@+id/btn_send"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/txt_input_client"
+	    android:layout_toRightOf="@id/btn_clear_info_to_send"
+	    android:text="@string/send" />
+	
+	<EditText
+	    android:id="@+id/txt_output_client"
+	    style="@style/txt_input_2"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@id/txt_input_client"
+	    android:layout_alignRight="@+id/txt_input_client"
+	    android:layout_below="@id/btn_clear_info_to_send"
+	    android:ems="10"
+	    android:hint="@string/server_answer"
+	    android:inputType="textMultiLine"
+	     />
+	
+	<CheckBox
+	    android:id="@+id/chk_hex_server"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/txt_output_client"
+	    android:layout_below="@+id/txt_output_client"
+	    style="@style/txt_info"
+	    android:text="@string/hex" />
+	
+	<Button
+	    android:id="@+id/btn_clear_info_from_server"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/txt_output_client"
+	    android:layout_toRightOf="@id/chk_hex_server"
+	    android:text="@string/clear" />
+	
+	
+	<LinearLayout 
+	    android:layout_below="@+id/btn_clear_info_from_server"
+	    android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+	    android:gravity="center"
+    	android:orientation="horizontal"
+    	android:weightSum="2"
+	    >
+		<Button
+		    android:id="@+id/btn_load_cfg"
+		    android:layout_width="0dp"
+		    android:layout_height="wrap_content"
+		    android:text="@string/load_cfg" 
+		    android:layout_weight="1" 
+		    />
+		
+		<Button
+		    android:id="@+id/btn_save_cfg"
+		    android:layout_width="0dp"
+		    android:layout_height="wrap_content"
+		    android:gravity="center"
+		    android:text="@string/save_cfg" 
+		    android:layout_weight="1"
+		    />
+	</LinearLayout>
+	
 </RelativeLayout>
+
+</ScrollView>

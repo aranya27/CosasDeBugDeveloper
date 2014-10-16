@@ -19,7 +19,7 @@
             
         </activity>
         <activity
-            android:name=".Client"
+            android:name=".ClientActivity"
             android:label="@string/title_activity_client" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,5 +36,6 @@
 	http://androidcookbook.com/Recipe.seam;jsessionid=8BED36512503CA63614CA9237248CBE7?recipeId=3307
 	http://android4beginners.com/2013/07/lesson-2-2-how-to-use-margins-and-paddings-in-android-layout/
 	http://androideity.com/2011/07/16/layout-en-android-relative-layout/
+	http://www.quora.com/Which-are-the-best-Android-projects-to-follow-on-GitHub
 -->
 

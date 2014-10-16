@@ -36,14 +36,32 @@
 		<item name="android:layout_margin">10dp</item>
     </style>
     
-    <style name="txt_input">
+    <style name="txt_input_1">
+        <item name="android:textSize">15sp</item>
         <item name="android:textColor">#fff</item>
         <item name="android:background">@drawable/edittext</item>
         <item name="android:layout_marginTop">10sp</item>
         <item name="android:gravity">top</item>
+        <item name="android:ems">10</item>
+    </style>
+    
+    <style name="txt_input_2">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:background">@drawable/edittext</item>
+        <item name="android:layout_marginTop">10sp</item>
+        <item name="android:gravity">top</item>
+        <item name="android:lines">6</item>
+        <item name="android:ems">10</item>
     </style>
     
     <style name="txt_info">
+        <item name="android:textColor">#fff</item>
+        <item name="android:layout_marginTop">10sp</item>
+        <item name="android:gravity">top</item>
+    </style>
+    
+    <style name="txt_check">
         <item name="android:textColor">#fff</item>
         <item name="android:layout_marginTop">10sp</item>
         <item name="android:gravity">top</item>
