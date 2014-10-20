@@ -14,13 +14,12 @@
     tools:context="com.example.simplesockettester.ClientActivity" >
 	
     <TextView
-	    android:id="@+id/txt_info"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_toLeftOf="@+id/btn_connect"
-	    style="@style/txt_info"
-	    android:text="Blabla bla"
-	    android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:id="@+id/txt_info"
+        style="@style/txt_info"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/txt_server_address"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
     
     <EditText
         android:id="@+id/txt_server_address"
@@ -51,11 +50,11 @@
 	
 	<Button
         android:id="@+id/btn_connect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_below="@id/txt_server_address"
         android:layout_toRightOf="@id/txt_server_port"
-        android:text="@string/connect" />
+        android:text="@string/connect"
+        style="@style/btn_default"
+         />
     
 	<EditText
 	    android:id="@+id/txt_input_client"
@@ -84,7 +83,9 @@
 	    android:layout_height="wrap_content"
 	    android:layout_below="@+id/txt_input_client"
 	    android:layout_toRightOf="@id/chk_hex_client"
-	    android:text="@string/clear" />
+	    android:text="@string/clear"
+	    style="@style/btn_default"
+	     />
 	
 	<Button
 	    android:id="@+id/btn_send"
@@ -92,7 +93,9 @@
 	    android:layout_height="wrap_content"
 	    android:layout_below="@+id/txt_input_client"
 	    android:layout_toRightOf="@id/btn_clear_info_to_send"
-	    android:text="@string/send" />
+	    android:text="@string/send"
+	    style="@style/btn_default"
+	     />
 	
 	<EditText
 	    android:id="@+id/txt_output_client"
@@ -122,7 +125,9 @@
 	    android:layout_height="wrap_content"
 	    android:layout_below="@+id/txt_output_client"
 	    android:layout_toRightOf="@id/chk_hex_server"
-	    android:text="@string/clear" />
+	    android:text="@string/clear"
+	    style="@style/btn_default"
+	     />
 	
 	
 	<LinearLayout 
@@ -132,6 +137,7 @@
 	    android:gravity="center"
     	android:orientation="horizontal"
     	android:weightSum="2"
+    	android:layout_marginTop="15dp"
 	    >
 		<Button
 		    android:id="@+id/btn_load_cfg"
@@ -139,6 +145,7 @@
 		    android:layout_height="wrap_content"
 		    android:text="@string/load_cfg" 
 		    android:layout_weight="1" 
+		    style="@style/btn_default"
 		    />
 		
 		<Button
@@ -148,6 +155,7 @@
 		    android:gravity="center"
 		    android:text="@string/save_cfg" 
 		    android:layout_weight="1"
+		    style="@style/btn_default"
 		    />
 	</LinearLayout>
 	

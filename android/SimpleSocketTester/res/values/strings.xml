@@ -9,18 +9,21 @@
     <string name="btn_exit">Exit</string>
     <string name="title_activity_client">Client</string>
     <string name="hello_world">Hello world!</string>
-    
     <string name="server_address">Server address</string>
     <string name="server_port">Server port</string>
     <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
     <string name="info_to_send">Write here the info to send</string>
     <string name="server_answer">Server answer</string>
-    <string name="save_cfg">Save this cfg</string>
-    <string name="load_cfg">Load cfg</string>
+    <string name="save_cfg">Save</string>
+    <string name="load_cfg">Load</string>
     <string name="send">Send</string>
     <string name="clear">Clear</string>
     <string name="hex">Hex</string>
-    
+    <string name="socket_connected">Socket connected</string>
+    <string name="socket_not_connected">Socket not connected</string>
+    <string name="unknown_host">Unknown host</string>
+    <string name="couldn_connect_to_host">Could not connect to host</string>
     
     
 </resources>
