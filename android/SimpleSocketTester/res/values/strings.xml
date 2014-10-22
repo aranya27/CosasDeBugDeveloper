@@ -24,6 +24,7 @@
     <string name="socket_not_connected">Socket not connected</string>
     <string name="unknown_host">Unknown host</string>
     <string name="couldn_connect_to_host">Could not connect to host</string>
+    <string name="invalid_message">Invalid message</string>
     
     
 </resources>
