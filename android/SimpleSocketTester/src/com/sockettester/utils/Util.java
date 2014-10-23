@@ -5,6 +5,7 @@ import android.widget.EditText;
 
 public class Util {
 	public static String CHARSET = "iso-8859-1";
+	public static String SHARED_PREFERENCES_NAME = "MyPreferences";
 	
 	
     //http://javarevisited.blogspot.sg/2013/03/convert-and-print-byte-array-to-hex-string-java-example-tutorial.html
@@ -59,7 +60,7 @@ public class Util {
         System.out.print("------------------------------");
         System.out.println();
         
-        String s = "holáaa";
+        String s = "holï¿½aa";
         byte[] array = s.getBytes("UTF-8");
         for(int i=0; i<array.length; i++){
             System.out.print("  "+array[i]);

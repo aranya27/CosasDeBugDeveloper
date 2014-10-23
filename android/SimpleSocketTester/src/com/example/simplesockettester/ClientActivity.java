@@ -7,18 +7,25 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Arrays;
+import java.util.Map;
 
 import com.sockettester.utils.Util;
 
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -52,6 +59,7 @@ public class ClientActivity extends ActionBarActivity {
 		chk_hex_client = (CheckBox)this.findViewById(R.id.chk_hex_client);
 		chk_hex_server = (CheckBox)this.findViewById(R.id.chk_hex_server);
 		btn_send = (Button)this.findViewById(R.id.btn_send);
+		
 		
 		
 		btn_connect.setOnClickListener(new OnClickListener(){
@@ -160,6 +168,49 @@ public class ClientActivity extends ActionBarActivity {
 			
 		});
 		
+		
+		restoreInputsData();
+	}
+	
+	
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		saveInputsData();
+	}
+	
+	private void saveInputsData(){
+		SharedPreferences prefs = getSharedPreferences(Util.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.putString("clientview_server_address", txt_server_address.getText().toString() );
+		editor.putString("clientview_server_port", txt_server_port.getText().toString() );
+		editor.putString("clientview_info_to_send", txt_input_client.getText().toString() );
+		editor.putBoolean("clientview_client_hex_info", chk_hex_client.isChecked() );
+		editor.putBoolean("clientview_server_hex_info", chk_hex_server.isChecked() );
+		editor.commit();
+		
+		Map<String, ?> allEntries = prefs.getAll();
+		for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+		    Log.d("map values", entry.getKey() + ": " + entry.getValue().toString());
+		} 
+	}
+	
+	private void restoreInputsData(){
+		SharedPreferences prefs = getSharedPreferences(Util.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+		System.out.println("prefs = "+prefs);
+		System.out.println("txt_server_address = "+txt_server_address);
+		if( prefs != null){	
+			Map<String, ?> allEntries = prefs.getAll();
+			for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+			    Log.d("map values", entry.getKey() + ": " + entry.getValue().toString());
+			} 
+			txt_server_address.setText( prefs.getString("clientview_server_address", "") );
+			txt_server_port.setText( prefs.getString("clientview_server_port", "") );
+			txt_input_client.setText( prefs.getString("clientview_info_to_send", "") );
+			chk_hex_client.setChecked( prefs.getBoolean("clientview_client_hex_info", false) );
+			chk_hex_client.setChecked( prefs.getBoolean("clientview_client_hex_info", false) );
+		}
 	}
 	
 	private void setMessageInfo(int idMessage, int idStyle){
@@ -230,7 +281,10 @@ public class ClientActivity extends ActionBarActivity {
 			System.out.println("SE acaba el hilo");
 			return null;
 		}
-		
-		
 	}
+	
+	
+	
+	
+	
 }

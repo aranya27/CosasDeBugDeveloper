@@ -30,7 +30,6 @@
         android:layout_alignParentRight="true"
         android:hint="@string/server_address" 
         style="@style/txt_input_1"
-        android:text="192.168.1.114"
         >
 
         <requestFocus android:layout_width="wrap_content" />
@@ -47,8 +46,7 @@
         android:ems="5"
         android:maxLength="5"
         android:hint="@string/server_port"
-        android:inputType="number"
-        android:text="1" />
+        android:inputType="number"/>
 	
 	<Button
         android:id="@+id/btn_connect"
