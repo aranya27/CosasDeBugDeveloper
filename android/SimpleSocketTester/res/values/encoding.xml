@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="encodings">
+        <item>UTF-8</item>
+        <item>iso&#8211;8859&#8211;1</item>
+    </string-array>
+</resources>
