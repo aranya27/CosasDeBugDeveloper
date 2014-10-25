@@ -83,7 +83,6 @@
     </style>
     
     
-    
     <style name="txt_check">
         <item name="android:textColor">#fff</item>
         <item name="android:layout_marginTop">10sp</item>

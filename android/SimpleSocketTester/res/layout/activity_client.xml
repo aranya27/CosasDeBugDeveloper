@@ -66,6 +66,7 @@
 	    android:layout_below="@id/btn_connect"
 	    android:hint="@string/info_to_send"
 	    android:inputType="textMultiLine"
+	    android:lines="8"
 	     />
 	
 	<CheckBox
@@ -97,6 +98,15 @@
 	    style="@style/btn_default"
 	     />
 	
+	<Spinner
+	    android:id="@+id/spinner_encoding_client"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/txt_input_client"
+	    android:layout_toRightOf="@id/btn_send"
+	    
+	     />
+	
 	<EditText
 	    android:id="@+id/txt_output_client"
 	    style="@style/txt_input_2"
@@ -108,6 +118,7 @@
 	    android:ems="10"
 	    android:hint="@string/server_answer"
 	    android:inputType="textMultiLine"
+	    android:lines="8"
 	     />
 	
 	<CheckBox
@@ -139,6 +150,8 @@
     	android:weightSum="2"
     	android:layout_marginTop="15dp"
 	    >
+        
+	    <!-- 
 		<Button
 		    android:id="@+id/btn_load_cfg"
 		    android:layout_width="0dp"
@@ -157,6 +170,8 @@
 		    android:layout_weight="1"
 		    style="@style/btn_default"
 		    />
+		    
+		 -->
 	</LinearLayout>
 	
 </RelativeLayout>

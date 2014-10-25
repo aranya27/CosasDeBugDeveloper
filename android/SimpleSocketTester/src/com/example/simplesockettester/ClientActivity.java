@@ -26,11 +26,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class ClientActivity extends ActionBarActivity {
@@ -39,6 +41,7 @@ public class ClientActivity extends ActionBarActivity {
 	TextView txt_info;
 	Button btn_connect, btn_send, btn_clear_info_to_send, btn_clear_info_from_server;
 	CheckBox chk_hex_client, chk_hex_server;
+	Spinner spinner_encoding_client, spinner_encoding_server;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +62,12 @@ public class ClientActivity extends ActionBarActivity {
 		chk_hex_client = (CheckBox)this.findViewById(R.id.chk_hex_client);
 		chk_hex_server = (CheckBox)this.findViewById(R.id.chk_hex_server);
 		btn_send = (Button)this.findViewById(R.id.btn_send);
+		spinner_encoding_client = (Spinner)this.findViewById(R.id.spinner_encoding_client);
+		//spinner_encoding_server = (Spinner)this.findViewById(R.id.spinner_encoding_server);
 		
-		
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.encodings, R.layout.spinner_item_text);
+		adapter.setDropDownViewResource(R.layout.spinner_item_text_dropdown);
+		spinner_encoding_client.setAdapter(adapter);
 		
 		btn_connect.setOnClickListener(new OnClickListener(){
 			@Override
@@ -148,6 +155,16 @@ public class ClientActivity extends ActionBarActivity {
 			}
 		});
 		
+		chk_hex_client.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				Util.changeInfoToBytesStringOrToString(txt_input_client, ((CheckBox)v).isChecked());
+			}
+			
+		});
+		
+		/*
 		chk_hex_client.setOnCheckedChangeListener(new OnCheckedChangeListener(){
 
 			@Override
@@ -157,7 +174,18 @@ public class ClientActivity extends ActionBarActivity {
 			}
 			
 		});
+		*/
 		
+		chk_hex_server.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				Util.changeInfoToBytesStringOrToString(txt_output_client, ((CheckBox)v).isChecked());
+			}
+			
+		});
+		
+		/*
 		chk_hex_server.setOnCheckedChangeListener(new OnCheckedChangeListener(){
 
 			@Override
@@ -167,7 +195,7 @@ public class ClientActivity extends ActionBarActivity {
 			}
 			
 		});
-		
+		*/
 		
 		restoreInputsData();
 	}
@@ -187,6 +215,7 @@ public class ClientActivity extends ActionBarActivity {
 		editor.putString("clientview_server_port", txt_server_port.getText().toString() );
 		editor.putString("clientview_info_to_send", txt_input_client.getText().toString() );
 		editor.putBoolean("clientview_client_hex_info", chk_hex_client.isChecked() );
+		editor.putString("clientview_info_received", txt_output_client.getText().toString() );
 		editor.putBoolean("clientview_server_hex_info", chk_hex_server.isChecked() );
 		editor.commit();
 		
@@ -209,7 +238,8 @@ public class ClientActivity extends ActionBarActivity {
 			txt_server_port.setText( prefs.getString("clientview_server_port", "") );
 			txt_input_client.setText( prefs.getString("clientview_info_to_send", "") );
 			chk_hex_client.setChecked( prefs.getBoolean("clientview_client_hex_info", false) );
-			chk_hex_client.setChecked( prefs.getBoolean("clientview_client_hex_info", false) );
+			txt_output_client.setText( prefs.getString("clientview_info_received", "") );
+			chk_hex_server.setChecked( prefs.getBoolean("clientview_server_hex_info", false) );
 		}
 	}
 	
