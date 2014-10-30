@@ -65,8 +65,17 @@ public class ClientActivity extends ActionBarActivity {
 		spinner_encoding_client = (Spinner)this.findViewById(R.id.spinner_encoding_client);
 		//spinner_encoding_server = (Spinner)this.findViewById(R.id.spinner_encoding_server);
 		
+		/*
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.encodings, R.layout.spinner_item_text);
 		adapter.setDropDownViewResource(R.layout.spinner_item_text_dropdown);
+		*/
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+		        R.array.encodings, android.R.layout.simple_spinner_item);
+		// Specify the layout to use when the list of choices appears
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// Apply the adapter to the spinner
+		
+		
 		spinner_encoding_client.setAdapter(adapter);
 		
 		btn_connect.setOnClickListener(new OnClickListener(){

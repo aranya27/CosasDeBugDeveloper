@@ -82,6 +82,10 @@
         <item name="android:gravity">top</item>
     </style>
     
+    <style name="spinner">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#f00</item>
+    </style>
     
     <style name="txt_check">
         <item name="android:textColor">#fff</item>

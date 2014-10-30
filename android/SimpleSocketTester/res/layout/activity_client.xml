@@ -104,7 +104,7 @@
 	    android:layout_height="wrap_content"
 	    android:layout_below="@+id/txt_input_client"
 	    android:layout_toRightOf="@id/btn_send"
-	    
+	    style="@style/spinner"
 	     />
 	
 	<EditText
