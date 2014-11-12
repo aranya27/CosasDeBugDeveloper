@@ -4,8 +4,7 @@ import android.widget.EditText;
 
 
 public class Util {
-	public static String CHARSET = "iso-8859-1";
-	public static String SHARED_PREFERENCES_NAME = "MyPreferences";
+	public static String SHARED_PREFERENCES_NAME = "Preferences";
 	
 	
     //http://javarevisited.blogspot.sg/2013/03/convert-and-print-byte-array-to-hex-string-java-example-tutorial.html
@@ -28,6 +27,7 @@ public class Util {
         return sb.toString().toUpperCase();
     }
     
+    /*
     public static void changeInfoToBytesStringOrToString(EditText editText, boolean toHex){
     	String infoEditText = editText.getText().toString().trim();
     	
@@ -44,6 +44,7 @@ public class Util {
     		}
     	}
     }
+    */
     
     public static void main(String[] args) throws Exception{
         

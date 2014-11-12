@@ -13,13 +13,38 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.simplesockettester.ClientActivity" >
 	
+    <RadioGroup
+        android:id="@+id/radioG_behavior"
+        android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    android:gravity="center"
+	    >
+	    <RadioButton android:id="@+id/radio_client"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/radio_client"
+	        android:layout_marginLeft="20sp"
+	        style="@style/radio"
+	        />
+	    
+	    <RadioButton android:id="@+id/radio_server"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/radio_server"
+	        android:layout_marginRight="20sp"
+	        style="@style/radio"
+	        />
+    </RadioGroup>
+    
     <TextView
         android:id="@+id/txt_info"
         style="@style/txt_info"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/txt_server_address"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@id/radioG_behavior"
+         />
     
     <EditText
         android:id="@+id/txt_server_address"
@@ -48,14 +73,25 @@
         android:hint="@string/server_port"
         android:inputType="number"/>
 	
-	<Button
-        android:id="@+id/btn_connect"
+	<ToggleButton
+        android:id="@+id/btn_connect_disconnect"
         android:layout_below="@id/txt_server_address"
         android:layout_toRightOf="@id/txt_server_port"
-        android:text="@string/connect"
+        android:textOn="@string/disconnect"
+        android:textOff="@string/connect"
         style="@style/btn_default"
          />
-    
+	
+    <ToggleButton
+	    android:id="@+id/btn_start_stop_server"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_toRightOf="@+id/btn_connect_disconnect"
+	    android:layout_below="@id/txt_server_address"
+	    android:textOn="@string/stop_server"
+        android:textOff="@string/start_server"
+        style="@style/btn_default"
+	     />
 	<EditText
 	    android:id="@+id/txt_input_client"
 	    style="@style/txt_input_2"
@@ -63,27 +99,17 @@
 	    android:layout_height="wrap_content"
 	    android:layout_alignLeft="@id/txt_server_port"
 	    android:layout_alignRight="@+id/txt_server_address"
-	    android:layout_below="@id/btn_connect"
+	    android:layout_below="@id/txt_server_port"
 	    android:hint="@string/info_to_send"
 	    android:inputType="textMultiLine"
 	    android:lines="8"
 	     />
-	
-	<CheckBox
-	    android:id="@+id/chk_hex_client"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignLeft="@+id/txt_input_client"
-	    android:layout_below="@+id/txt_input_client"
-	    style="@style/txt_info"
-	    android:text="@string/hex" />
 	
 	<Button
 	    android:id="@+id/btn_clear_info_to_send"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_below="@+id/txt_input_client"
-	    android:layout_toRightOf="@id/chk_hex_client"
 	    android:text="@string/clear"
 	    style="@style/btn_default"
 	     />
@@ -98,12 +124,21 @@
 	    style="@style/btn_default"
 	     />
 	
+	<CheckBox
+	    android:id="@+id/chk_hex_client"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/txt_input_client"
+	    android:layout_toRightOf="@id/btn_send"
+	    style="@style/txt_info"
+	    android:text="@string/hex" />
+	
 	<Spinner
 	    android:id="@+id/spinner_encoding_client"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_below="@+id/txt_input_client"
-	    android:layout_toRightOf="@id/btn_send"
+	    android:layout_toRightOf="@id/chk_hex_client"
 	    style="@style/spinner"
 	     />
 	
@@ -116,31 +151,42 @@
 	    android:layout_alignRight="@+id/txt_input_client"
 	    android:layout_below="@id/btn_clear_info_to_send"
 	    android:ems="10"
-	    android:hint="@string/server_answer"
 	    android:inputType="textMultiLine"
 	    android:lines="8"
 	     />
 	
-	<CheckBox
-	    android:id="@+id/chk_hex_server"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignLeft="@+id/txt_output_client"
-	    android:layout_below="@+id/txt_output_client"
-	    style="@style/txt_info"
-	    android:text="@string/hex" />
+
 	
 	<Button
 	    android:id="@+id/btn_clear_info_from_server"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_below="@+id/txt_output_client"
-	    android:layout_toRightOf="@id/chk_hex_server"
 	    android:text="@string/clear"
 	    style="@style/btn_default"
 	     />
 	
+	<CheckBox
+	    android:id="@+id/chk_hex_server"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/txt_output_client"
+	    android:layout_toRightOf="@id/btn_clear_info_from_server"
+	    style="@style/txt_info"
+	    android:text="@string/hex" 
+	     />
+		
+	<Spinner
+	    android:id="@+id/spinner_encoding_server"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/txt_output_client"
+	    android:layout_toRightOf="@id/chk_hex_server"
+	    style="@style/spinner"
+	     />
 	
+	
+	<!-- 
 	<LinearLayout 
 	    android:layout_below="@+id/btn_clear_info_from_server"
 	    android:layout_width="match_parent"
@@ -151,7 +197,7 @@
     	android:layout_marginTop="15dp"
 	    >
         
-	    <!-- 
+	    
 		<Button
 		    android:id="@+id/btn_load_cfg"
 		    android:layout_width="0dp"
@@ -171,9 +217,9 @@
 		    style="@style/btn_default"
 		    />
 		    
-		 -->
+		 
 	</LinearLayout>
-	
+	-->
 </RelativeLayout>
 
 </ScrollView>
