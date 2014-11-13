@@ -33,6 +33,8 @@
     <string name="couldn_connect_to_host">Could not connect to host</string>
     <string name="couldn_start_server">Could not start the server</string>
     <string name="invalid_message">Invalid message</string>
+    <string name="local_ip">Local IP</string>
+    <string name="clients_connected">Clients connected</string>
     
     
 </resources>

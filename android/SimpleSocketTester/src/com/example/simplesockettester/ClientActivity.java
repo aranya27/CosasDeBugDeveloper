@@ -20,9 +20,11 @@ import com.sockettester.utils.Util;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.Formatter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -137,6 +139,7 @@ public class ClientActivity extends  Activity {
 		txt_output_client.setHint(R.string.server_answer);
 		showHideCharsetOptions();
 		txt_info.setText("");
+		txt_server_address.setText("");
 	}
 	
 	private void changeToServerMode(){
@@ -150,6 +153,7 @@ public class ClientActivity extends  Activity {
 		txt_output_client.setHint(R.string.clients_answer);
 		showHideCharsetOptions();
 		txt_info.setText("");
+		txt_server_address.setText("");
 	}
 	
 	private void addListenersToViews(){
@@ -197,11 +201,16 @@ public class ClientActivity extends  Activity {
 							setMessageInfo(R.string.socket_connected, R.style.txt_success);
 						}catch (UnknownHostException e) {
 							setMessageInfo(R.string.unknown_host, R.style.txt_error);
+							buttonView.setChecked(false);
 							e.printStackTrace();
 						} catch (IOException e) {
 							setMessageInfo(R.string.couldn_connect_to_host, R.style.txt_error);
+							buttonView.setChecked(false);
 							e.printStackTrace();
 						}
+					}
+					else{
+						buttonView.setChecked(false);
 					}
 				}
 			}
@@ -227,12 +236,16 @@ public class ClientActivity extends  Activity {
 							serverOn = true;
 							clientSocketList = new ArrayList<Socket>();
 							sd.execute();
-							
+							refreshInfoIPAndClientsConnected();
 							setMessageInfo(R.string.server_on, R.style.txt_success);
 						} catch (IOException e) {
 							setMessageInfo(R.string.couldn_start_server, R.style.txt_error);
+							buttonView.setChecked(false);
 							e.printStackTrace();
 						}
+					}
+					else{
+						buttonView.setChecked(false);
 					}
 				}
 				
@@ -426,6 +439,19 @@ public class ClientActivity extends  Activity {
 		
 	}
 	
+	private void refreshInfoIPAndClientsConnected(){
+		WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
+		String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+		String clients_connected_message = getResources().getString(R.string.clients_connected);
+		String local_ip_message = getResources().getString(R.string.local_ip);
+		
+		int clientsConnected = 0;
+		
+		if(clientSocketList != null) clientsConnected = clientSocketList.size();
+		
+		
+		txt_server_address.setText(local_ip_message+": "+ip+" - "+clients_connected_message+": "+clientsConnected);
+	}
 	
 	
 	private class ServerHandlerThread extends AsyncTask <Void, byte[], Void> {
@@ -449,7 +475,14 @@ public class ClientActivity extends  Activity {
 				try{
 					so = serverSocket.accept();
 					clientSocketList.add(so);
-					
+					runOnUiThread( 
+	            		new Runnable() {
+	                        @Override
+	                        public void run() {
+	                        	refreshInfoIPAndClientsConnected();
+	                        }
+	                    }
+	            	);
 					
 					Thread cliThread = new Thread( new ClientServiceThread(so) );
 	                cliThread.start(); 
@@ -503,11 +536,20 @@ public class ClientActivity extends  Activity {
 	                }
 	            }
             }catch(Exception e){
-            	e.printStackTrace();
+            	//e.printStackTrace();
             }
             finally{
             	Log.d("MSG", "ADIOS PUTO");
             	if( clientSocketList != null ) clientSocketList.remove(clientSocket);
+            	runOnUiThread( 
+            		new Runnable() {
+                        @Override
+                        public void run() {
+                        	refreshInfoIPAndClientsConnected();
+                        }
+                    }
+            	);
+            	
             }
 		}
 		
