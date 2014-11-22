@@ -24,6 +24,7 @@ import android.text.format.Formatter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -410,6 +411,15 @@ public class ClientActivity extends  Activity {
 			chk_hex_client.setChecked( prefs.getBoolean("clientview_client_hex_info", false) );
 			txt_output_client.setText( prefs.getString("clientview_info_received", "") );
 			chk_hex_server.setChecked( prefs.getBoolean("clientview_server_hex_info", false) );
+			
+			if(socket != null && socket.isConnected() ){
+				btn_connect_disconnect.setChecked( true );
+			}
+			
+			if(serverSocket != null && !serverSocket.isClosed() ){
+				btn_start_stop_server.setChecked( true );
+			}
+			
 		}
 	}
 	
@@ -451,6 +461,20 @@ public class ClientActivity extends  Activity {
 		
 		
 		txt_server_address.setText(local_ip_message+": "+ip+" - "+clients_connected_message+": "+clientsConnected);
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	    super.onConfigurationChanged(newConfig);
+
+	    /*if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+	        setContentView(R.layout.activity_client);
+
+	    } else {
+	        setContentView(R.layout.activity_client);
+	    }
+	    setContentView(R.layout.activity_client);
+	    restoreInputsData();*/
 	}
 	
 	
