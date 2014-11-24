@@ -1,0 +1,227 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+<RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.simplesockettester.MainActivity" >
+	
+    <RadioGroup
+        android:id="@+id/radioG_behavior"
+        android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    android:gravity="center"
+	    >
+	    <RadioButton android:id="@+id/radio_client"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/radio_client"
+	        android:layout_marginLeft="20sp"
+	        style="@style/radio"
+	        />
+	    
+	    <RadioButton android:id="@+id/radio_server"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/radio_server"
+	        android:layout_marginRight="20sp"
+	        style="@style/radio"
+	        />
+    </RadioGroup>
+    
+    <TextView
+        android:id="@+id/txt_info"
+        style="@style/txt_info"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@id/radioG_behavior"
+         />
+    
+    <EditText
+        android:id="@+id/txt_server_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_info"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:hint="@string/server_address" 
+        style="@style/txt_input_1"
+        >
+
+        <requestFocus android:layout_width="wrap_content" />
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/txt_server_port"
+        style="@style/txt_input_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/txt_server_address"
+        android:layout_below="@id/txt_server_address"
+        android:ems="5"
+        android:maxLength="5"
+        android:hint="@string/server_port"
+        android:inputType="number"/>
+	
+	<ToggleButton
+        android:id="@+id/btn_connect_disconnect"
+        android:layout_below="@id/txt_server_address"
+        android:layout_toRightOf="@id/txt_server_port"
+        android:textOn="@string/disconnect"
+        android:textOff="@string/connect"
+        style="@style/btn_default"
+         />
+	
+    <ToggleButton
+	    android:id="@+id/btn_start_stop_server"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_toRightOf="@+id/btn_connect_disconnect"
+	    android:layout_below="@id/txt_server_address"
+	    android:textOn="@string/stop_server"
+        android:textOff="@string/start_server"
+        style="@style/btn_default"
+	     />
+	<EditText
+	    android:id="@+id/txt_input_client"
+	    style="@style/txt_input_2"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@id/txt_server_port"
+	    android:layout_alignRight="@+id/txt_server_address"
+	    android:layout_below="@id/txt_server_port"
+	    android:hint="@string/info_to_send"
+	    android:inputType="textMultiLine"
+	    android:lines="8"
+	     />
+	
+	<Button
+	    android:id="@+id/btn_clear_info_to_send"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/txt_input_client"
+	    android:text="@string/clear"
+	    style="@style/btn_default"
+	     />
+	
+	<Button
+	    android:id="@+id/btn_send"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/txt_input_client"
+	    android:layout_toRightOf="@id/btn_clear_info_to_send"
+	    android:text="@string/send"
+	    style="@style/btn_default"
+	     />
+	
+	<CheckBox
+	    android:id="@+id/chk_hex_client"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/txt_input_client"
+	    android:layout_toRightOf="@id/btn_send"
+	    style="@style/txt_info"
+	    android:text="@string/hex" />
+	
+	<Spinner
+	    android:id="@+id/spinner_encoding_client"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/txt_input_client"
+	    android:layout_toRightOf="@id/chk_hex_client"
+	    android:layout_marginLeft="20dip"
+	    style="@style/spinner"
+	     />
+	
+	<EditText
+	    android:id="@+id/txt_output_client"
+	    style="@style/txt_input_2"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@id/txt_input_client"
+	    android:layout_alignRight="@+id/txt_input_client"
+	    android:layout_below="@id/btn_clear_info_to_send"
+	    android:ems="10"
+	    android:inputType="textMultiLine"
+	    android:lines="8"
+	     />
+	
+
+	
+	<Button
+	    android:id="@+id/btn_clear_info_from_server"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/txt_output_client"
+	    android:text="@string/clear"
+	    style="@style/btn_default"
+	     />
+	
+	<CheckBox
+	    android:id="@+id/chk_hex_server"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/txt_output_client"
+	    android:layout_toRightOf="@id/btn_clear_info_from_server"
+	    style="@style/txt_info"
+	    android:text="@string/hex" 
+	     />
+		
+	<Spinner
+	    android:id="@+id/spinner_encoding_server"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/txt_output_client"
+	    android:layout_toRightOf="@id/chk_hex_server"
+	    android:layout_marginLeft="20dip"
+	    style="@style/spinner"
+	     />
+	
+	
+	<!-- 
+	<LinearLayout 
+	    android:layout_below="@+id/btn_clear_info_from_server"
+	    android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+	    android:gravity="center"
+    	android:orientation="horizontal"
+    	android:weightSum="2"
+    	android:layout_marginTop="15dp"
+	    >
+        
+	    
+		<Button
+		    android:id="@+id/btn_load_cfg"
+		    android:layout_width="0dp"
+		    android:layout_height="wrap_content"
+		    android:text="@string/load_cfg" 
+		    android:layout_weight="1" 
+		    style="@style/btn_default"
+		    />
+		
+		<Button
+		    android:id="@+id/btn_save_cfg"
+		    android:layout_width="0dp"
+		    android:layout_height="wrap_content"
+		    android:gravity="center"
+		    android:text="@string/save_cfg" 
+		    android:layout_weight="1"
+		    style="@style/btn_default"
+		    />
+		    
+		 
+	</LinearLayout>
+	-->
+</RelativeLayout>
+
+</ScrollView>

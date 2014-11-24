@@ -1,8 +1,5 @@
 package com.sockettester.utils;
 
-import android.widget.EditText;
-
-
 public class Util {
 	public static String SHARED_PREFERENCES_NAME = "Preferences";
 	

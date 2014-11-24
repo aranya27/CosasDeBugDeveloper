@@ -11,7 +11,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.simplesockettester.ClientActivity" >
+    tools:context="com.example.simplesockettester.MainActivity" >
 	
     <RadioGroup
         android:id="@+id/radioG_behavior"
@@ -35,6 +35,16 @@
 	        android:layout_marginRight="20sp"
 	        style="@style/radio"
 	        />
+
+	    <EditText
+	        android:id="@+id/editText1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:ems="10"
+	        android:text="putos"
+	        android:inputType="textPersonName" />
+
     </RadioGroup>
     
     <TextView
@@ -139,6 +149,7 @@
 	    android:layout_height="wrap_content"
 	    android:layout_below="@+id/txt_input_client"
 	    android:layout_toRightOf="@id/chk_hex_client"
+	    android:layout_marginLeft="20dip"
 	    style="@style/spinner"
 	     />
 	
@@ -182,6 +193,7 @@
 	    android:layout_height="wrap_content"
 	    android:layout_below="@+id/txt_output_client"
 	    android:layout_toRightOf="@id/chk_hex_server"
+	    android:layout_marginLeft="20dip"
 	    style="@style/spinner"
 	     />
 	
