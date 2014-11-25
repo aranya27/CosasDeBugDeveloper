@@ -19,12 +19,16 @@ import com.sockettester.utils.Util;
 
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.text.format.Formatter;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -65,6 +69,9 @@ public class MainActivity extends  Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_activity);
+		ActionBar actionBar = this.getActionBar();
+		actionBar.setBackgroundDrawable(new ColorDrawable( Color.parseColor("#222222") )); 
+		actionBar.setTitle(Html.fromHtml("<font color='#ffffff'>"+getResources().getString(R.string.app_name)+"</font>"));
 		
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);

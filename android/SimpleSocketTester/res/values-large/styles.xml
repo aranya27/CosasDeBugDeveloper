@@ -1,0 +1,103 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:background">#222</item>
+    </style>
+    
+    <style name="title_text" parent="AppBaseTheme">
+        <item name="android:padding">4dip</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize" >29sp</item>
+		<item name="android:shadowDx" >1.5</item>
+    </style>
+    
+    
+    <style name="btn_default">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:typeface">monospace</item>
+		<item name="android:gravity" >center</item>
+		<item name="android:textSize" >30sp</item>
+		<item name="android:textColor">#fff</item>
+    </style>
+    
+    <style name="btn_menu" parent="@android:style/Widget.Button">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:typeface">monospace</item>
+		<item name="android:textColor">#fff</item>
+		<item name="android:gravity" >center</item>
+		<item name="android:textSize" >20sp</item>
+		<item name="android:background">@drawable/menu_button</item>
+		<item name="android:layout_margin">10dp</item>
+    </style>
+    
+    <style name="txt_input_1">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:background">@drawable/edittext</item>
+        <item name="android:layout_marginTop">10sp</item>
+        <item name="android:gravity">top</item>
+        <item name="android:ems">10</item>
+    </style>
+    
+    <style name="txt_input_2">
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:background">@drawable/edittext</item>
+        <item name="android:layout_marginTop">10sp</item>
+        <item name="android:gravity">top</item>
+        <item name="android:lines">6</item>
+        <item name="android:ems">10</item>
+    </style>
+	
+    <style name="radio">
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:gravity">top</item>
+    </style>
+    
+    <style name="txt_info">
+        <item name="android:textColor">#fff</item>
+        <item name="android:layout_marginTop">10sp</item>
+        <item name="android:gravity">top</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+    
+    <style name="txt_error">
+        <item name="android:textColor">#DB0404</item>
+        <item name="android:layout_marginTop">10sp</item>
+        <item name="android:gravity">top</item>
+    </style>
+    
+    <style name="txt_success">
+        <item name="android:textColor">#15D400</item>
+        <item name="android:layout_marginTop">10sp</item>
+        <item name="android:gravity">top</item>
+    </style>
+    
+    <style name="spinner">
+        <item name="android:textSize">40sp</item>
+        <item name="android:textColor">#f00</item>
+    </style>
+    
+    <style name="txt_check">
+        <item name="android:textColor">#fff</item>
+        <item name="android:layout_marginTop">10sp</item>
+        <item name="android:gravity">top</item>
+    </style>
+
+</resources>

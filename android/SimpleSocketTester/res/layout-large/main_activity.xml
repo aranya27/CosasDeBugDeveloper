@@ -36,15 +36,6 @@
 	        style="@style/radio"
 	        />
 
-	    <EditText
-	        android:id="@+id/editText1"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
-	        android:ems="10"
-	        android:text="putos"
-	        android:inputType="textPersonName" />
-
     </RadioGroup>
     
     <TextView
@@ -84,24 +75,25 @@
         android:inputType="number"/>
 	
 	<ToggleButton
-        android:id="@+id/btn_connect_disconnect"
-        android:layout_below="@id/txt_server_address"
-        android:layout_toRightOf="@id/txt_server_port"
-        android:textOn="@string/disconnect"
-        android:textOff="@string/connect"
-        style="@style/btn_default"
-         />
+	    android:id="@+id/btn_connect_disconnect"
+	    style="@style/btn_default"
+	    android:layout_alignBottom="@+id/txt_server_port"
+	    android:layout_below="@id/txt_server_address"
+	    android:layout_toRightOf="@id/txt_server_port"
+	    android:textOff="@string/connect"
+	    android:textOn="@string/disconnect" />
 	
     <ToggleButton
-	    android:id="@+id/btn_start_stop_server"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_toRightOf="@+id/btn_connect_disconnect"
-	    android:layout_below="@id/txt_server_address"
-	    android:textOn="@string/stop_server"
-        android:textOff="@string/start_server"
+        android:id="@+id/btn_start_stop_server"
         style="@style/btn_default"
-	     />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txt_input_client"
+        android:layout_below="@id/txt_server_address"
+        android:layout_toRightOf="@+id/btn_connect_disconnect"
+        android:textOff="@string/start_server"
+        android:textOn="@string/stop_server" />
+
 	<EditText
 	    android:id="@+id/txt_input_client"
 	    style="@style/txt_input_2"
