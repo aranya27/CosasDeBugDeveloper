@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.google.android.gms.ads.AdView;
 import com.sockettester.utils.Util;
 
 import android.support.v7.app.ActionBarActivity;
@@ -64,6 +65,7 @@ public class MainActivity extends  Activity {
 	CheckBox chk_hex_client, chk_hex_server;
 	Spinner spinner_encoding_client, spinner_encoding_server;
 	boolean serverOn = false;
+	private AdView adView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

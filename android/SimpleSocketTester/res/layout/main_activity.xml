@@ -1,4 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ScrollView01"
     android:layout_width="fill_parent"
@@ -13,12 +14,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.simplesockettester.MainActivity" >
 	
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-123456789/123456789" />
+    
     <RadioGroup
         android:id="@+id/radioG_behavior"
         android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:orientation="horizontal"
 	    android:gravity="center"
+	    android:layout_below="@id/adView"
 	    >
 	    <RadioButton android:id="@+id/radio_client"
 	        android:layout_width="wrap_content"
@@ -102,7 +111,7 @@
 	    android:layout_below="@id/txt_server_port"
 	    android:hint="@string/info_to_send"
 	    android:inputType="textMultiLine"
-	    android:lines="8"
+	    android:lines="6"
 	     />
 	
 	<Button
@@ -153,7 +162,7 @@
 	    android:layout_below="@id/btn_clear_info_to_send"
 	    android:ems="10"
 	    android:inputType="textMultiLine"
-	    android:lines="8"
+	    android:lines="6"
 	     />
 	
 
