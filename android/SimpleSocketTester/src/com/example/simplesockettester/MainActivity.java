@@ -80,6 +80,7 @@ public class MainActivity extends  Activity {
         findViews();
 		addListenersToViews();
 		restoreInputsData();
+		showHideCharsetOptions();
 	}
 	
 	private void findViews(){
