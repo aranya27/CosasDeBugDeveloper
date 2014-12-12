@@ -84,7 +84,7 @@ public class MainActivity extends  Activity {
 		restoreInputsData();
 		showHideCharsetOptions();
 		
-		/*
+		
 		AdView adView = (AdView) this.findViewById(R.id.adView);
         //request TEST ads to avoid being disabled for clicking your own ads
         AdRequest adRequest = new AdRequest.Builder()
@@ -94,7 +94,7 @@ public class MainActivity extends  Activity {
                 
                 .build();
         adView.loadAd(adRequest);
-        */
+        
 	}
 	
 	private void findViews(){
@@ -223,11 +223,11 @@ public class MainActivity extends  Activity {
 						}catch (UnknownHostException e) {
 							setMessageInfo(R.string.unknown_host, R.style.txt_error);
 							buttonView.setChecked(false);
-							e.printStackTrace();
+							//e.printStackTrace();
 						} catch (IOException e) {
 							setMessageInfo(R.string.couldn_connect_to_host, R.style.txt_error);
 							buttonView.setChecked(false);
-							e.printStackTrace();
+							//e.printStackTrace();
 						}
 					}
 					else{
@@ -263,7 +263,7 @@ public class MainActivity extends  Activity {
 						} catch (Exception e) {
 							setMessageInfo(R.string.couldn_start_server, R.style.txt_error);
 							buttonView.setChecked(false);
-							e.printStackTrace();
+							//e.printStackTrace();
 						}
 					}
 					else{
@@ -404,19 +404,20 @@ public class MainActivity extends  Activity {
 		editor.putBoolean("clientview_server_hex_info", chk_hex_server.isChecked() );
 		editor.commit();
 		
+		/*
 		Map<String, ?> allEntries = prefs.getAll();
 		for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
 		    Log.d("map values", entry.getKey() + ": " + entry.getValue().toString());
-		} 
+		}*/
 	}
 	
 	private void restoreInputsData(){
 		SharedPreferences prefs = getSharedPreferences(Util.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
 		if( prefs != null){	
-			Map<String, ?> allEntries = prefs.getAll();
+			/*Map<String, ?> allEntries = prefs.getAll();
 			for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
 			    Log.d("map values", entry.getKey() + ": " + entry.getValue().toString());
-			}
+			}*/
 			
 			boolean client_mode = prefs.getBoolean("client_mode", true);
 			if( client_mode ){
@@ -463,7 +464,7 @@ public class MainActivity extends  Activity {
 			try{
 				result.append(new String(answer, spinner_encoding_server.getSelectedItem().toString() ) );
 			}catch(Exception e){
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 		txt_output_client.setText( result.toString() );
@@ -531,11 +532,11 @@ public class MainActivity extends  Activity {
 					
 					Thread cliThread = new Thread( new ClientServiceThread(so) );
 	                cliThread.start(); 
-	                Log.d("MSG", "Nuevo hilo creado");
+	                //Log.d("MSG", "Nuevo hilo creado");
 					
 				}catch(Exception e){
-					Log.d("MSG", "Se termino");
-					e.printStackTrace();
+					//Log.d("MSG", "Se termino");
+					//e.printStackTrace();
 				}
 			}
 			
@@ -566,7 +567,7 @@ public class MainActivity extends  Activity {
 	            	final byte[] bytes = new byte[2048];
 	            	int count;
 	                while ((count = is.read(bytes)) > 0) {
-	                	Log.d("MSG", "Nomas esperando respuestas");
+	                	//Log.d("MSG", "Nomas esperando respuestas");
 	                	final int finalCount = count;
 	                	runOnUiThread( 
 	                		new Runnable() {
@@ -584,7 +585,6 @@ public class MainActivity extends  Activity {
             	//e.printStackTrace();
             }
             finally{
-            	Log.d("MSG", "ADIOS PUTO");
             	if( clientSocketList != null ) clientSocketList.remove(clientSocket);
             	runOnUiThread( 
             		new Runnable() {
@@ -611,7 +611,7 @@ public class MainActivity extends  Activity {
 				in = socket.getInputStream();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 		
@@ -634,16 +634,14 @@ public class MainActivity extends  Activity {
 						//http://stackoverflow.com/questions/10475898/receive-byte-using-bytearrayinputstream-from-a-socket
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
-			System.out.println("Se acaba el hilo");
 			return null;
 		}
 		
 		@Override 
 		protected void onPostExecute(Void res) {
-			System.out.println("Ejecutando onPostExecute");
 			setMessageInfo(R.string.socket_not_connected, R.style.txt_info);
 			try {
 				socket.close();
