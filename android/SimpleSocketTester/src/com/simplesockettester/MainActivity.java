@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
-import com.example.simplesockettester.R;
+import com.simplesockettester.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.simplesockettester.utils.Util;
@@ -84,7 +84,7 @@ public class MainActivity extends  Activity {
 		restoreInputsData();
 		showHideCharsetOptions();
 		
-		
+		/*
 		AdView adView = (AdView) this.findViewById(R.id.adView);
         //request TEST ads to avoid being disabled for clicking your own ads
         AdRequest adRequest = new AdRequest.Builder()
@@ -94,6 +94,7 @@ public class MainActivity extends  Activity {
                 
                 .build();
         adView.loadAd(adRequest);
+        */
 	}
 	
 	private void findViews(){

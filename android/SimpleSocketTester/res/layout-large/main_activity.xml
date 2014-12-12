@@ -14,12 +14,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.simplesockettester.MainActivity" >
 	
+	<!--  
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         ads:adSize="LARGE_BANNER"
         ads:adUnitId="ca-app-pub-1537450975399159/4762315026" />
+    android:layout_below="@id/adView"
+    -->
     
     <RadioGroup
         android:id="@+id/radioG_behavior"
@@ -27,7 +30,7 @@
 	    android:layout_height="wrap_content"
 	    android:orientation="horizontal"
 	    android:gravity="center"
-	    android:layout_below="@id/adView"
+	    
 	    >
 	    <RadioButton android:id="@+id/radio_client"
 	        android:layout_width="wrap_content"
