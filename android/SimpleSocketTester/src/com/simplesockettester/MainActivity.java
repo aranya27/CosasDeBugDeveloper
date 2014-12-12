@@ -1,4 +1,4 @@
-package com.example.simplesockettester;
+package com.simplesockettester;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,8 +15,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.example.simplesockettester.R;
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.sockettester.utils.Util;
+import com.simplesockettester.utils.Util;
 
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
@@ -81,6 +83,17 @@ public class MainActivity extends  Activity {
 		addListenersToViews();
 		restoreInputsData();
 		showHideCharsetOptions();
+		
+		
+		AdView adView = (AdView) this.findViewById(R.id.adView);
+        //request TEST ads to avoid being disabled for clicking your own ads
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                //.addTestDevice("690E5F593A34AEF3A849239B26DDE0EA")
+                //.addTestDevice("A581DF31AE30AE25AEA91004F3334D3C")
+                
+                .build();
+        adView.loadAd(adRequest);
 	}
 	
 	private void findViews(){

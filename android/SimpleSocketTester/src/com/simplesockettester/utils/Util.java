@@ -1,4 +1,4 @@
-package com.sockettester.utils;
+package com.simplesockettester.utils;
 
 public class Util {
 	public static String SHARED_PREFERENCES_NAME = "Preferences";

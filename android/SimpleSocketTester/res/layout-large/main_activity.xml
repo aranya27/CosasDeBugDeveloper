@@ -12,14 +12,14 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.simplesockettester.MainActivity" >
+    tools:context="com.simplesockettester.MainActivity" >
 	
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-123456789/123456789" />
+        ads:adSize="LARGE_BANNER"
+        ads:adUnitId="ca-app-pub-1537450975399159/4762315026" />
     
     <RadioGroup
         android:id="@+id/radioG_behavior"
