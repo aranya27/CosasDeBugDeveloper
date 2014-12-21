@@ -1,20 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans.backing;
 
 import beans.model.Candidato;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
-/**
- *
- * @author armando
- */
-@Named(value = "vacanteForm")
+
+//@Named(value = "vacanteForm")
+@ManagedBean
 @RequestScoped
 public class VacanteForm {
     
@@ -22,6 +16,15 @@ public class VacanteForm {
     private Candidato candidato;
     
     public VacanteForm() {
+    }
+    
+    public String enviar(){
+        if(this.candidato.getNombre().equals("Juan")){
+            return "exito";
+        }
+        else{
+            return null;
+        }
     }
 
     public Candidato getCandidato() {
