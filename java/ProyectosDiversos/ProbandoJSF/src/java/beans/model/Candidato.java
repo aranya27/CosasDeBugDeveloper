@@ -8,11 +8,12 @@ import javax.faces.bean.SessionScoped;
 
 //@Named(value = "candidato")
 @ManagedBean
-//@RequestScoped
-@SessionScoped
+@RequestScoped
+//@SessionScoped
 public class Candidato {
-    
-    private String nombre = "Escribe tu nombre!!";
+    private String nombre = "Escribe tu nombre";
+    private String apellido = "Introduce apellido";
+    private String sueldoDeseado = "Introduce el sueldo deseadp";
     
     public Candidato() {
     }
@@ -23,6 +24,22 @@ public class Candidato {
     
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getSueldoDeseado() {
+        return sueldoDeseado;
+    }
+
+    public void setSueldoDeseado(String sueldoDeseado) {
+        this.sueldoDeseado = sueldoDeseado;
     }
 
     

@@ -13,9 +13,28 @@
         <br /><br />
 
         <h:form>
-            <h:outputLabel for="nombre" value="Nombre:" />
-            <h:inputText id="nombre" value="#{candidato.nombre}" />
-            <h:message for="nombre" />
+            <h:messages globalOnly="true"></h:messages>
+            <table>
+                <tr>
+                    <td><h:outputLabel for="nombre" value="Nombre:" /></td>
+                    <td><h:inputText id="nombre" required="true" value="#{candidato.nombre}" /></td>
+                    <td><h:message for="nombre" />  </td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel for="apellido" value="Apellido:" /></td>
+                    <td><h:inputText id="apellido" required="true" value="#{candidato.apellido}" /></td>
+                    <td><h:message for="apellido" />  </td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel for="sueldoDeseado" value="Sueldo deseado:" /></td>
+                    <td>
+                        <h:inputText id="sueldoDeseado" required="true" value="#{candidato.sueldoDeseado}" >
+                            <f:validateLongRange minimum="1000" maximum="50000" />
+                        </h:inputText>
+                    </td>
+                    <td><h:message for="sueldoDeseado" />  </td>
+                </tr>
+            </table>
             <br />
             <h:commandButton value="Enviar" action="#{vacanteForm.enviar}" />
         </h:form>
