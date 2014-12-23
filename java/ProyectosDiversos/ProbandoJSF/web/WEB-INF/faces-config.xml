@@ -9,4 +9,19 @@
             prueba.ciclodevida.DepuracionListener
         </phase-listener>
     </lifecycle>
+    
+    <application>
+        <locale-config>
+            <default-locale>es</default-locale>
+        </locale-config>
+        
+        <resource-bundle>
+            <base-name>com.validators.Messages</base-name>
+            <var>msgs</var>
+        </resource-bundle>
+        
+        <message-bundle>
+            com.validators.Messages
+        </message-bundle>
+    </application>
 </faces-config>

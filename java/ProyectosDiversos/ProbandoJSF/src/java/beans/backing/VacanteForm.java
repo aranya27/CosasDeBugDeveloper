@@ -26,8 +26,6 @@ public class VacanteForm {
         System.out.println("enviar() Sueldo deseado="+this.candidato.getSueldoDeseado());
         
         
-        
-        
         if(this.candidato.getNombre().equals("Juan")){
             if(this.candidato.getApellido().equals("Perez")){
                 String msg = "Gracias, pero Juan Perez ya trabaja con nosotros";

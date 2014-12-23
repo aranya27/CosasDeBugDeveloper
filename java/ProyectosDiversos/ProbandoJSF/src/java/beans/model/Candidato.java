@@ -1,5 +1,6 @@
 package beans.model;
 
+import java.util.Date;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
@@ -13,7 +14,9 @@ import javax.faces.bean.SessionScoped;
 public class Candidato {
     private String nombre = "Escribe tu nombre";
     private String apellido = "Introduce apellido";
-    private String sueldoDeseado = "Introduce el sueldo deseadp";
+    private int sueldoDeseado;
+    private String email = "Introduce Email";
+    private Date fechaNacimiento;
     
     public Candidato() {
     }
@@ -34,14 +37,28 @@ public class Candidato {
         this.apellido = apellido;
     }
 
-    public String getSueldoDeseado() {
+    public int getSueldoDeseado() {
         return sueldoDeseado;
     }
 
-    public void setSueldoDeseado(String sueldoDeseado) {
+    public void setSueldoDeseado(int sueldoDeseado) {
         this.sueldoDeseado = sueldoDeseado;
     }
 
-    
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
     
 }
