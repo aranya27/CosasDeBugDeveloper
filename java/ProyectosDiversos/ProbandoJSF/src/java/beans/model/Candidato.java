@@ -17,6 +17,11 @@ public class Candidato {
     private int sueldoDeseado;
     private String email = "Introduce Email";
     private Date fechaNacimiento;
+    private String ciudad;
+    private long coloniaId;
+    private String codigoPostal;
+    private String comentario = "Escribe tu comentario...";
+    private boolean comentarioEnviado;
     
     public Candidato() {
     }
@@ -60,5 +65,46 @@ public class Candidato {
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public long getColoniaId() {
+        return coloniaId;
+    }
+
+    public void setColoniaId(long coloniaId) {
+        this.coloniaId = coloniaId;
+    }
+
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
+
+    public boolean isComentarioEnviado() {
+        return comentarioEnviado;
+    }
+
+    public void setComentarioEnviado(boolean comentarioEnviado) {
+        this.comentarioEnviado = comentarioEnviado;
+    }
+    
     
 }

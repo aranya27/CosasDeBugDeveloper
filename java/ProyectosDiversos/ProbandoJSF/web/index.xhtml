@@ -5,14 +5,16 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     </h:head>
     <h:body>
         Hello from Facelets
         <br />
         <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
         <br /><br />
-
-        <h:form>
+        #{candidato.apellido}
+        <br />
+        <h:form id="vacanteForm">
             <h:messages globalOnly="true"></h:messages>
             <table>
                 <tr>
@@ -53,11 +55,103 @@
                     </td>
                     <td><h:message for="fechaNacimiento" /></td>    
                 </tr>
+                <tr>
+                    <td><h:outputLabel for="ciudad" value="#{msgs['vacanteForm.ciudad']}" /></td>
+                    <td>
+                        <h:inputText id="ciudad" required="true" value="#{candidato.ciudad}" />
+                    </td>
+                    <td><h:message for="ciudad" /></td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel for="coloniaId" value="#{msgs['vacanteForm.coloniaId']}" /></td>
+                    <td>
+                        <h:selectOneMenu id="coloniaId" required="true" value="#{candidato.coloniaId}">
+                            <f:selectItem itemLabel="#{msgs['vacanteForm.seleccione']}" itemValue="" />
+                            <!--
+                            <f:selectItem itemLabel="Nápoles" itemValue="1" />
+                            <f:selectItem itemLabel="Polanco" itemValue="2" />
+                            <f:selectItem itemLabel="Del valle centro" itemValue="3" />
+                            -->
+                            <f:selectItems value="#{coloniaHelper.selectItems}" />
+                        </h:selectOneMenu>
+                    </td>    
+                </tr>
+
+                <tr>
+                    <td><h:outputLabel for="codigoPostal" value="#{msgs['vacanteForm.codigoPostal']}" /></td>
+                    <td>
+                        <h:inputText id="codigoPostal" immediate="true" required="true" 
+                                     onchange="this.form.submit()"
+                                     valueChangeListener="#{vacanteForm.codigoPostalListener}"
+                                     value="#{candidato.codigoPostal}" />
+                    </td>
+                    <td><h:message for="codigoPostal" /></td>
+                </tr>
             </table>
+            <table>
+                <tr>
+                    <td>
+                        <h:commandLink actionListener="#{vacanteForm.ocultarComentario}"
+                                       immediate="true" rendered="#{!candidato.comentarioEnviado}"
+                                       onclick="togglito('#{requestScope.miHidden.clientId}');"
+                                       value="#{msgs['vacanteForm.mostrar']}" />
+                        ==
+                        <h:commandLink actionListener="#{vacanteForm.ocultarComentario}"
+                                       immediate="true" rendered="#{candidato.comentarioEnviado}"
+                                       onclick="togglito('#{requestScope.miHidden.clientId}');"
+                                       value="#{msgs['vacanteForm.ocultar']}" />
+                        
+                        <h:inputHidden binding="#{requestScope.miHidden}" id="comentarioEnviado" value="#{candidato.comentarioEnviado}" />
+                        <h:inputText id="unCampoMas" required="true" value="#{vacanteForm.unCampoMas}" />
+                    </td>
+                </tr>
+            </table>
+            <h:panelGroup rendered="#{candidato.comentarioEnviado}">
+                <table>
+                    <tr>
+                        <td><h:outputLabel for="comentario" value="#{msg['vacanteForm.comentario']}" /></td>
+                    </tr>
+                    <tr>
+                        <td><h:inputTextarea id="comentario" cols="50" rows="10" value="#{candidato.comentario}" /></td>
+                    </tr>
+                </table>
+            </h:panelGroup>
+
             <br />
             <h:commandButton value="#{msgs['vacanteForm.enviar']}" action="#{vacanteForm.enviar}" />
         </h:form>
-
+        
+        
+        =============
+        <h:button value="toggle" 
+                  onclick="toggle('#{requestScope.foo.clientId}');
+                          return false;" />
+        <h:inputText binding="#{requestScope.foo}" id="x" style="display: block" />
+        <script type="text/javascript">
+            function toggle(id) {
+                var element = document.getElementById(id);
+                if (element.style.display == 'block') {
+                    element.style.display = 'none';
+                } else {
+                    element.style.display = 'block'
+                }
+            }
+            
+            function togglito(id){
+                var element = document.getElementById(id);
+                
+                if(element.value==="true"){
+                    element.value = "false";
+                }
+                else{
+                    element.value = "true";
+                }
+            }
+            
+            $( document ).ready(function() {
+                
+            });
+        </script>
     </h:body>
 </html>
 
