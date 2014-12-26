@@ -26,13 +26,19 @@
     <ListView
         android:id="@android:id/list"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="600px"
         android:layout_marginTop="10dp"
+        android:padding="10dp"
         android:layout_below="@+id/btAnular"
         tools:listitem="@android:layout/simple_list_item_checked" >
     </ListView>
 
-    
+    <Button
+        android:id="@+id/btAnularx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_mark_read"
+        android:layout_below="@android:id/list"/>
 
 </RelativeLayout> <!-- android:id="@+id/listViewMatch" -->
 
