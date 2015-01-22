@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app>	
+<meta  http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<head>
+	<script type="text/javascript" src="js/lib/angular.min.js"></script>
+	<script type="text/javascript" src="js/lib/angular-resource.min.js"></script>
+	<script type="text/javascript" src="js/controlador/datos_aeropuertos.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css">
+</head>
+<body>
+	<div class="container" ng-controller="AppControl">
+		<h1>Angular</h1>
+		<div class="pull-left span6">
+			<ul>
+				<li ng-repeat="aeropuerto in aeropuertos">
+					<a href="" ng-click="setAeropuerto(aeropuerto.codigo)">{{aeropuerto.codigo}}-{{aeropuerto.ciudad}}</a>
+				</li>
+			</ul>
+			<p ng-show="aeropuertoActual">Aeropuerto actual: {{aeropuertoActual.nombre}}</p>
+		</div>
+		
+		<div class="span5" ng-include  src="sidebarURL"></div>
+		<ng-include class="span5" src="sidebarURL"></ng-include>
+	</div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+<div class="pull-left span6">
+	<h3>Todos los destinos</h3>
+	<ul>
+		<li ng-repeat="aeropuerto in aeropuertos">
+			<a href="" ng-click="setAeropuerto(aeropuerto.codigo)">{{aeropuerto.codigo}} -{{aeropuerto.ciudad}}</a>
+		</li>
+	</ul>
+</div>
+<div class="span5" ng-include src="sidebarURL"></div>

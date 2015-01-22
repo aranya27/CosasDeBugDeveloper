@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="aerolinea">	
+<meta  http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<head>
+	<script type="text/javascript" src="js/lib/angular.min.js"></script>
+	<script type="text/javascript" src="js/lib/angular-route.min.js"></script>
+	<script type="text/javascript" src="js/lib/angular-resource.min.js"></script>
+	<script type="text/javascript" src="js/controlador/datos_aeropuertos.js"></script>
+	<script type="text/javascript" src="js/controlador/destinos.js"></script>
+	<script type="text/javascript" src="js/controlador/reservaciones.js"></script>
+	<script type="text/javascript" src="js/controlador/vuelos.js"></script>
+	<script type="text/javascript" src="js/datos_aeropuertos.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css">
+</head>
+<body>
+	<div class="container" ng-controller="AppControl">
+		<h1>AngulAIR</h1>
+		<ul class="nav nav-pills">
+			<li ng-class="destinosActive">
+				<a href="#/">Destinos</a>
+			</li>
+			<li ng-class="vuelosActive">
+				<a href="#/Vuelos">Vuelos</a>
+			</li>
+			<li ng-class="reservacionesActive">
+				<a href="#/Reservaciones">Reservaciones</a>
+			</li>
+		</ul>
+		
+		<div ng-view></div>
+	</div>
+</body>
+</html>
