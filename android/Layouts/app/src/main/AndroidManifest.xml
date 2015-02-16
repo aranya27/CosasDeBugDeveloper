@@ -8,13 +8,22 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".ListviewActivity1"
+            android:name=".ListviewActivit1"
             android:label="@string/app_name" >
-
         </activity>
         <activity
-            android:name=".ListviewActivity2"
+            android:name=".ListviewActivit2"
             android:label="@string/title_activity_listview_activity2" >
+        </activity>
+
+
+        <activity android:name=".tabsProbandoTabs.AndroidActivity" />
+        <activity android:name=".tabsProbandoTabs.WindowsActivity" />
+        <activity android:name=".tabsProbandoTabs.AppleActivity" />
+        <activity android:name=".tabsProbandoTabs.BlackBerryActivity" />
+        <activity
+            android:name=".ProbandoTabs"
+            android:label="@string/title_activity_probando_tabs" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

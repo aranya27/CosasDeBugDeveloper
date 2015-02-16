@@ -19,5 +19,9 @@
     <string name="imagen_content_description">Calendario</string>
 
     <string name="title_activity_listview_activity2">sfdsfgsdf</string>
+    <string name="title_activity_probando_tabs">ProbandoTabs</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settingsxx</string>
 
 </resources>
