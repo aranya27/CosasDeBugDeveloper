@@ -21,9 +21,12 @@ public class Candidato {
     private long coloniaId;
     private String codigoPostal;
     private String comentario = "Escribe tu comentario...";
-    private boolean comentarioEnviado;
+    private boolean comentarioEnviado = true;
     
     public Candidato() {
+        System.out.println("============================================");
+        System.out.println("=======CREANDO OBJETO CANDIDATO=============");
+        System.out.println("============================================");
     }
     
     public String getNombre() {

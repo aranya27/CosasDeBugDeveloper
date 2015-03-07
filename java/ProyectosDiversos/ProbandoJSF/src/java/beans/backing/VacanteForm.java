@@ -129,7 +129,16 @@ public class VacanteForm {
     }
     
     public void ocultarComentario(ActionEvent actionEvent){
-        this.candidato.setComentarioEnviado(!this.candidato.isComentarioEnviado());
+        this.candidato.setComentarioEnviado(false);
+        System.out.println("==============comentarioEnviado = "+this.candidato.isComentarioEnviado());
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        FacesContextHelper.limpiarImmediateFacesMessages(facesContext);
+        HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        req.setAttribute("algo", "x");
+    }
+    
+    public void mostrarComentario(ActionEvent actionEvent){
+        this.candidato.setComentarioEnviado(true);
         System.out.println("==============comentarioEnviado = "+this.candidato.isComentarioEnviado());
         FacesContext facesContext = FacesContext.getCurrentInstance();
         FacesContextHelper.limpiarImmediateFacesMessages(facesContext);

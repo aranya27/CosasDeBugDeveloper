@@ -91,13 +91,13 @@
             <table>
                 <tr>
                     <td>
-                        <h:commandLink actionListener="#{vacanteForm.ocultarComentario}"
-                                       immediate="true" rendered="#{!candidato.comentarioEnviado}"
+                        <h:commandLink actionListener="#{vacanteForm.mostrarComentario}"
+                                       immediate="true" rendered="#{candidato.comentarioEnviado eq false}"
                                        onclick="togglito('#{requestScope.miHidden.clientId}');"
                                        value="#{msgs['vacanteForm.mostrar']}" />
                         ==
                         <h:commandLink actionListener="#{vacanteForm.ocultarComentario}"
-                                       immediate="true" rendered="#{candidato.comentarioEnviado}"
+                                       immediate="true" rendered="#{candidato.comentarioEnviado eq true}"
                                        onclick="togglito('#{requestScope.miHidden.clientId}');"
                                        value="#{msgs['vacanteForm.ocultar']}" />
                         
