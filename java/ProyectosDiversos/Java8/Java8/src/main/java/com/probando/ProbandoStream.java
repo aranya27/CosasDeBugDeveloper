@@ -18,6 +18,15 @@ import static java.util.stream.Collectors.toList;
 public class ProbandoStream {
 
     public static void main(String[] args) {
+        /*
+        Revisar
+        http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/Lambda-QuickStart/index.html
+        http://www.oracle.com/technetwork/articles/java/ma14-java-se-8-streams-2177646.html
+        
+        */
+        
+        
+        
         //Inicializamos todo
         List<Persona> personas = new ArrayList<Persona>();
         personas.add(new Persona("Armando", 29, 'M'));
