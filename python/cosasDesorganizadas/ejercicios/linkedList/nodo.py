@@ -37,13 +37,28 @@ def borrarNodo(cargo,nodo1):
 
 
 
+def borrarRepetidos(nodo):	
+	nodoActual = nodo
+	while nodoActual:
+		nodoIter = nodoActual.next
+		nodoPrev = nodoActual
+		while nodoIter:
+			if nodoActual.cargo == nodoIter.cargo:
+				nodoPrev.next = nodoIter.next
+			else:
+				nodoPrev = nodoIter
+			nodoIter = nodoIter.next
+		nodoActual = nodoActual.next
+	return nodo
 
-
-
-
-
-
-
+"""
+nodo1 = Node(1)
+nodo2 = Node(2)
+nodo3 = Node(3)
+nodo4 = Node(4)
+nodo5 = Node(3)
+nodo6 = Node(3)
+"""
 
 
 
