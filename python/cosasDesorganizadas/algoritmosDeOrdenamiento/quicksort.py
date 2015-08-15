@@ -23,7 +23,7 @@ class Quicksort(object):
 		j = last
 
 		while i<j :
-
+			print "i = %i, j = %i" % (i,j)
 			while arreglo[i] < pivote:
 				i += 1
 
