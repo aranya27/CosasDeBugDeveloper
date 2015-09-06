@@ -33,6 +33,8 @@ public class ProbandoStream {
         personas.add(new Persona("Fernando", 31, 'M'));
         personas.add(new Persona("Claudia", 18, 'F'));
         personas.add(new Persona("Beto", 22, 'M'));
+        
+        personas.forEach(p -> System.out.println(p.getNombre()));
 
         Collections.sort(personas, new Comparator<Persona>() { //Usando clase anonima
             
