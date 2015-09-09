@@ -20,26 +20,33 @@ class Arbol(object):
 			else:
 				self.izq.addValor(valor)
 
-
-def imprimirProfundidad(arbol):
+def imprimirArbolOrdenado(arbol):
 	if arbol.izq != None:
-		imprimirProfundidad(arbol.izq)
+		imprimirArbolOrdenado(arbol.izq)
 	print(arbol.valor)
 	if arbol.der != None:
-		imprimirProfundidad(arbol.der)
+		imprimirArbolOrdenado(arbol.der)
+
 	
+# El arbol que se genera es el que aparece aqui https://es.wikipedia.org/wiki/%C3%81rbol_binario_de_b%C3%BAsqueda
+def generarArbol():
+	a = Arbol(8)
+	a.addValor(3)
+	a.addValor(1)
+	a.addValor(6)
+	a.addValor(4)
+	a.addValor(7)
+	a.addValor(10)
+	a.addValor(14)
+	a.addValor(13)
+	return a
 
 
 
 if __name__ == "__main__":
-	a = Arbol(2)
-	a.addValor(3)
-	a.addValor(1)
-	a.addValor(9)
-	a.addValor(10)
-	a.addValor(.5)
-	imprimirProfundidad(a)
-	
+	a = generarArbol()
+	imprimirArbolOrdenado(a)
+
 
 
 	
