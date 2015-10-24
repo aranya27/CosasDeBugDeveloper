@@ -5,11 +5,13 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 
 //@Named(value = "candidato")
 @ManagedBean
-@RequestScoped
+//@RequestScoped
+@ViewScoped
 //@SessionScoped
 public class Candidato {
     private String nombre = "Escribe tu nombre";

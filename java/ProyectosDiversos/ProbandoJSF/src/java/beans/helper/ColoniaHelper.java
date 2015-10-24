@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 @ManagedBean    
-@RequestScoped
+//@RequestScoped
+@ViewScoped
 public class ColoniaHelper {
     public List<Colonia> getColonias(){
         List<Colonia> colonias = new ArrayList<Colonia>();
