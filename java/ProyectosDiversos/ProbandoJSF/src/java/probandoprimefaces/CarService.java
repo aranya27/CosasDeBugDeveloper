@@ -14,6 +14,8 @@ public class CarService {
     private final static String[] colors;
      
     private final static String[] brands;
+    
+    private List<Escuela> listadoEscuelas;
      
     static {
         colors = new String[10];
@@ -49,6 +51,19 @@ public class CarService {
          
         return list;
     }
+    
+    public CarService(){
+        listadoEscuelas = createEscuelasx(10);
+    }
+    
+    public List<Escuela> createEscuelasx(int size) {
+        listadoEscuelas = new ArrayList<Escuela>();
+        for(int i = 0 ; i < size ; i++) {
+            listadoEscuelas.add(new Escuela(i, "Escuela "+i));
+        }
+         
+        return listadoEscuelas;
+    }
      
     private String getRandomId() {
         return UUID.randomUUID().toString().substring(0, 8);
@@ -81,4 +96,23 @@ public class CarService {
     public List<String> getBrands() {
         return Arrays.asList(brands);
     }
+    
+    
+    public Escuela getEscuelaById(int id){
+        for(Escuela e:listadoEscuelas){
+            if(e.getId() == id)
+                return e;
+        }
+        return null;
+    }
+
+    public List<Escuela> getListadoEscuelas() {
+        return listadoEscuelas;
+    }
+
+    public void setListadoEscuelas(List<Escuela> listadoEscuelas) {
+        this.listadoEscuelas = listadoEscuelas;
+    }
+    
+    
 }

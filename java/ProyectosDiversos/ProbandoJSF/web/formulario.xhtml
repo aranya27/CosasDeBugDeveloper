@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args) {
+                if(!args.validationFailed){
+                    PF('escuelaDialog1').hide();
+                }
+                /*
+                if(args.validationFailed || !args.loggedIn) {
+                    PF('dlg').jq.effect("shake", {times:5}, 100);
+                }
+                else {
+                    PF('dlg').hide();
+                    $('#loginLink').fadeOut();
+                }
+                */
+            }
+        </script>
+    </h:head>
+    <h:body>
+        <h:form id="form1">
+            <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+            
+            <h:outputLabel for="escuelaSeleccionada1" value="Escuela 1:" />
+            <h:outputLabel id="escuelaSeleccionada1" value="#{formulario.escuela1.nombre}" />
+            <p:commandButton oncomplete="PF('escuelaDialog1').show()" icon="ui-icon-search" title="View">
+            </p:commandButton>
+            <br />
+            <h:outputLabel for="nombre" value="Nombre:" />
+            <p:inputText id="nombre" value="#{formulario.nombre}" required="true" label="nombre" />
+            <br />
+            <h:outputLabel for="fecha" value="Fecha:" />
+            <p:calendar id="fecha" value="#{formulario.fecha}" pattern="dd-MM-yyyy" required="true" label="fecha"  />
+            <br />
+            <h:outputLabel for="esCasado" value="Es Casado:" />
+            <p:selectBooleanCheckbox id="esCasado" value="#{formulario.esCasado}"  >
+                <p:ajax event="change" update="panelConyugue" listener="#{formulario.actualizaEsCasado}" />
+            </p:selectBooleanCheckbox>
+            <br />
+            <h:panelGroup id="panelConyugue">
+                <h:outputLabel for="conyugue" value="Conyugue:"  rendered="#{formulario.esCasado}" />
+                <p:inputText id="conyugue" rendered="#{formulario.esCasado}" value="#{formulario.conyugue}" required="#{formulario.esCasado}" label="conyugue" />
+                <br />
+            </h:panelGroup>
+            
+            <p:commandButton  ajax="false" update="growl" type="submit" value="Login" actionListener="#{formulario.procesaForm}" />
+        </h:form>
+        
+        <h:form id="form2">
+            <p:dialog header="Escuelas" widgetVar="escuelaDialog1" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputLabel for="escuelaSelect" value="Escuela:" />
+                <p:selectOneMenu required="true" id="escuelaSelect" value="#{formulario.escuela1}" style="width:125px" converter="escuelaConverter" >
+                    <f:selectItem itemLabel="Select One" itemValue="#{null}" />
+                    <f:selectItems value="#{formulario.escuelas}" var="escuela" itemValue="#{escuela}" itemLabel="#{escuela.nombre}"  />
+                </p:selectOneMenu>
+                <br />
+                <p:commandButton value="Aceptar" update=":form1:growl :form1:escuelaSeleccionada1"  oncomplete="handleLoginRequest(xhr, status, args)" />
+            </p:dialog>
+        </h:form>
+    </h:body>
+</html>
+

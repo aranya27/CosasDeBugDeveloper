@@ -31,10 +31,11 @@
         <br />
         <br />
         <h:form id="form">
+            <p:messages globalOnly="true"></p:messages>
             valor: 
             <h:outputText id="algoEstatico" value="#{dtFilterView.algo}" />
             <br />
-            <p:inputText id="algo" required="false" value="#{dtFilterView.algo}" />
+            <p:inputText id="algo" required="true" value="#{dtFilterView.algo}" />
             <p:commandButton update=":form:algo algoescondido" action="#{dtFilterView.metodochafa}" value="Submit">
                 <f:setPropertyActionListener value="Pedrito" target="#{dtFilterView.algo}" />
             </p:commandButton>
