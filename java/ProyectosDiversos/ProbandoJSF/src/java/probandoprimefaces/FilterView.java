@@ -6,6 +6,7 @@ import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 
  
@@ -14,8 +15,9 @@ import javax.faces.bean.ViewScoped;
 public class FilterView implements Serializable {
      
     private List<Car> cars;
-     
+    private Car selectedCar;
     private List<Car> filteredCars;
+    private String algo;
      
     @ManagedProperty("#{carService}")
     private CarService service;
@@ -36,6 +38,10 @@ public class FilterView implements Serializable {
         }
          
         return ((Comparable) value).compareTo(Integer.valueOf(filterText)) > 0;
+    }
+    
+    public String metodochafa(){
+        return "";
     }
      
     public List<String> getBrands() {
@@ -61,4 +67,22 @@ public class FilterView implements Serializable {
     public void setService(CarService service) {
         this.service = service;
     }
+
+    public Car getSelectedCar() {
+        return selectedCar;
+    }
+
+    public void setSelectedCar(Car selectedCar) {
+        this.selectedCar = selectedCar;
+    }
+
+    public String getAlgo() {
+        return algo;
+    }
+
+    public void setAlgo(String algo) {
+        this.algo = algo;
+    }
+    
+    
 }

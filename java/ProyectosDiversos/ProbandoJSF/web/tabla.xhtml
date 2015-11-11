@@ -8,7 +8,7 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <h1>Probando tabla</h1>
+        <h1>Probando tabla</h1>        
 
         <p:dataTable var="car" value="#{dtBasicView.cars}">
             <p:column headerText="Id">
@@ -27,10 +27,17 @@
                 <h:outputText value="#{car.color}" />
             </p:column>
         </p:dataTable>
-        
+
         <br />
         <br />
-        <h:form>
+        <h:form id="form">
+            valor: 
+            <h:outputText id="algoEstatico" value="#{dtFilterView.algo}" />
+            <br />
+            <p:inputText id="algo" required="false" value="#{dtFilterView.algo}" />
+            <p:commandButton update=":form:algo algoescondido" action="#{dtFilterView.metodochafa}" value="Submit">
+                <f:setPropertyActionListener value="Pedrito" target="#{dtFilterView.algo}" />
+            </p:commandButton>
             <p:dataTable var="car" value="#{dtFilterView.cars}" widgetVar="carsTable"
                          emptyMessage="No cars found with given criteria" filteredValue="#{dtFilterView.filteredCars}">
 
@@ -90,7 +97,42 @@
                         <f:convertNumber currencySymbol="$" type="currency"/>
                     </h:outputText>
                 </p:column>
+
+                <p:column style="width:32px;text-align: center">
+                    <p:commandButton update=":form:carDetail" oncomplete="PF('carDialog').show()" icon="ui-icon-search" title="View">
+                        <f:setPropertyActionListener value="#{car}" target="#{dtFilterView.selectedCar}" />
+                    </p:commandButton>
+                </p:column>
             </p:dataTable>
+
+
+            <p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="carDetail" style="text-align:center;">
+                    <p:panelGrid  columns="2" rendered="#{not empty dtFilterView.selectedCar}" columnClasses="label,value">
+                        <f:facet name="header">
+                            <p:graphicImage name="demo/images/car/#{dtFilterView.selectedCar.brand}-big.gif"/> 
+                        </f:facet>
+
+                        <h:outputText value="Id:" />
+                        <h:outputText value="#{dtFilterView.selectedCar.id}" />
+
+                        <h:outputText value="Year" />
+                        <h:outputText value="#{dtFilterView.selectedCar.year}" />
+
+                        <h:outputText value="Color:" />
+                        <h:outputText value="#{dtFilterView.selectedCar.color}" style="color:#{dtFilterView.selectedCar.color}"/>
+
+                        <h:outputText value="Price" />
+                        <h:outputText value="$#{dtFilterView.selectedCar.price}" />
+                        
+                        <p:inputText id="algoescondido" required="false" value="#{dtFilterView.algo}" />
+                        <p:commandButton update=":form:algo :form:algoEstatico algoescondido" value="Submit" />
+                    </p:panelGrid>
+                    
+                </p:outputPanel>
+                
+
+            </p:dialog>
         </h:form>
     </h:body>
 </html>
