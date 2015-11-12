@@ -2,6 +2,7 @@ package probandoprimefaces;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,6 +27,8 @@ public class Formulario  implements Serializable {
     private String conyugue;
     private Escuela escuela1;
     private Escuela escuela2;
+    private String escuelaBusqueda;
+    private List<Escuela> escuelasEncontradas;
     private List<Persona> personas;
     
     @ManagedProperty("#{carService}")
@@ -49,6 +52,10 @@ public class Formulario  implements Serializable {
         }
         else if(escuela1 == null){
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Escuela fail", "No se ha seleccionado una escuela");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+        else if(escuela2 == null){
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Escuela 2 fail", "No se ha seleccionado una escuela");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
         else{
@@ -77,7 +84,16 @@ public class Formulario  implements Serializable {
         System.out.println("esCasado = "+esCasado);
     }
     
-    
+    public void buscarEscuelas(ActionEvent event) {
+        escuela2 = null;
+        
+        escuelasEncontradas = new ArrayList<Escuela>();
+        for(Escuela e : escuelas){
+            if(e.getNombre().contains(escuelaBusqueda)){
+                escuelasEncontradas.add(e);
+            }
+        }
+    }
 
     public String getNombre() {
         return nombre;
@@ -149,6 +165,22 @@ public class Formulario  implements Serializable {
 
     public void setConyugue(String conyugue) {
         this.conyugue = conyugue;
+    }
+
+    public String getEscuelaBusqueda() {
+        return escuelaBusqueda;
+    }
+
+    public void setEscuelaBusqueda(String escuelaBusqueda) {
+        this.escuelaBusqueda = escuelaBusqueda;
+    }
+
+    public List<Escuela> getEscuelasEncontradas() {
+        return escuelasEncontradas;
+    }
+
+    public void setEscuelasEncontradas(List<Escuela> escuelasEncontradas) {
+        this.escuelasEncontradas = escuelasEncontradas;
     }
     
     
