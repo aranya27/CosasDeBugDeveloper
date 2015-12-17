@@ -79,9 +79,9 @@ public class Formulario  implements Serializable {
     }
     
     public void actualizaEsCasado(javax.faces.event.AjaxBehaviorEvent event) {
-        esCasado = (boolean)((SelectBooleanCheckbox)event.getComponent()).getValue();
+        //esCasado = (boolean)((SelectBooleanCheckbox)event.getComponent()).getValue();
         
-        System.out.println("esCasado = "+esCasado);
+        System.out.println("esCasadox = "+esCasado);
     }
     
     public void buscarEscuelas(ActionEvent event) {

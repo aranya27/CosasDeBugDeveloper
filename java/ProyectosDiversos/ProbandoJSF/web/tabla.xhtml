@@ -50,7 +50,9 @@
                 </f:facet>
 
                 <p:column filterBy="#{car.id}" headerText="Id" footerText="contains" filterMatchMode="contains">
-                    <h:outputText value="#{car.id}" />
+                    <p:commandLink style="color: blue"  update=":form:carDetail" value="#{car.id}" onclick="PF('carDialog').show()"  >
+                        <f:setPropertyActionListener value="#{car}" target="#{dtFilterView.selectedCar}" />
+                    </p:commandLink>
                 </p:column>
 
                 <p:column filterBy="#{car.year}" headerText="Year" footerText="lte" filterMatchMode="lte">
