@@ -8,29 +8,32 @@
         <title>Facelet Title</title>
         <script type="text/javascript">
             function handleLoginRequest(xhr, status, args) {
-                if(!args.validationFailed){
+                if (!args.validationFailed) {
                     PF('escuelaDialog1').hide();
                 }
                 /*
-                if(args.validationFailed || !args.loggedIn) {
-                    PF('dlg').jq.effect("shake", {times:5}, 100);
-                }
-                else {
-                    PF('dlg').hide();
-                    $('#loginLink').fadeOut();
-                }
-                */
+                 if(args.validationFailed || !args.loggedIn) {
+                 PF('dlg').jq.effect("shake", {times:5}, 100);
+                 }
+                 else {
+                 PF('dlg').hide();
+                 $('#loginLink').fadeOut();
+                 }
+                 */
             }
         </script>
     </h:head>
     <h:body>
         <h:form id="form1">
             <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
-            
+
             <h:outputLabel for="escuelaSeleccionada1" value="Escuela 1:" />
             <h:outputLabel id="escuelaSeleccionada1" value="#{formulario.escuela1.nombre}" />
-            <p:commandButton oncomplete="PF('escuelaDialog1').show()" icon="ui-icon-search" title="View">
-            </p:commandButton>
+            <p:commandButton oncomplete="PF('escuelaDialog1').show()" icon="ui-icon-search" title="View" />
+            <br />
+            <h:outputLabel for="escuelaSeleccionada2" value="Escuela 2:" />
+            <h:outputLabel id="escuelaSeleccionada2" value="#{formulario.escuela2.nombre}" />
+            <p:commandButton oncomplete="PF('escuelaDialog2').show()" icon="ui-icon-search" title="View" />
             <br />
             <h:outputLabel for="nombre" value="Nombre:" />
             <p:inputText id="nombre" value="#{formulario.nombre}" required="true" label="nombre" />
@@ -48,10 +51,10 @@
                 <p:inputText id="conyugue" rendered="#{formulario.esCasado}" value="#{formulario.conyugue}" required="#{formulario.esCasado}" label="conyugue" />
                 <br />
             </h:panelGroup>
-            
+
             <p:commandButton  ajax="false" update="growl" type="submit" value="Login" actionListener="#{formulario.procesaForm}" />
         </h:form>
-        
+
         <h:form id="form2">
             <p:dialog header="Escuelas" widgetVar="escuelaDialog1" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                 <p:outputLabel for="escuelaSelect" value="Escuela:" />
@@ -61,6 +64,31 @@
                 </p:selectOneMenu>
                 <br />
                 <p:commandButton value="Aceptar" update=":form1:growl :form1:escuelaSeleccionada1"  oncomplete="handleLoginRequest(xhr, status, args)" />
+            </p:dialog>
+        </h:form>
+
+        <h:form id="form3">
+            <p:dialog header="Escuelas" widgetVar="escuelaDialog2" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputLabel for="buscarEscuela" value="Criterio de busqueda:" />
+                <p:inputText id="buscarEscuela" value="#{formulario.escuelaBusqueda}" required="false" label="nombre" />
+                <p:commandButton id="encontrarCarajo" value="Encontrar" update="tablaEscuelasEncontradas" actionListener="#{formulario.buscarEscuelas}" />
+                <br />
+                <p:dataTable id="tablaEscuelasEncontradas" var="esc" value="#{formulario.escuelasEncontradas}" selection="#{formulario.escuela2}" rowKey="#{esc.id}"
+                             scrollable="true" scrollHeight="150"
+                             >
+                    <f:facet name="header">
+                        RadioButton
+                    </f:facet>
+                    <p:column selectionMode="single" style="width:16px;text-align:center"/>
+                    <p:column headerText="Id">
+                        <h:outputText value="#{esc.id}" />
+                    </p:column>
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{esc.nombre}" />
+                    </p:column>
+                </p:dataTable>
+                <br />
+                <p:commandButton value="Aceptar" update=":form1:growl :form1:escuelaSeleccionada2" icon="ui-icon-search"  oncomplete="PF('escuelaDialog2').hide()"  />
             </p:dialog>
         </h:form>
     </h:body>
