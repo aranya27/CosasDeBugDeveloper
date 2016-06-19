@@ -60,6 +60,8 @@ public class ProbandoStream {
         System.out.println("Impresion 3");
         imprimirPersonas(personas);
         
+        int totalAge = personas.stream().mapToInt(p -> p.getEdad()).sum();
+        System.out.println("totalAge = "+totalAge);
         
     }
 

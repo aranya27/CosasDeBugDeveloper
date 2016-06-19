@@ -2,7 +2,10 @@
 package com.probando;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -25,7 +28,33 @@ public class ProbandoLambdas {
         MiInterface7 m7 = String::substring;
         MiInterface8 m8 = ArrayList<String>::new;
         
+        List<Integer> numeros = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+        List<Integer> numerosPares = numeros.stream().filter(n -> n % 2 ==0).collect(Collectors.toList());
+        numerosPares.forEach(System.out::println);
+        List<Persona> personas = crearListaPersonas();
+        List<String> nombres = personas.stream().filter(p -> p.getSexo() == 'F').map(Persona::getNombre).collect(Collectors.toList());
+        nombres.forEach(System.out::println);
+        
+        String s = "hola";
+        Predicate predicate = (ss) -> ss != null;
+        predicate.test(s);
+        
     }
+    
+    
+    
+    public static List<Persona> crearListaPersonas(){
+        List<Persona> personas = new ArrayList<>();
+        personas.add( new Persona("Pedrito", 40, 'M') );
+        personas.add( new Persona("Susana", 20, 'F') );
+        personas.add( new Persona("Juan", 15, 'M') );
+        personas.add( new Persona("Elena", 45, 'F') );
+        personas.add( new Persona("Marcela", 18, 'F') );
+        
+        return personas;
+    }
+    
+ 
 }
 
 
