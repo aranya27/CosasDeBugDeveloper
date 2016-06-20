@@ -16,7 +16,7 @@ def checkAnagram(w1, w2):
 
 
 if __name__ == "__main__":
-	palabras = ("ROMA", "OMAR", "XDF", "PEPITO", "LOCO", "COLO")
+	palabras = ("ROMA", "OMAR", "PEPITO", "LOCO", "COLO")
 	resultadoFinal = []
 
 	

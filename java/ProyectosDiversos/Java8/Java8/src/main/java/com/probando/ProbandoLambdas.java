@@ -37,7 +37,7 @@ public class ProbandoLambdas {
         
         String s = "hola";
         Predicate predicate = (ss) -> ss != null;
-        predicate.test(s);
+        System.out.println("res = "+predicate.test(s));
         
     }
     
