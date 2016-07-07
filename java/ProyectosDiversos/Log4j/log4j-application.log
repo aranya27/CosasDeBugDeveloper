@@ -1,0 +1,8 @@
+2016-07-07 10:55:39 DEBUG Main:14 - This is debug : JESUS
+2016-07-07 10:55:39 INFO  Main:18 - This is info : JESUS
+2016-07-07 10:55:39 WARN  Main:21 - This is warn : JESUS
+2016-07-07 10:55:39 ERROR Main:22 - This is error : JESUS
+2016-07-07 10:55:39 FATAL Main:23 - This is fatal : JESUS
+java.lang.Exception: Valio verga!!
+	at com.jugando.log4j.Main.runMe(Main.java:23)
+	at com.jugando.log4j.Main.main(Main.java:28)
